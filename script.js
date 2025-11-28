@@ -27,3 +27,16 @@ function typeWriter2() {
 // Start typing after a slight delay
 setTimeout(typeWriter, 500);
 setTimeout(typeWriter2, 600);
+
+const music = document.getElementById('music');
+const btn = document.getElementById('music-btn');
+
+btn.addEventListener('click', () => {
+    if (music.paused) {
+        music.play();
+        btn.innerHTML = "❚❚ Pause Music"; // Change text to Pause
+    } else {
+        music.pause();
+        btn.innerHTML = "▶ Play Music"; // Change text back to Play
+    }
+});
