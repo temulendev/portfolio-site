@@ -1,18 +1,63 @@
+a:link {
+  color: rgb(40, 228, 90);
+  text-decoration: underline; /* Default underline */
+  background-color: transparent;
+}
+a:visited {
+  color: rgb(40, 228, 90);
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(255, 255, 255);
+  background-color: transparent;
+  text-decoration: underline;
+}
+a:active {
+  color: rgb(15, 155, 29);
+  background-color: transparent;
+  text-decoration: underline;
+}
+
 body {
     /* Format: font-family: "Preferred Font", "Backup Font", generic-type; */
-    background-color: rgb(36, 33, 33);
+    background-color: rgb(25, 25, 25);
     font-family: "Courier New", Courier, monospace;
     color:rgb(250, 251, 252);
-}
-h1 {
-    /* Format: font-family: "Preferred Font", "Backup Font", generic-type; */
-    font-family: "Courier New", Courier, monospace;
-}
-
-p{
-    color:aqua;
+    max-width: 600px; /* Adjust as needed */
+    margin: 0 auto;
+    text-align: left;
+    padding: 0 20px;
 }
 
-#identity{
-    color:brown;
+#divider{
+    border-bottom: dashed;
+    border-width: 2px;
+}
+
+ul{
+    list-style-type: lower-roman;
+}
+
+#name{
+    font-size: 30px;
+    white-space: pre-wrap; 
+}
+
+#intro{
+    color:rgb(40, 228, 90);
+}
+
+#connections{
+    list-style-type: none;
+}
+
+#internships{
+    color:rgb(176, 176, 176);
+    white-space: pre-wrap; 
+}
+
+footer{
+    font-size:small;
+    text-align: center;
 }
