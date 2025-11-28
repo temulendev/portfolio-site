@@ -1,0 +1,18 @@
+body {
+    /* Format: font-family: "Preferred Font", "Backup Font", generic-type; */
+    background-color: rgb(36, 33, 33);
+    font-family: "Courier New", Courier, monospace;
+    color:rgb(250, 251, 252);
+}
+h1 {
+    /* Format: font-family: "Preferred Font", "Backup Font", generic-type; */
+    font-family: "Courier New", Courier, monospace;
+}
+
+p{
+    color:aqua;
+}
+
+#identity{
+    color:brown;
+}
