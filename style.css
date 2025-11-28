@@ -61,3 +61,21 @@ footer{
     font-size:small;
     text-align: center;
 }
+
+.music-btn {
+    padding: 5px 5px;
+    background-color: transparent; /* Dark button */
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px; /* Rounded pill shape */
+    cursor: pointer;
+    font-family: monospace;
+    font-size: x-small;
+    transition: all 0.5s ease;
+    
+}
+
+.music-btn:hover {
+    background-color: white;
+    color: black;
+}
