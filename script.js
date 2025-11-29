@@ -28,6 +28,7 @@ function typeWriter2() {
 setTimeout(typeWriter, 500);
 setTimeout(typeWriter2, 600);
 
+// Music configuration
 const music = document.getElementById('music');
 const btn = document.getElementById('music-btn');
 
