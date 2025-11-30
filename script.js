@@ -5,7 +5,7 @@ const fullInternTxt = "[ Open to Summer 2026 Internships ]";
 let i=0;
 let j=0;
 
-nameElement.innerText = "whoami? "; // Clear it initially
+nameElement.innerText = ""; // Clear it initially
 internElement.innerText = "";
 
 function typeWriter() {
@@ -25,8 +25,8 @@ function typeWriter2() {
 }
 
 // Start typing after a slight delay
-setTimeout(typeWriter, 500);
-setTimeout(typeWriter2, 600);
+setTimeout(typeWriter, 200);
+setTimeout(typeWriter2, 400);
 
 // Music configuration
 const music = document.getElementById('music');
