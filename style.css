@@ -52,7 +52,7 @@ ul{
     list-style-type: none;
 }
 
-#internships{
+.subtitle{
     color:rgb(176, 176, 176);
     white-space: pre-wrap; 
 }
@@ -78,4 +78,12 @@ footer{
 .music-btn:hover {
     background-color: white;
     color: black;
+}
+
+#apptitle{
+    font-size: 30px;
+}
+
+#banklink{
+    text-indent: 2em;
 }
