@@ -2,7 +2,7 @@ const nameElement = document.getElementById('name');
 const fullName = "Temulen Iveelt"; // Updated to match your name
 const internElement = document.getElementById('internships');
 const fullInternTxt = "[ Open to Summer 2026 Internships ]";
-let i = 0;
+let i=0;
 let j=0;
 
 nameElement.innerText = "whoami? "; // Clear it initially
