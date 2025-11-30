@@ -88,7 +88,10 @@ footer{
     text-indent: 2em;
 }
 
-#bankvideo{
-    width: 500px;
-    height: 300px;
+#bankvideo {
+    width: 100%;        
+    height: auto;       
+    max-width: 600px;   
+    display: block;    
+    margin-bottom: 20px;
 }
