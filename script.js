@@ -1,5 +1,5 @@
 const nameElement = document.getElementById('name');
-const fullName = "Temulen Iveelt"; // Updated to match your name
+const fullName = "Temulen Iveelt"; 
 const internElement = document.getElementById('internships');
 const fullInternTxt = "[ Open to Summer 2026 Internships ]";
 let i=0;
@@ -12,7 +12,7 @@ function typeWriter() {
     if (i < fullName.length) {
         nameElement.innerText += fullName.charAt(i);
         i++;
-        setTimeout(typeWriter, 150); // Speed of typing
+        setTimeout(typeWriter, 120); // Speed of typing
     }
 }
 
@@ -25,7 +25,7 @@ function typeWriter2() {
 }
 
 // Start typing after a slight delay
-setTimeout(typeWriter, 200);
+setTimeout(typeWriter, 100);
 setTimeout(typeWriter2, 400);
 
 // Music configuration
