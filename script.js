@@ -25,7 +25,7 @@ function typeWriter2() {
 }
 
 // Start typing after a slight delay
-setTimeout(typeWriter, 100);
+setTimeout(typeWriter, 0);
 setTimeout(typeWriter2, 400);
 
 // Music configuration
