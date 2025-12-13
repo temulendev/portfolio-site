@@ -9,7 +9,7 @@ a:visited {
     text-decoration: none;
 }
 a:hover {
-    color: rgb(62, 134, 33);
+    color: rgb(0, 255, 64);
     background-color: transparent;
     text-decoration: underline;
 }
@@ -99,6 +99,9 @@ footer{
     color: rgb(255, 214, 9);
     text-decoration: none;
     text-indent: 2em;
+}
+#csb:hover{
+    color:rgb(255, 175, 27);
 }
 
 #banklink{
