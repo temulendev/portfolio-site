@@ -1,25 +1,25 @@
 a:link {
-  color: rgb(40, 228, 90);
-  text-decoration: underline; 
-  background-color: transparent;
+    color: rgb(40, 228, 90);
+    text-decoration: underline; 
+    background-color: transparent;
 }
 a:visited {
-  color: rgb(40, 228, 90);
-  background-color: transparent;
-  text-decoration: none;
+    color: rgb(40, 228, 90);
+    background-color: transparent;
+    text-decoration: none;
 }
 a:hover {
-  color: rgb(62, 134, 33);
-  background-color: transparent;
-  text-decoration: underline;
+    color: rgb(62, 134, 33);
+    background-color: transparent;
+    text-decoration: underline;
 }
 a:active {
-  color: rgb(15, 155, 29);
-  background-color: transparent;
-  text-decoration: underline;
+    color: rgb(15, 155, 29);
+    background-color: transparent;
+    text-decoration: underline;
 }
 
-body {
+body{
     background-color: rgb(20, 20, 25);
     font-family: "Courier New", Courier, monospace;
     color:rgb(250, 251, 252);
@@ -34,7 +34,7 @@ body {
     height: 180px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid #ffffff;
+    border: 2px solid #ffffff;
     flex-shrink: 0;
 }
 
@@ -45,7 +45,7 @@ h3{
 
 
 ul{
-    list-style-type: lower-roman;
+    list-style: disc;
 }
 
 #name{
@@ -70,6 +70,7 @@ ul{
 footer{
     font-size:small;
     text-align: center;
+    margin-bottom: 15px;
 }
 
 .music-btn {
