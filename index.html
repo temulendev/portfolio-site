@@ -1260,7 +1260,7 @@
       <span class="coming-soon-label">Coming soon</span>
     </div>
 
-    <div class="projects-inner cribcub blur-reveal" data-blur-delay="150">
+    <div class="projects-inner cribcub blur-reveal">
 
       <div class="project-left">
         <h2 class="project-title cribcub-title">CribCub</h2>
@@ -1328,7 +1328,7 @@
           blurObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -10px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px 280px 0px' });
 
     document.querySelectorAll('.blur-reveal').forEach(el => blurObserver.observe(el));
 
