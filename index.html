@@ -693,18 +693,13 @@
       --border-glow: 0;
     }
     /* Spotlight: soft white glow that follows cursor */
-    .projects-inner.cribcub::before {
-      content: '';
+    .cribcub-spotlight {
       position: absolute;
       inset: 0;
       border-radius: 16px;
-      background: radial-gradient(circle 380px at var(--mx) var(--my),
-        rgba(255,255,255,0.045) 0%,
-        rgba(255,255,255,0.018) 35%,
-        transparent 70%);
-      opacity: var(--border-glow);
-      transition: opacity 0.35s ease;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
       z-index: 0;
     }
     /* Border arc: amber glow on nearest edge */
@@ -1256,11 +1251,12 @@
 
     </div>
 
-    <div class="coming-soon-divider" aria-hidden="true">
+    <div class="coming-soon-divider" data-animate style="transition-delay:0.05s" aria-hidden="true">
       <span class="coming-soon-label">Coming soon</span>
     </div>
 
-    <div class="projects-inner cribcub">
+    <div class="projects-inner cribcub" data-animate style="transition-delay:0.15s">
+      <div class="cribcub-spotlight" aria-hidden="true"></div>
 
       <div class="project-left">
         <h2 class="project-title cribcub-title">CribCub</h2>
@@ -1417,23 +1413,36 @@
       toggleBtn.innerHTML = isLight ? lnMoonSVG : lnSunSVG;
     }
 
-    // CribCub proximity border glow
-    const cribcubEl = document.querySelector('.projects-inner.cribcub');
-    if (cribcubEl) {
-      const PROXIMITY = 140;
+    // CribCub proximity border glow + spotlight
+    const cribcubEl  = document.querySelector('.projects-inner.cribcub');
+    const spotlightEl = cribcubEl && cribcubEl.querySelector('.cribcub-spotlight');
+    if (cribcubEl && spotlightEl) {
+      const PROXIMITY = 160;
       document.addEventListener('mousemove', (e) => {
-        const r = cribcubEl.getBoundingClientRect();
-        const cx = Math.max(r.left, Math.min(e.clientX, r.right));
-        const cy = Math.max(r.top,  Math.min(e.clientY, r.bottom));
-        const dx = Math.max(0, r.left - e.clientX, e.clientX - r.right);
-        const dy = Math.max(0, r.top  - e.clientY, e.clientY - r.bottom);
+        const r   = cribcubEl.getBoundingClientRect();
+        // nearest point on the box edge (clamped)
+        const cx  = Math.max(r.left, Math.min(e.clientX, r.right));
+        const cy  = Math.max(r.top,  Math.min(e.clientY, r.bottom));
+        // distance from cursor to nearest box edge
+        const dx  = Math.max(0, r.left - e.clientX, e.clientX - r.right);
+        const dy  = Math.max(0, r.top  - e.clientY, e.clientY - r.bottom);
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const glow = Math.max(0, 1 - dist / PROXIMITY).toFixed(3);
-        const px = ((cx - r.left) / r.width  * 100).toFixed(1) + '%';
-        const py = ((cy - r.top)  / r.height * 100).toFixed(1) + '%';
+        const glow = Math.max(0, 1 - dist / PROXIMITY);
+        const px  = ((cx - r.left) / r.width  * 100).toFixed(1) + '%';
+        const py  = ((cy - r.top)  / r.height * 100).toFixed(1) + '%';
+
+        // border arc (::after via CSS vars)
         cribcubEl.style.setProperty('--mx', px);
         cribcubEl.style.setProperty('--my', py);
-        cribcubEl.style.setProperty('--border-glow', glow);
+        cribcubEl.style.setProperty('--border-glow', glow.toFixed(3));
+
+        // spotlight: set directly on the real div
+        spotlightEl.style.opacity = glow.toFixed(3);
+        spotlightEl.style.background =
+          `radial-gradient(circle 420px at ${px} ${py},` +
+          `rgba(255,255,255,0.07) 0%,` +
+          `rgba(255,255,255,0.03) 40%,` +
+          `transparent 70%)`;
       });
     }
   </script>
