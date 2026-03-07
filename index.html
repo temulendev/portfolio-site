@@ -692,6 +692,22 @@
       --my: 50%;
       --border-glow: 0;
     }
+    /* Spotlight: soft white glow that follows cursor */
+    .projects-inner.cribcub::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: radial-gradient(circle 380px at var(--mx) var(--my),
+        rgba(255,255,255,0.045) 0%,
+        rgba(255,255,255,0.018) 35%,
+        transparent 70%);
+      opacity: var(--border-glow);
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Border arc: amber glow on nearest edge */
     .projects-inner.cribcub::after {
       content: '';
       position: absolute;
@@ -712,6 +728,10 @@
       opacity: var(--border-glow);
       transition: opacity 0.2s ease;
       pointer-events: none;
+    }
+    .projects-inner.cribcub > * {
+      position: relative;
+      z-index: 1;
     }
     .cribcub-title {
       font-size: 3rem !important;
@@ -757,14 +777,14 @@
       font-size: 0.63rem;
       letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.55);
       animation: mystery-pulse 4s ease-in-out infinite;
       position: relative;
       z-index: 1;
     }
     @keyframes mystery-pulse {
-      0%, 100% { opacity: 0.2; letter-spacing: 0.38em; }
-      50%       { opacity: 0.55; letter-spacing: 0.44em; }
+      0%, 100% { opacity: 0.55; letter-spacing: 0.38em; }
+      50%       { opacity: 0.88; letter-spacing: 0.44em; }
     }
 
     /* ── RESPONSIVE: TABLET (768px–1199px) ── */
@@ -1236,11 +1256,11 @@
 
     </div>
 
-    <div class="coming-soon-divider blur-reveal" data-blur-delay="100" aria-hidden="true">
+    <div class="coming-soon-divider" aria-hidden="true">
       <span class="coming-soon-label">Coming soon</span>
     </div>
 
-    <div class="projects-inner cribcub blur-reveal" data-blur-delay="200">
+    <div class="projects-inner cribcub">
 
       <div class="project-left">
         <h2 class="project-title cribcub-title">CribCub</h2>
