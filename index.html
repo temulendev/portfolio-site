@@ -651,6 +651,122 @@
       letter-spacing: 0.1em;
     }
 
+    /* ── COMING SOON DIVIDER ── */
+    .coming-soon-divider {
+      width: 90vw;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 3rem;
+    }
+    .coming-soon-divider::before,
+    .coming-soon-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);
+    }
+    .coming-soon-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      animation: cs-shimmer 3.5s ease-in-out infinite;
+    }
+    @keyframes cs-shimmer {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; color: rgba(255,255,255,0.6); }
+    }
+
+    /* ── CRIBCUB ── */
+    .projects-inner.cribcub {
+      position: relative;
+      background: rgba(255,255,255,0.016);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      --mx: 50%;
+      --my: 50%;
+      --border-glow: 0;
+    }
+    .projects-inner.cribcub::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle 200px at var(--mx) var(--my),
+          rgba(245,166,35,0.7), transparent 70%)
+        border-box;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: var(--border-glow);
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    .cribcub-title {
+      font-size: 3rem !important;
+      font-weight: 600 !important;
+      background: linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.45) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+    .cribcub-mystery {
+      border-radius: 12px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.05);
+      gap: 1rem;
+    }
+    .cribcub-mystery::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(245,166,35,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .cribcub-mystery-icon {
+      font-size: 2.5rem;
+      opacity: 0.3;
+      animation: mystery-float 6s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes mystery-float {
+      0%, 100% { transform: translateY(0);   opacity: 0.3; }
+      50%       { transform: translateY(-6px); opacity: 0.5; }
+    }
+    .cribcub-mystery-text {
+      font-size: 0.63rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      animation: mystery-pulse 4s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes mystery-pulse {
+      0%, 100% { opacity: 0.2; letter-spacing: 0.38em; }
+      50%       { opacity: 0.55; letter-spacing: 0.44em; }
+    }
+
     /* ── RESPONSIVE: TABLET (768px–1199px) ── */
     @media (max-width: 1199px) {
       .hero {
@@ -701,11 +817,19 @@
       }
       .terminal,
       .coming-soon-card,
+      .cribcub-mystery,
       .ln-demo {
         order: 2;
       }
       .terminal-body {
         min-height: 240px;
+      }
+      .cribcub-title {
+        font-size: 2.5rem !important;
+      }
+      .coming-soon-divider {
+        padding: 1.5rem 2rem;
+        gap: 1.5rem;
       }
 
       .connect {
@@ -836,6 +960,16 @@
         width: 100%;
         margin: 1rem 0;
       }
+      .coming-soon-divider {
+        padding: 1.25rem 1rem;
+        gap: 1rem;
+      }
+      .cribcub-title {
+        font-size: 2.25rem !important;
+      }
+      .cribcub-mystery {
+        min-height: 160px;
+      }
 
       .connect {
         padding: 2rem 1.25rem 4vh;
@@ -920,6 +1054,36 @@
     }
     .ln-copy:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.22); }
     .ln-copy.copied { color: var(--accent-green); border-color: rgba(74,222,128,0.3); }
+
+    .ln-generate.ln-back {
+      background: none;
+      color: var(--text-muted);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .ln-generate.ln-back:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.22); opacity: 1; }
+
+    .ln-dark-toggle {
+      background: none; border: none; cursor: pointer; padding: 0.2rem;
+      color: rgba(255,255,255,0.3); display: flex; align-items: center;
+      flex-shrink: 0; transition: color 0.2s;
+    }
+    .ln-dark-toggle:hover { color: rgba(255,255,255,0.65); }
+
+    /* Light mode */
+    .ln-demo.ln-light { background: #f1f5f9; }
+    .ln-demo.ln-light .terminal-bar { background: #e2e8f0; border-bottom-color: #cbd5e1; }
+    .ln-demo.ln-light .terminal-title { color: #94a3b8; }
+    .ln-demo.ln-light .ln-dark-toggle { color: #94a3b8; }
+    .ln-demo.ln-light .ln-dark-toggle:hover { color: #475569; }
+    .ln-demo.ln-light .ln-chip.target { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); color: #64748b; }
+    .ln-demo.ln-light .ln-sep { color: #94a3b8; }
+    .ln-demo.ln-light .ln-generate.ln-back { color: #475569; border-color: #cbd5e1; }
+    .ln-demo.ln-light .ln-generate.ln-back:hover { color: #1e293b; border-color: #94a3b8; }
+    .ln-demo.ln-light .ln-note { background: #ffffff; border-color: #e2e8f0; }
+    .ln-demo.ln-light .ln-note-text { color: #1e293b; }
+    .ln-demo.ln-light .ln-copy { border-color: #cbd5e1; color: #64748b; }
+    .ln-demo.ln-light .ln-copy:hover { color: #1e293b; border-color: #94a3b8; }
+    .ln-demo.ln-light .ln-copy.copied { color: #16a34a; border-color: #86efac; }
   </style>
 </head>
 <body>
@@ -1050,11 +1214,14 @@
       </div>
 
       <div class="ln-demo" aria-label="Interactive demo of LinkedIn Note Generator">
-        <div class="terminal-bar" aria-hidden="true">
-          <span class="t-dot red"></span>
-          <span class="t-dot yellow"></span>
-          <span class="t-dot green"></span>
-          <span class="terminal-title">LinkedIn Note Generator — demo</span>
+        <div class="terminal-bar">
+          <span class="t-dot red" aria-hidden="true"></span>
+          <span class="t-dot yellow" aria-hidden="true"></span>
+          <span class="t-dot green" aria-hidden="true"></span>
+          <span class="terminal-title" aria-hidden="true">LinkedIn Note Generator — demo</span>
+          <button class="ln-dark-toggle" id="ln-dark-toggle" onclick="lnToggleDark()" aria-label="Toggle demo theme">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
         </div>
         <div class="ln-body">
           <div class="ln-meta">
@@ -1069,19 +1236,21 @@
 
     </div>
 
-    <div class="project-divider" aria-hidden="true"></div>
+    <div class="coming-soon-divider blur-reveal" data-blur-delay="100" aria-hidden="true">
+      <span class="coming-soon-label">Coming soon</span>
+    </div>
 
-    <div class="projects-inner">
+    <div class="projects-inner cribcub blur-reveal" data-blur-delay="200">
 
       <div class="project-left">
-        <h2 class="project-title">CribCub</h2>
+        <h2 class="project-title cribcub-title">CribCub</h2>
         <span class="project-tag in-progress">In Progress</span>
         <p class="project-desc">A hub for all things housing.</p>
       </div>
 
-      <div class="coming-soon-card" aria-label="Coming soon">
-        <span class="coming-soon-emoji" aria-hidden="true">🏠</span>
-        <span class="coming-soon-text">Coming soon</span>
+      <div class="cribcub-mystery" aria-label="Coming soon">
+        <span class="cribcub-mystery-icon" aria-hidden="true">🏠</span>
+        <span class="cribcub-mystery-text">Something is being built</span>
       </div>
 
     </div>
@@ -1183,9 +1352,18 @@
       { text: "Sarah, I came across your profile and your ML engineering background at Stripe is really impressive. I'm studying CS with a focus on AI and actively looking for opportunities — would love to connect and learn from your experience!", chars: 230 },
       { text: "Hi Sarah! The fraud detection work you're doing at Stripe is exactly the type of problem I want to work on. I'm exploring ML roles and would love to connect with someone building at that scale.", chars: 193 },
     ];
+    const lnSunSVG  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+    const lnMoonSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
     function lnGenerate() {
       const genBtn = document.getElementById('ln-gen-btn');
       const notes  = document.getElementById('ln-notes');
+      if (genBtn.dataset.mode === 'back') {
+        notes.innerHTML = '';
+        genBtn.textContent = 'Generate Notes';
+        genBtn.classList.remove('ln-back');
+        delete genBtn.dataset.mode;
+        return;
+      }
       genBtn.disabled = true;
       genBtn.textContent = 'Generating…';
       setTimeout(() => {
@@ -1197,8 +1375,9 @@
               <button class="ln-copy" onclick="lnCopy(this,${i})">Copy</button>
             </div>
           </div>`).join('');
-        notes.style.display = 'flex';
-        genBtn.textContent = 'Regenerate';
+        genBtn.textContent = '← Back';
+        genBtn.classList.add('ln-back');
+        genBtn.dataset.mode = 'back';
         genBtn.disabled = false;
       }, 900);
     }
@@ -1210,6 +1389,32 @@
       });
       copyBtn.textContent = 'Copied!'; copyBtn.classList.add('copied');
       setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
+    }
+    function lnToggleDark() {
+      const demo = document.getElementById('ln-demo');
+      const toggleBtn = document.getElementById('ln-dark-toggle');
+      const isLight = demo.classList.toggle('ln-light');
+      toggleBtn.innerHTML = isLight ? lnMoonSVG : lnSunSVG;
+    }
+
+    // CribCub proximity border glow
+    const cribcubEl = document.querySelector('.projects-inner.cribcub');
+    if (cribcubEl) {
+      const PROXIMITY = 140;
+      document.addEventListener('mousemove', (e) => {
+        const r = cribcubEl.getBoundingClientRect();
+        const cx = Math.max(r.left, Math.min(e.clientX, r.right));
+        const cy = Math.max(r.top,  Math.min(e.clientY, r.bottom));
+        const dx = Math.max(0, r.left - e.clientX, e.clientX - r.right);
+        const dy = Math.max(0, r.top  - e.clientY, e.clientY - r.bottom);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const glow = Math.max(0, 1 - dist / PROXIMITY).toFixed(3);
+        const px = ((cx - r.left) / r.width  * 100).toFixed(1) + '%';
+        const py = ((cy - r.top)  / r.height * 100).toFixed(1) + '%';
+        cribcubEl.style.setProperty('--mx', px);
+        cribcubEl.style.setProperty('--my', py);
+        cribcubEl.style.setProperty('--border-glow', glow);
+      });
     }
   </script>
 
