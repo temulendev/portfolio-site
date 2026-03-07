@@ -275,8 +275,8 @@
     /* ── MID BAND ── */
     .mid-band {
       position: relative;
-      min-height: 340px;
-      margin: 6vh 0 4vh;
+      min-height: 220px;
+      margin: 60px 0 0;
     }
 
     .technical {
@@ -341,7 +341,7 @@
 
     /* ── PROJECTS ── */
     .projects {
-      padding: 4vh 5vw 6vh;
+      padding: 30px 5vw 20px;
     }
 
     .projects-inner {
@@ -351,10 +351,6 @@
       grid-template-columns: 1fr 2fr;
       gap: 4vw;
       align-items: center;
-      background: rgba(255,255,255,0.018);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border-radius: 18px;
       padding: 3.5rem 3.5rem 3.5rem 3rem;
     }
 
@@ -494,7 +490,7 @@
 
     /* ── CONNECT ── */
     .connect {
-      padding: 4vh 8vw 5vh;
+      padding: 40px 8vw 5vh;
     }
 
     .connect-pills {
@@ -681,31 +677,20 @@
         </div>
         <div class="terminal-body" aria-hidden="true">
           <div class="scanline"></div>
-          <span class="t-dim">$ javac BankingApp.java &amp;&amp; java BankingApp</span><br>
+          <span class="t-dim">$ javac Bank.java &amp;&amp; java Bank</span><br>
           <br>
-          <span class="t-bright">&nbsp;&nbsp;╔════════════════════════════╗</span><br>
-          <span class="t-bright">&nbsp;&nbsp;║&nbsp;&nbsp;&nbsp;&nbsp;TEMULEN'S BANK&nbsp;&nbsp;v1.0&nbsp;&nbsp;&nbsp;&nbsp;║</span><br>
-          <span class="t-bright">&nbsp;&nbsp;╚════════════════════════════╝</span><br>
+          Welcome to Temulen's Bank!<br>
           <br>
-          <span class="t-dim">&nbsp;&nbsp;Enter PIN: </span>****<br>
+          Please enter a 4-digit pin<br>
+          <span class="t-dim">&gt; </span>****<br>
+          Enter your pin<br>
+          <span class="t-dim">&gt; </span>****<br>
+          Login successful<br>
+          Your balance is: 0.0<br>
           <br>
-          &gt; Authentication successful.<br>
-          <br>
-          <span class="t-dim">&nbsp;&nbsp;[1]</span> Check Balance &nbsp;&nbsp;&nbsp;<span class="t-bright">$12,450.00</span><br>
-          <span class="t-dim">&nbsp;&nbsp;[2]</span> Deposit<br>
-          <span class="t-dim">&nbsp;&nbsp;[3]</span> Withdraw<br>
-          <span class="t-dim">&nbsp;&nbsp;[4]</span> Project Interest<br>
-          <span class="t-dim">&nbsp;&nbsp;[5]</span> Exit<br>
-          <br>
-          <span class="t-dim">&nbsp;&nbsp;Select: </span>4<br>
-          <br>
-          &gt; Principal ──────── <span class="t-bright">$12,450.00</span><br>
-          &gt; Rate ─────────── <span class="t-bright">7.20% APY</span><br>
-          &gt; Term ────────── <span class="t-bright">10 years</span><br>
-          &nbsp;&nbsp;──────────────────────────<br>
-          &gt; Projected: <span class="t-bright">$25,012.47</span><br>
-          <br>
-          &gt; Goodbye.&nbsp;<span class="t-cursor"></span>
+          Would you like to deposit or withdraw?<br>
+          (1-Deposit, 2-Withdraw, 3-Calculate Interest)<br>
+          <span class="t-dim">&gt; </span><span class="t-cursor"></span>
         </div>
       </div>
 
