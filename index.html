@@ -719,8 +719,9 @@
     /* ── RESPONSIVE: MOBILE (<768px) ── */
     @media (max-width: 767px) {
       .hero {
-        padding: 5vh 1.25rem 3vh;
-        min-height: 100svh;
+        padding: 4vh 1.25rem 5rem;
+        min-height: auto;
+        justify-content: flex-start;
       }
       .hero-name {
         margin-bottom: 0.9rem;
@@ -737,7 +738,7 @@
       .hero-photo-wrapper {
         width: 160px;
         height: 160px;
-        margin-top: 1.5rem;
+        margin-top: 0.75rem;
       }
 
       .internship-pill {
@@ -843,6 +844,15 @@
         min-width: 44px;
       }
 
+      /* Scroll hint in flow below headshot so it never overlaps */
+      .hero .scroll-hint {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        transform: none;
+        margin-top: 1.5rem;
+        padding-bottom: 0.5rem;
+      }
       .scroll-hint__line {
         height: 32px;
       }
@@ -886,6 +896,10 @@
       <div class="photo-glow-ring" aria-hidden="true"></div>
     </div>
 
+    <div class="scroll-hint scroll-hint--hero" id="scrollHint">
+      <span class="scroll-hint__text">scroll</span>
+      <div class="scroll-hint__line"></div>
+    </div>
   </section>
 
   <!-- Mid band: Technical + About Me -->
@@ -999,11 +1013,6 @@
       <span id="music-label">Play music</span>
     </button>
   </footer>
-
-  <div class="scroll-hint" id="scrollHint">
-    <span class="scroll-hint__text">scroll</span>
-    <div class="scroll-hint__line"></div>
-  </div>
 
   <audio id="music" loop preload="none">
     <source src="angelIns.wav" type="audio/wav">
