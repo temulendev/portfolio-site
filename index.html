@@ -118,20 +118,27 @@
       min-height: 100vh;
       position: relative;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 8vw 7vh;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10vh 20vw 4vh 8vw;
     }
 
-    /* Photo — top right */
+    .hero-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* Photo — right of name block */
     .hero-photo-wrapper {
-      position: absolute;
-      top: 9vh;
-      right: 8vw;
+      position: relative;
       width: 185px;
       height: 185px;
       border-radius: 50%;
       cursor: default;
+      flex-shrink: 0;
     }
 
     .hero-photo-wrapper img {
@@ -142,7 +149,11 @@
       display: block;
       position: relative;
       z-index: 1;
-      transition: transform 0.1s;
+      transition: filter 0.4s ease;
+    }
+
+    .hero-photo-wrapper:hover img {
+      filter: saturate(0.85) contrast(1.05) brightness(1.1);
     }
 
     /* Ice-blue glow ring */
@@ -159,57 +170,6 @@
       pointer-events: none;
     }
 
-    /* CSS glitch on hover */
-    .hero-photo-wrapper::before,
-    .hero-photo-wrapper::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('headshot.webp');
-      background-size: cover;
-      background-position: center;
-      border-radius: 50%;
-      opacity: 0;
-      z-index: 3;
-      pointer-events: none;
-    }
-    .hero-photo-wrapper::before {
-      mix-blend-mode: screen;
-      filter: saturate(3) hue-rotate(160deg);
-    }
-    .hero-photo-wrapper::after {
-      mix-blend-mode: screen;
-      filter: saturate(3) hue-rotate(-70deg);
-    }
-    .hero-photo-wrapper:hover img {
-      animation: glitch-main 0.45s steps(3) infinite;
-    }
-    .hero-photo-wrapper:hover::before {
-      opacity: 0.55;
-      animation: glitch-a 0.45s steps(2) infinite;
-    }
-    .hero-photo-wrapper:hover::after {
-      opacity: 0.55;
-      animation: glitch-b 0.45s steps(2) infinite;
-    }
-
-    @keyframes glitch-main {
-      0%   { transform: translate(0, 0); }
-      33%  { transform: translate(-2px, 1px); }
-      66%  { transform: translate(2px, -1px); }
-      100% { transform: translate(0, 0); }
-    }
-    @keyframes glitch-a {
-      0%   { transform: translate(-3px, 0); clip-path: inset(15% 0 65% 0); }
-      50%  { transform: translate(3px, 0);  clip-path: inset(68% 0 8% 0); }
-      100% { transform: translate(-2px, 1px); clip-path: inset(38% 0 28% 0); }
-    }
-    @keyframes glitch-b {
-      0%   { transform: translate(3px, -1px);  clip-path: inset(58% 0 22% 0); }
-      50%  { transform: translate(-2px, 1px);  clip-path: inset(8% 0 68% 0); }
-      100% { transform: translate(2px, 0);     clip-path: inset(48% 0 12% 0); }
-    }
-
     /* Name */
     .hero-name {
       line-height: 1;
@@ -218,17 +178,17 @@
     .name-first {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
-      font-size: clamp(4rem, 9.5vw, 8.5rem);
+      font-size: clamp(3.5rem, 7vw, 8rem);
       color: var(--text-primary);
-      display: block;
+      display: inline;
     }
     .name-last {
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: clamp(4rem, 9.5vw, 8.5rem);
+      font-size: clamp(3.5rem, 7vw, 8rem);
       color: var(--text-primary);
       letter-spacing: -0.025em;
-      display: block;
+      display: inline;
     }
 
     .hero-tagline {
@@ -275,7 +235,7 @@
     /* ── MID BAND ── */
     .mid-band {
       position: relative;
-      min-height: 220px;
+      min-height: 200px;
       margin: 60px 0 0;
     }
 
@@ -337,6 +297,7 @@
       line-height: 1.8;
       color: var(--text-muted);
       font-weight: 300;
+      text-align: left;
     }
 
     /* ── PROJECTS ── */
@@ -590,6 +551,60 @@
       from { height: 3px; }
       to   { height: 12px; }
     }
+
+    /* ── BLUR REVEAL ── */
+    .blur-reveal {
+      filter: blur(20px);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: filter 1.4s ease, opacity 1.4s ease, transform 1.4s ease;
+    }
+    .blur-reveal.clear {
+      filter: blur(0px);
+      opacity: 1;
+      transform: translateY(0);
+    }
+    footer.blur-reveal.clear {
+      opacity: 0.4;
+    }
+
+    /* ── PROJECT DIVIDER ── */
+    .project-divider {
+      width: 90vw;
+      margin: 0 auto;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* In-progress tag pulse */
+    .project-tag.in-progress {
+      animation: tag-pulse 2s ease-in-out infinite;
+    }
+    @keyframes tag-pulse {
+      0%, 100% { box-shadow: 0 0 6px rgba(245,166,35,0.12); }
+      50%       { box-shadow: 0 0 14px rgba(245,166,35,0.32), 0 0 30px rgba(245,166,35,0.1); }
+    }
+
+    /* Coming soon glass card */
+    .coming-soon-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      gap: 0.75rem;
+    }
+    .coming-soon-emoji { font-size: 3rem; line-height: 1; }
+    .coming-soon-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
   </style>
 </head>
 <body>
@@ -606,30 +621,31 @@
   <!-- Hero -->
   <section class="hero" aria-label="Introduction">
 
+    <div class="hero-left">
+      <div class="hero-name" data-animate style="transition-delay:0s">
+        <span class="name-first">Temulen</span><span class="name-last"> Iveelt</span>
+      </div>
+
+      <p class="hero-tagline" data-animate style="transition-delay:0.1s">
+        Founder building products at the intersection of code and business.
+      </p>
+
+      <div class="internship-pill" data-animate style="transition-delay:0.2s" aria-label="Open to Summer 2026 Internships">
+        [ Open to Summer 2026 Internships ]<span class="pill-cursor" aria-hidden="true">_</span>
+      </div>
+    </div>
+
     <div class="hero-photo-wrapper" data-animate style="transition-delay:0.1s" aria-label="Photo of Temulen Iveelt">
       <img src="headshot.webp" alt="Temulen Iveelt">
       <div class="photo-glow-ring" aria-hidden="true"></div>
     </div>
 
-    <div class="hero-name" data-animate style="transition-delay:0s">
-      <span class="name-first">Temulen</span>
-      <span class="name-last">Iveelt</span>
-    </div>
-
-    <p class="hero-tagline" data-animate style="transition-delay:0.1s">
-      Founder building products at the intersection of code and business.
-    </p>
-
-    <div class="internship-pill" data-animate style="transition-delay:0.2s" aria-label="Open to Summer 2026 Internships">
-      [ Open to Summer 2026 Internships ]<span class="pill-cursor" aria-hidden="true">_</span>
-    </div>
-
   </section>
 
   <!-- Mid band: Technical + About Me -->
-  <section class="mid-band" aria-label="Skills and background">
+  <section class="mid-band blur-reveal" aria-label="Skills and background">
 
-    <div class="technical" data-animate style="transition-delay:0.05s">
+    <div class="technical">
       <p class="section-label">Technical</p>
       <div class="skills">
         <span class="skill-pill ice">Java</span>
@@ -641,7 +657,7 @@
       </div>
     </div>
 
-    <div class="about-me" data-animate style="transition-delay:0.15s">
+    <div class="about-me">
       <p class="section-label">About Me</p>
       <p class="about-text">
         I love being creative with problem-solving. That, and my passion for
@@ -654,8 +670,8 @@
   </section>
 
   <!-- Projects -->
-  <section class="projects" aria-label="Projects">
-    <div class="projects-inner" data-animate>
+  <section class="projects blur-reveal" data-blur-delay="200" aria-label="Projects">
+    <div class="projects-inner">
 
       <div class="project-left">
         <p class="project-label">Projects</p>
@@ -695,10 +711,27 @@
       </div>
 
     </div>
+
+    <div class="project-divider" aria-hidden="true"></div>
+
+    <div class="projects-inner">
+
+      <div class="project-left">
+        <h2 class="project-title">CribCub</h2>
+        <span class="project-tag in-progress">In Progress</span>
+        <p class="project-desc">A hub for all things housing.</p>
+      </div>
+
+      <div class="coming-soon-card" aria-label="Coming soon">
+        <span class="coming-soon-emoji" aria-hidden="true">🏠</span>
+        <span class="coming-soon-text">Coming soon</span>
+      </div>
+
+    </div>
   </section>
 
   <!-- Connect -->
-  <section class="connect" aria-label="Contact links">
+  <section class="connect blur-reveal" data-blur-delay="150" aria-label="Contact links">
     <p class="section-label">Connect</p>
     <div class="connect-pills">
       <a href="https://linkedin.com/in/temulen-iveelt" target="_blank" rel="noopener noreferrer" class="connect-pill linkedin">LinkedIn</a>
@@ -708,7 +741,7 @@
   </section>
 
   <!-- Footer -->
-  <footer>
+  <footer class="blur-reveal" data-blur-delay="100">
     Ambient music written by me &nbsp;·&nbsp; Website by Temulen Iveelt
     <br>
     <button id="music-btn" aria-label="Toggle ambient music">
@@ -739,6 +772,19 @@
     }, { threshold: 0.08 });
 
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+    // Blur reveal
+    const blurObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = parseInt(entry.target.dataset.blurDelay) || 0;
+          setTimeout(() => entry.target.classList.add('clear'), delay);
+          blurObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.blur-reveal').forEach(el => blurObserver.observe(el));
 
     // Music toggle
     const audio = document.getElementById('music');
