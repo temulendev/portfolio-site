@@ -700,7 +700,8 @@
         order: 1;
       }
       .terminal,
-      .coming-soon-card {
+      .coming-soon-card,
+      .ln-demo {
         order: 2;
       }
       .terminal-body {
@@ -810,6 +811,21 @@
       .terminal-title {
         font-size: 0.65rem;
       }
+      .ln-demo {
+        max-width: 100%;
+      }
+      .ln-body {
+        min-height: auto;
+        padding: 1rem 1.1rem;
+      }
+      .ln-generate {
+        min-height: 44px;
+        padding: 0 1.1rem;
+      }
+      .ln-copy {
+        min-height: 36px;
+        padding: 0.4rem 0.7rem;
+      }
       .coming-soon-card {
         min-height: 160px;
       }
@@ -861,6 +877,49 @@
       .orb-2 { width: 300px; height: 300px; bottom: -80px; }
       .orb-3 { width: 400px; height: 400px; top: 30%; left: 10%; }
     }
+
+    /* ── LINKEDIN MINI DEMO ── */
+    .ln-demo { background: #030608; border-radius: 12px; overflow: hidden; font-family: 'Inter', sans-serif; }
+    .ln-body { padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: 0.9rem; min-height: 310px; }
+    .ln-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .ln-chip {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.2rem 0.65rem; border-radius: 100px;
+      font-size: 0.7rem; font-weight: 500;
+    }
+    .ln-chip.type { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2); color: var(--accent-green); }
+    .ln-chip.target { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); color: var(--text-muted); }
+    .ln-sep { color: var(--text-muted); font-size: 0.7rem; }
+    .ln-generate {
+      align-self: flex-start;
+      background: var(--accent-green); color: #050810;
+      border: none; border-radius: 8px;
+      padding: 0.48rem 1.05rem;
+      font-size: 0.76rem; font-weight: 600; font-family: 'Inter', sans-serif;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .ln-generate:hover { opacity: 0.85; }
+    .ln-generate:disabled { opacity: 0.5; cursor: default; }
+    .ln-notes { display: flex; flex-direction: column; gap: 0.6rem; }
+    .ln-note {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px; padding: 0.7rem 0.85rem;
+    }
+    .ln-note-text { font-size: 0.74rem; color: var(--text-primary); line-height: 1.65; margin-bottom: 0.5rem; }
+    .ln-note-footer { display: flex; align-items: center; justify-content: space-between; }
+    .ln-char {
+      font-size: 0.64rem; font-weight: 600;
+      padding: 0.13rem 0.48rem; border-radius: 100px;
+    }
+    .ln-char.green { color: #4ade80; background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2); }
+    .ln-char.amber { color: var(--accent-amber); background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); }
+    .ln-copy {
+      background: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
+      color: var(--text-muted); font-size: 0.66rem; font-family: 'Inter', sans-serif;
+      padding: 0.16rem 0.5rem; cursor: pointer; transition: color 0.2s, border-color 0.2s;
+    }
+    .ln-copy:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.22); }
+    .ln-copy.copied { color: var(--accent-green); border-color: rgba(74,222,128,0.3); }
   </style>
 </head>
 <body>
@@ -981,36 +1040,30 @@
       <div class="project-left">
         <h2 class="project-title">LinkedIn Note Generator</h2>
         <span class="project-tag">React</span>
-        <span class="project-tag">OpenAI</span>
+        <span class="project-tag">OpenAI API</span>
         <p class="project-desc">
-          Full-stack AI web app that generates personalized LinkedIn connection
+          Full-stack AI-powered web app that generates personalized LinkedIn connection
           request notes. Paste a profile or fill fields, pick a connection type,
           and get 3 tailored notes under LinkedIn's 300-character limit.
         </p>
         <a href="https://linkedin-connector-one.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link">View project →</a>
       </div>
 
-      <div class="terminal" role="img" aria-label="Terminal demonstrating the LinkedIn Note Generator">
+      <div class="ln-demo" aria-label="Interactive demo of LinkedIn Note Generator">
         <div class="terminal-bar" aria-hidden="true">
           <span class="t-dot red"></span>
           <span class="t-dot yellow"></span>
           <span class="t-dot green"></span>
-          <span class="terminal-title">linkedin-notes — react — 80×24</span>
+          <span class="terminal-title">LinkedIn Note Generator — demo</span>
         </div>
-        <div class="terminal-body" aria-hidden="true">
-          <div class="scanline"></div>
-          <span class="t-dim">mode:</span> paste &nbsp;·&nbsp; <span class="t-dim">type:</span> <span class="t-bright">employer</span><br>
-          <span class="t-dim">target →</span> Sarah Chen · ML Eng at Stripe<br>
-          <br>
-          <span class="t-dim">✓ sanitized &nbsp;·&nbsp; ✓ rate check &nbsp;·&nbsp; 48ms</span><br>
-          <br>
-          <span class="t-dim">── 1 ──────────────────── </span><span class="t-bright">284 / 300</span><br>
-          Hi Sarah! Your fraud detection work<br>
-          at Stripe caught my eye — exploring<br>
-          ML roles &amp; would love to connect.<br>
-          <br>
-          <span class="t-dim">── 2 ──────────────────────────────</span><br>
-          <span class="t-cursor"></span>
+        <div class="ln-body">
+          <div class="ln-meta">
+            <span class="ln-chip type">💼 Employer</span>
+            <span class="ln-sep">·</span>
+            <span class="ln-chip target">Sarah Chen · ML Eng at Stripe</span>
+          </div>
+          <button class="ln-generate" id="ln-gen-btn" onclick="lnGenerate()">Generate Notes</button>
+          <div class="ln-notes" id="ln-notes"></div>
         </div>
       </div>
 
@@ -1123,6 +1176,41 @@
         label.textContent = 'Play music';
       }
     });
+
+    // LinkedIn demo
+    const lnNotes = [
+      { text: "Hi Sarah! Your fraud detection work at Stripe caught my eye — ML at that scale is exactly what I want to learn more about. I'm a CS student exploring ML roles and would love to connect and hear about your path.", chars: 213 },
+      { text: "Sarah, I came across your profile and your ML engineering background at Stripe is really impressive. I'm studying CS with a focus on AI and actively looking for opportunities — would love to connect and learn from your experience!", chars: 230 },
+      { text: "Hi Sarah! The fraud detection work you're doing at Stripe is exactly the type of problem I want to work on. I'm exploring ML roles and would love to connect with someone building at that scale.", chars: 193 },
+    ];
+    function lnGenerate() {
+      const genBtn = document.getElementById('ln-gen-btn');
+      const notes  = document.getElementById('ln-notes');
+      genBtn.disabled = true;
+      genBtn.textContent = 'Generating…';
+      setTimeout(() => {
+        notes.innerHTML = lnNotes.map((n, i) => `
+          <div class="ln-note">
+            <p class="ln-note-text">${n.text}</p>
+            <div class="ln-note-footer">
+              <span class="ln-char ${n.chars <= 250 ? 'green' : 'amber'}">${n.chars} / 300</span>
+              <button class="ln-copy" onclick="lnCopy(this,${i})">Copy</button>
+            </div>
+          </div>`).join('');
+        notes.style.display = 'flex';
+        genBtn.textContent = 'Regenerate';
+        genBtn.disabled = false;
+      }, 900);
+    }
+    function lnCopy(copyBtn, i) {
+      navigator.clipboard.writeText(lnNotes[i].text).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = lnNotes[i].text; ta.style.cssText = 'position:fixed;left:-9999px';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      });
+      copyBtn.textContent = 'Copied!'; copyBtn.classList.add('copied');
+      setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
+    }
   </script>
 
 </body>
