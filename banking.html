@@ -12,7 +12,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #050810;
+      --bg: #020c06;
       --accent-green: #4ade80;
       --accent-ice: #7dd3fc;
       --accent-amber: #f5a623;
@@ -44,21 +44,21 @@
     }
     .orb-1 {
       width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(125,211,252,0.1) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(74,222,128,0.11) 0%, transparent 65%);
       top: -160px; right: -100px;
       filter: blur(80px);
       animation: drift-1 22s ease-in-out infinite alternate;
     }
     .orb-2 {
       width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(45,212,191,0.09) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(0,180,80,0.09) 0%, transparent 65%);
       bottom: -100px; left: -120px;
       filter: blur(90px);
       animation: drift-2 28s ease-in-out infinite alternate;
     }
     .orb-3 {
       width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(49,46,129,0.12) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(1,40,16,0.22) 0%, transparent 65%);
       top: 30%; left: 20%;
       filter: blur(100px);
       animation: drift-3 35s ease-in-out infinite alternate;
@@ -295,10 +295,10 @@
       transition: color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
     }
     .github-pill:hover {
-      color: var(--accent-ice);
-      border-color: rgba(125,211,252,0.38);
-      background: rgba(125,211,252,0.06);
-      box-shadow: 0 0 18px rgba(125,211,252,0.11);
+      color: var(--accent-green);
+      border-color: rgba(74,222,128,0.38);
+      background: rgba(74,222,128,0.06);
+      box-shadow: 0 0 18px rgba(74,222,128,0.12);
     }
 
     .github-icon {
@@ -414,6 +414,16 @@
     }, { threshold: 0.06 });
 
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+    // Background shifts from dark matrix green to lighter green on scroll
+    window.addEventListener('scroll', function() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const p = Math.min(window.scrollY / maxScroll, 1);
+      const r = Math.round(2  + (7  - 2)  * p);
+      const g = Math.round(12 + (26 - 12) * p);
+      const b = Math.round(6  + (13 - 6)  * p);
+      document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+    });
   </script>
 
 </body>

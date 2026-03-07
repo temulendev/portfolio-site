@@ -134,8 +134,8 @@
     /* Photo — right of name block */
     .hero-photo-wrapper {
       position: relative;
-      width: 185px;
-      height: 185px;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
       cursor: default;
       flex-shrink: 0;
@@ -216,6 +216,12 @@
       letter-spacing: 0.05em;
       animation: pill-glow 2s ease-in-out infinite;
       width: fit-content;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .internship-pill:hover {
+      border-color: rgba(74, 222, 128, 0.65);
+      background: rgba(74, 222, 128, 0.12);
     }
     .pill-cursor {
       display: inline-block;
@@ -235,7 +241,7 @@
     /* ── MID BAND ── */
     .mid-band {
       position: relative;
-      min-height: 200px;
+      min-height: 320px;
       margin: 60px 0 0;
     }
 
@@ -273,8 +279,6 @@
       border-radius: 100px;
       font-size: 0.8rem;
       font-weight: 400;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: default;
     }
@@ -473,8 +477,6 @@
       text-decoration: none;
       font-size: 0.84rem;
       font-weight: 400;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       transition: color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
     }
     .connect-pill:hover { color: var(--text-primary); }
@@ -552,17 +554,57 @@
       to   { height: 12px; }
     }
 
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      position: fixed;
+      bottom: 2.5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 100;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    .scroll-hint.hidden {
+      opacity: 0;
+    }
+    .scroll-hint__text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .scroll-hint__line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(125,211,252,0.4), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+      transform-origin: top;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { transform: scaleY(1); opacity: 0.4; }
+      50% { transform: scaleY(0.6); opacity: 1; }
+    }
+
     /* ── BLUR REVEAL ── */
     .blur-reveal {
-      filter: blur(20px);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: filter 1.4s ease, opacity 1.4s ease, transform 1.4s ease;
+      filter: blur(18px);
+      opacity: 0.45;
+      transition: filter 1.4s ease, opacity 1.4s ease;
+      will-change: filter, opacity;
     }
     .blur-reveal.clear {
       filter: blur(0px);
       opacity: 1;
-      transform: translateY(0);
+    }
+    footer.blur-reveal {
+      opacity: 0.18;
     }
     footer.blur-reveal.clear {
       opacity: 0.4;
@@ -630,9 +672,9 @@
         Founder building products at the intersection of code and business.
       </p>
 
-      <div class="internship-pill" data-animate style="transition-delay:0.2s" aria-label="Open to Summer 2026 Internships">
+      <a href="mailto:temulen.iveelt@gmail.com" class="internship-pill" data-animate style="transition-delay:0.2s" aria-label="Email Temulen — open to Summer 2026 internships">
         [ Open to Summer 2026 Internships ]<span class="pill-cursor" aria-hidden="true">_</span>
-      </div>
+      </a>
     </div>
 
     <div class="hero-photo-wrapper" data-animate style="transition-delay:0.1s" aria-label="Photo of Temulen Iveelt">
@@ -643,9 +685,9 @@
   </section>
 
   <!-- Mid band: Technical + About Me -->
-  <section class="mid-band blur-reveal" aria-label="Skills and background">
+  <section class="mid-band" aria-label="Skills and background">
 
-    <div class="technical">
+    <div class="technical blur-reveal">
       <p class="section-label">Technical</p>
       <div class="skills">
         <span class="skill-pill ice">Java</span>
@@ -657,7 +699,7 @@
       </div>
     </div>
 
-    <div class="about-me">
+    <div class="about-me blur-reveal" data-blur-delay="100">
       <p class="section-label">About Me</p>
       <p class="about-text">
         I love being creative with problem-solving. That, and my passion for
@@ -756,6 +798,11 @@
     </button>
   </footer>
 
+  <div class="scroll-hint" id="scrollHint">
+    <span class="scroll-hint__text">scroll</span>
+    <div class="scroll-hint__line"></div>
+  </div>
+
   <audio id="music" loop preload="none">
     <source src="angelIns.wav" type="audio/wav">
   </audio>
@@ -782,7 +829,7 @@
           blurObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -10px 0px' });
 
     document.querySelectorAll('.blur-reveal').forEach(el => blurObserver.observe(el));
 
@@ -790,6 +837,23 @@
     const audio = document.getElementById('music');
     const btn   = document.getElementById('music-btn');
     const label = document.getElementById('music-label');
+
+    window.addEventListener('scroll', function() {
+      const hint = document.getElementById('scrollHint');
+      if (window.scrollY > 80) {
+        hint.classList.add('hidden');
+      } else {
+        hint.classList.remove('hidden');
+      }
+
+      // Background shifts to a lighter blue as user scrolls
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const p = Math.min(window.scrollY / maxScroll, 1);
+      const r = Math.round(5  + (7  - 5)  * p);
+      const g = Math.round(8  + (20 - 8)  * p);
+      const b = Math.round(16 + (40 - 16) * p);
+      document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+    });
 
     btn.addEventListener('click', () => {
       if (audio.paused) {
