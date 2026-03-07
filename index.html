@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Portfolio of Temulen Iveelt — CS & Business at Lehigh University. Founder building products at the intersection of code and business.">
   <title>Temulen Iveelt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,6 +29,11 @@
       font-weight: 400;
       overflow-x: hidden;
       min-height: 100vh;
+    }
+
+    img, video {
+      max-width: 100%;
+      height: auto;
     }
 
     /* ── BACKGROUND ── */
@@ -644,6 +649,207 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       letter-spacing: 0.1em;
+    }
+
+    /* ── RESPONSIVE: TABLET (768px–1199px) ── */
+    @media (max-width: 1199px) {
+      .hero {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 8vh 5vw 4vh;
+      }
+      .hero-left {
+        align-items: center;
+      }
+      .hero-photo-wrapper {
+        margin-top: 2rem;
+        order: 2;
+      }
+      .hero-tagline {
+        max-width: 100%;
+      }
+
+      .mid-band {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+        min-height: auto;
+        margin: 3rem 5vw 0;
+        padding-bottom: 2rem;
+      }
+      .technical,
+      .about-me {
+        position: static;
+        max-width: 100%;
+      }
+      .technical { order: 1; }
+      .about-me { order: 2; }
+
+      .projects {
+        padding: 2rem 5vw 1.5rem;
+      }
+      .projects-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 2rem;
+        width: 100%;
+        padding: 2.5rem 2rem;
+      }
+      .project-left {
+        order: 1;
+      }
+      .terminal,
+      .coming-soon-card {
+        order: 2;
+      }
+      .terminal-body {
+        min-height: 240px;
+      }
+
+      .connect {
+        padding: 2.5rem 5vw 4vh;
+      }
+
+      .orb-1 { width: 500px; height: 500px; }
+      .orb-2 { width: 420px; height: 420px; }
+      .orb-3 { width: 560px; height: 560px; }
+    }
+
+    /* ── RESPONSIVE: MOBILE (<768px) ── */
+    @media (max-width: 767px) {
+      .hero {
+        padding: 5vh 1.25rem 3vh;
+        min-height: 100svh;
+      }
+      .hero-name {
+        margin-bottom: 0.9rem;
+      }
+      .name-first,
+      .name-last {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+      }
+      .hero-tagline {
+        font-size: 1rem;
+        margin-bottom: 1.25rem;
+        line-height: 1.65;
+      }
+      .hero-photo-wrapper {
+        width: 160px;
+        height: 160px;
+        margin-top: 1.5rem;
+      }
+
+      .internship-pill {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mid-band {
+        margin: 2rem 1.25rem 0;
+        gap: 2rem;
+        padding-bottom: 1.5rem;
+      }
+      .section-label {
+        font-size: 0.7rem;
+        margin-bottom: 1rem;
+      }
+      .skills {
+        gap: 0.4rem;
+      }
+      .skill-pill {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+      }
+      .about-text {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .projects {
+        padding: 1.5rem 1.25rem 1rem;
+      }
+      .projects-inner {
+        padding: 1.5rem 1rem;
+        gap: 1.5rem;
+      }
+      .project-label {
+        font-size: 0.7rem;
+      }
+      .project-title {
+        font-size: 1.5rem;
+      }
+      .project-desc {
+        font-size: 0.9rem;
+      }
+      .project-link {
+        font-size: 0.9rem;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .terminal {
+        max-width: 100%;
+        overflow-x: auto;
+      }
+      .terminal-body {
+        padding: 1rem 1.2rem;
+        font-size: 0.72rem;
+        min-height: 200px;
+        line-height: 1.75;
+      }
+      .terminal-bar {
+        padding: 0.6rem 0.85rem;
+      }
+      .terminal-title {
+        font-size: 0.65rem;
+      }
+      .coming-soon-card {
+        min-height: 160px;
+      }
+      .coming-soon-emoji {
+        font-size: 2.5rem;
+      }
+      .project-divider {
+        width: 100%;
+        margin: 1rem 0;
+      }
+
+      .connect {
+        padding: 2rem 1.25rem 4vh;
+      }
+      .connect-pills {
+        gap: 0.6rem;
+      }
+      .connect-pill {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      footer {
+        padding: 2vh 1rem 4vh;
+        font-size: 0.75rem;
+      }
+      #music-btn {
+        padding: 0.5rem 1.2rem;
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      .scroll-hint__line {
+        height: 32px;
+      }
+
+      .orb-1 { width: 360px; height: 360px; top: -100px; }
+      .orb-2 { width: 300px; height: 300px; bottom: -80px; }
+      .orb-3 { width: 400px; height: 400px; top: 30%; left: 10%; }
     }
   </style>
 </head>
