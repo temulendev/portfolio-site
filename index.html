@@ -817,6 +817,34 @@
       0%, 100% { letter-spacing: 0.38em; }
       50%       { letter-spacing: 0.44em; }
     }
+    .cribcub-mystery {
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .cribcub-mystery:hover {
+      transform: scale(1.012);
+    }
+    .cribcub-visit {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      font-family: 'Inter', sans-serif;
+      color: rgba(245, 166, 35, calc(0.45 + 0.55 * var(--mystery-glow, 0)));
+      text-shadow:
+        0 0 calc(12px * var(--mystery-glow, 0)) rgba(245,166,35,0.9),
+        0 0 calc(28px * var(--mystery-glow, 0)) rgba(245,166,35,0.4);
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s ease, text-shadow 0.3s ease, letter-spacing 0.4s ease;
+      animation: visit-drift 7s ease-in-out infinite;
+    }
+    .cribcub-mystery:hover .cribcub-visit {
+      letter-spacing: 0.2em;
+    }
+    @keyframes visit-drift {
+      0%, 100% { opacity: calc(0.45 + 0.55 * var(--mystery-glow, 0)); }
+      50%       { opacity: calc(0.6  + 0.4  * var(--mystery-glow, 0)); }
+    }
 
     /* ── RESPONSIVE: TABLET (768px–1199px) ── */
     @media (max-width: 1199px) {
@@ -1300,10 +1328,11 @@
         <p class="project-desc">A hub for all things housing.</p>
       </div>
 
-      <div class="cribcub-mystery" aria-label="Coming soon">
+      <a href="https://cribcub.com" target="_blank" rel="noopener noreferrer" class="cribcub-mystery" aria-label="Visit CribCub">
         <span class="cribcub-mystery-icon" aria-hidden="true">🏠</span>
         <span class="cribcub-mystery-text">Something is being built</span>
-      </div>
+        <span class="cribcub-visit">cribcub.com ↗</span>
+      </a>
 
     </div>
   </section>
