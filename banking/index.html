@@ -333,9 +333,11 @@
         <span class="project-tag">Java</span>
       </div>
       <p class="project-desc" data-animate style="transition-delay:0.2s">
-        A secure command-line banking interface built in Java. Features robust input
-        validation for PIN authentication, prevents overdrafts, and includes a compound
-        interest projection tool for modeling long-term account growth.
+        A two-class Java CLI banking system (Bank + Account). On launch, the user creates
+        a 4-digit PIN and registers a name, then re-authenticates before accessing the
+        menu. Supports deposits, withdrawals with overdraft protection, and compound
+        interest projection at a fixed 5% annual rate using A&nbsp;=&nbsp;P(1+r)^t.
+        Handles invalid input gracefully throughout.
       </p>
     </header>
 
@@ -346,47 +348,47 @@
           <span class="t-dot red"></span>
           <span class="t-dot yellow"></span>
           <span class="t-dot green"></span>
-          <span class="terminal-title">temulen — java BankingApp — 80×24</span>
+          <span class="terminal-title">temulen — java Bank — 80×24</span>
         </div>
         <div class="terminal-body" aria-hidden="true">
           <div class="scanline"></div>
-          <span class="t-dim">$ javac BankingApp.java &amp;&amp; java BankingApp</span><br>
+          <span class="t-dim">$ javac Bank.java Account.java &amp;&amp; java Bank</span><br>
           <br>
-          <span class="t-bright">&nbsp;&nbsp;╔══════════════════════════════════╗</span><br>
-          <span class="t-bright">&nbsp;&nbsp;║&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMULEN'S BANK&nbsp;&nbsp;v1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;║</span><br>
-          <span class="t-bright">&nbsp;&nbsp;╚══════════════════════════════════╝</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;Welcome to Temulen's Bank!<br>
           <br>
-          <span class="t-dim">&nbsp;&nbsp;New account? (y/n): </span>n<br>
-          <span class="t-dim">&nbsp;&nbsp;Account ID: </span>10042<br>
-          <span class="t-dim">&nbsp;&nbsp;Enter PIN: </span>****<br>
+          --Please Enter a 4-Digit PIN--<br>
+          <span class="t-dim">1234</span><br>
+          --Hello, what is your name?--<br>
+          <span class="t-dim">Alex</span><br>
+          --Enter your pin--<br>
+          <span class="t-dim">1234</span><br>
+          --Login successful. Welcome, <span class="t-bright">Alex</span>--<br>
           <br>
-          &gt; Access granted. Welcome back.<br>
-          <br>
-          <span class="t-dim">&nbsp;&nbsp;─ Main Menu ──────────────────────</span><br>
-          <span class="t-dim">&nbsp;&nbsp;[1]</span> Check Balance &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-bright">$8,320.50</span><br>
-          <span class="t-dim">&nbsp;&nbsp;[2]</span> Deposit<br>
-          <span class="t-dim">&nbsp;&nbsp;[3]</span> Withdraw<br>
-          <span class="t-dim">&nbsp;&nbsp;[4]</span> Compound Interest Projection<br>
-          <span class="t-dim">&nbsp;&nbsp;[5]</span> Transaction History<br>
-          <span class="t-dim">&nbsp;&nbsp;[6]</span> Exit<br>
-          <br>
-          <span class="t-dim">&nbsp;&nbsp;Select: </span>3<br>
-          <span class="t-dim">&nbsp;&nbsp;Amount to withdraw: </span>$500<br>
-          &gt; Confirming withdrawal of $500.00...<br>
-          &gt; Success. New balance: <span class="t-bright">$7,820.50</span><br>
-          <br>
-          <span class="t-dim">&nbsp;&nbsp;Select: </span>4<br>
-          <span class="t-dim">&nbsp;&nbsp;Principal: </span>$7,820.50<br>
-          <span class="t-dim">&nbsp;&nbsp;Rate (APY %): </span>6.5<br>
-          <span class="t-dim">&nbsp;&nbsp;Years: </span>15<br>
-          <br>
-          <span class="t-dim">&nbsp;&nbsp;─ Projection ─────────────────────</span><br>
-          &nbsp;&nbsp;Year &nbsp;5 &nbsp;&nbsp;→ &nbsp;<span class="t-bright">$10,691.48</span><br>
-          &nbsp;&nbsp;Year 10 &nbsp;&nbsp;→ &nbsp;<span class="t-bright">$14,613.30</span><br>
-          &nbsp;&nbsp;Year 15 &nbsp;&nbsp;→ &nbsp;<span class="t-bright">$19,975.22</span><br>
-          <br>
-          <span class="t-dim">&nbsp;&nbsp;Select: </span>6<br>
-          &gt; Session ended. Goodbye.&nbsp;<span class="t-cursor"></span>
+          What would you like to do, Alex?<br>
+          1 - View Balance<br>
+          &nbsp;2 - Deposit<br>
+          &nbsp;3 - Withdraw<br>
+          &nbsp;4 - Calculate Interest<br>
+          &nbsp;5 - Exit<br>
+          <span class="t-dim">2</span><br>
+          --How much would you like to deposit?--<br>
+          <span class="t-dim">5000</span><br>
+          What would you like to do, Alex?<br>
+          1 - View Balance<br>
+          &nbsp;2 - Deposit<br>
+          &nbsp;3 - Withdraw<br>
+          &nbsp;4 - Calculate Interest<br>
+          &nbsp;5 - Exit<br>
+          <span class="t-dim">3</span><br>
+          --How much would you like to withdraw?--<br>
+          <span class="t-dim">9999</span><br>
+          --Cannot withdraw more than you have!--<br>
+          <span class="t-dim">4</span><br>
+          --How many years?--<br>
+          <span class="t-dim">10</span><br>
+          At 5% interest, in 10 years you will have: <span class="t-bright">$8144.47</span><br>
+          <span class="t-dim">5</span><br>
+          --Thank you for using Temulen's Bank!--&nbsp;<span class="t-cursor"></span>
         </div>
       </div>
     </section>
