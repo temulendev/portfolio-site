@@ -5,197 +5,195 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Temulen's Bank — Java CLI banking app by Temulen Iveelt">
   <title>Banking App — Temulen Iveelt</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── COLOR SYSTEM ── */
     :root {
-      --bg: #020c06;
-      --accent-green: #4ade80;
-      --accent-ice: #7dd3fc;
-      --accent-amber: #f5a623;
-      --text-primary: rgba(255,255,255,0.88);
-      --text-muted: rgba(255,255,255,0.45);
+      --bg: #F4EFE6;
+      --bg-card: #EBE3D2;
+      --border: #C9B89A;
+      --border-strong: #A89070;
+      --text-primary: #2C1F10;
+      --text-secondary: #6B5840;
+      --text-muted: #9A8870;
+      --accent: #3B5998;
+      --accent-hover: #2D4473;
+      --accent-light: #EBF0F8;
+      --accent-2: #7A4A22;
+      --accent-green: #4A7236;
+      --nav-bg: #3B5998;
+      --nav-text: #FFFFFF;
+      --tag-bg: #E2D9C4;
+      --tag-text: #5A4A32;
+      --link: #3B5998;
     }
 
+    body.dark-mode {
+      --bg: #2C2F38;
+      --bg-card: #363A45;
+      --border: #48505E;
+      --border-strong: #58607A;
+      --text-primary: #E4DDD2;
+      --text-secondary: #A8A090;
+      --text-muted: #787080;
+      --accent: #7A9FD0;
+      --accent-hover: #9AB8E0;
+      --accent-light: #2A3348;
+      --accent-2: #C09060;
+      --accent-green: #72A850;
+      --nav-bg: #20242E;
+      --nav-text: #E4DDD2;
+      --tag-bg: #3C3F50;
+      --tag-text: #9A9CB0;
+      --link: #7A9FD0;
+    }
+
+    /* ── TRANSITIONS ── */
+    body, .project-header, footer {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* ── BASE ── */
     body {
       background: var(--bg);
       color: var(--text-primary);
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      overflow-x: hidden;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 16px;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ── BACKGROUND ── */
-    .bg-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .orb-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(74,222,128,0.11) 0%, transparent 65%);
-      top: -160px; right: -100px;
-      filter: blur(80px);
-      animation: drift-1 22s ease-in-out infinite alternate;
-    }
-    .orb-2 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(0,180,80,0.09) 0%, transparent 65%);
-      bottom: -100px; left: -120px;
-      filter: blur(90px);
-      animation: drift-2 28s ease-in-out infinite alternate;
-    }
-    .orb-3 {
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(1,40,16,0.22) 0%, transparent 65%);
-      top: 30%; left: 20%;
-      filter: blur(100px);
-      animation: drift-3 35s ease-in-out infinite alternate;
-    }
-    @keyframes drift-1 {
-      from { transform: translate(0,0) scale(1); }
-      to   { transform: translate(-60px,80px) scale(1.1); }
-    }
-    @keyframes drift-2 {
-      from { transform: translate(0,0) scale(1); }
-      to   { transform: translate(80px,-60px) scale(1.15); }
-    }
-    @keyframes drift-3 {
-      from { transform: translate(0,0) scale(1); }
-      to   { transform: translate(-40px,50px) scale(0.9); }
+    /* ── NAV BAR ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      height: 44px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
     }
 
-    .dot-texture {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 28px 28px;
-      pointer-events: none;
+    .nav-inner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .noise-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 200px 200px;
+
+    .nav-brand {
+      color: var(--nav-text);
+      text-decoration: none;
+      font-family: Trebuchet MS, Lucida Grande, Verdana, Arial, sans-serif;
+      font-weight: bold;
+      font-size: 0.9rem;
+      opacity: 0.92;
+      transition: opacity 0.15s ease;
+    }
+    .nav-brand:hover { opacity: 1; }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.85rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 3px;
+      color: var(--nav-text);
+      font-family: Trebuchet MS, Lucida Grande, Verdana, Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      white-space: nowrap;
+    }
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.38);
     }
 
     /* ── FADE-IN ── */
     [data-animate] {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     [data-animate].visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* ── LAYOUT ── */
-    .page-wrapper {
+    /* ── PAGE CONTAINER ── */
+    .page-container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 8vw;
+      padding: 2rem 1.5rem 3rem;
     }
 
-    /* ── BACK BUTTON ── */
-    .back-btn {
-      position: fixed;
-      top: 2.2rem;
-      left: 8vw;
-      z-index: 10;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.45rem 1rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 100px;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 400;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: color 0.22s, border-color 0.22s, background 0.22s;
-    }
-    .back-btn:hover {
-      color: var(--text-primary);
-      border-color: rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.07);
-    }
-
-    /* ── HEADER ── */
+    /* ── PROJECT HEADER ── */
     .project-header {
-      padding-top: 13vh;
-      padding-bottom: 5vh;
+      padding-top: 2.5rem;
+      padding-bottom: 2rem;
     }
 
     .section-label {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
+      font-family: Trebuchet MS, Lucida Grande, Verdana, Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: normal;
       text-transform: uppercase;
+      letter-spacing: 0.14em;
       color: var(--text-muted);
-      margin-bottom: 1.1rem;
+      margin-bottom: 0.75rem;
     }
 
     .project-title {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(2.6rem, 6vw, 4.5rem);
-      font-weight: 300;
-      letter-spacing: -0.025em;
+      font-family: Trebuchet MS, Lucida Grande, Verdana, Arial, sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: bold;
       color: var(--text-primary);
       line-height: 1.1;
-      margin-bottom: 1rem;
+      margin-bottom: 0.65rem;
     }
 
     .project-tag {
       display: inline-block;
-      padding: 0.22rem 0.75rem;
-      background: rgba(245,166,35,0.09);
-      border: 1px solid rgba(245,166,35,0.24);
-      border-radius: 100px;
-      color: var(--accent-amber);
+      padding: 0.22rem 0.7rem;
+      background: var(--tag-bg);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--accent-2);
+      font-family: Trebuchet MS, Lucida Grande, Verdana, Arial, sans-serif;
       font-size: 0.72rem;
-      font-weight: 500;
-      margin-bottom: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 1.25rem;
     }
 
     .project-desc {
-      max-width: 540px;
+      font-family: Georgia, 'Times New Roman', serif;
       font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.8;
-      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 580px;
     }
 
-    /* ── TERMINAL ── */
+    /* ── TERMINAL SECTION ── */
     .terminal-section {
-      padding-bottom: 6vh;
+      padding-bottom: 2rem;
     }
 
     .terminal {
       background: #030608;
-      border-radius: 14px;
+      border-radius: 10px;
       overflow: hidden;
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+      font-family: 'SF Mono', 'Courier New', Courier, monospace;
       width: 100%;
+      border: 1px solid #1E2530;
     }
 
     .terminal-bar {
@@ -206,22 +204,25 @@
       gap: 6px;
       border-bottom: 1px solid rgba(255,255,255,0.04);
     }
-    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
     .t-dot.red    { background: #ff5f57; }
     .t-dot.yellow { background: #ffbd2e; }
     .t-dot.green  { background: #28c840; }
+
     .terminal-title {
       flex: 1;
       text-align: center;
       font-size: 0.7rem;
       color: rgba(255,255,255,0.25);
+      font-family: 'SF Mono', 'Courier New', Courier, monospace;
     }
 
     .terminal-body {
       padding: 1.6rem 2rem;
       font-size: 0.8rem;
       line-height: 1.85;
-      color: var(--accent-green);
+      color: #4ade80;
       position: relative;
       overflow: hidden;
       min-height: 480px;
@@ -242,6 +243,7 @@
       pointer-events: none;
       z-index: 1;
     }
+
     .scanline {
       position: absolute;
       left: 0; right: 0;
@@ -251,6 +253,7 @@
       pointer-events: none;
       z-index: 2;
     }
+
     @keyframes scan {
       from { top: -80px; }
       to   { top: 100%; }
@@ -258,47 +261,47 @@
 
     .t-dim    { color: rgba(74,222,128,0.38); }
     .t-bright { color: #a7f3d0; }
+
     .t-cursor {
       display: inline-block;
-      width: 7px; height: 13px;
-      background: var(--accent-green);
+      width: 7px;
+      height: 13px;
+      background: #4ade80;
       vertical-align: middle;
       animation: blink 1s step-end infinite;
     }
+
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50%       { opacity: 0; }
     }
 
-    /* ── GITHUB LINK ── */
+    /* ── GITHUB BUTTON ── */
     .actions {
-      padding-bottom: 8vh;
+      padding-bottom: 2rem;
       display: flex;
       align-items: center;
       gap: 1rem;
     }
 
-    .github-pill {
+    .github-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       padding: 0.55rem 1.3rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 100px;
-      color: var(--text-muted);
+      background: var(--accent-light);
+      border: 1px solid var(--accent);
+      border-radius: 3px;
+      color: var(--accent);
       text-decoration: none;
+      font-family: Trebuchet MS, Lucida Grande, Verdana, Arial, sans-serif;
       font-size: 0.85rem;
-      font-weight: 400;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
+      font-weight: bold;
+      transition: background 0.15s ease, color 0.15s ease;
     }
-    .github-pill:hover {
-      color: var(--accent-green);
-      border-color: rgba(74,222,128,0.38);
-      background: rgba(74,222,128,0.06);
-      box-shadow: 0 0 18px rgba(74,222,128,0.12);
+    .github-btn:hover {
+      background: var(--accent);
+      color: white;
     }
 
     .github-icon {
@@ -307,32 +310,51 @@
       fill: currentColor;
       flex-shrink: 0;
     }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      font-family: Trebuchet MS, Lucida Grande, Verdana, Arial, sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .page-container { padding: 1.25rem 1rem 2rem; }
+      .project-title { font-size: 1.75rem; }
+      .terminal-body { padding: 1rem 1.2rem; font-size: 0.72rem; min-height: 380px; }
+      .nav-inner { padding: 0 1rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Background -->
-  <div class="bg-canvas" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
-  <div class="dot-texture" aria-hidden="true"></div>
-  <div class="noise-overlay" aria-hidden="true"></div>
+  <!-- Nav Bar -->
+  <nav class="nav" role="navigation" aria-label="Site navigation">
+    <div class="nav-inner">
+      <a href="../" class="nav-brand">← Temulen Iveelt</a>
+      <button class="nav-btn" id="dark-toggle" onclick="toggleDark()" aria-label="Toggle dark mode">
+        <span id="dark-icon">☾</span>
+        <span id="dark-label">Dark</span>
+      </button>
+    </div>
+  </nav>
 
-  <!-- Back button -->
-  <a href="../" class="back-btn" aria-label="Back to home">← Back</a>
+  <!-- Page Container -->
+  <div class="page-container">
 
-  <div class="page-wrapper">
-
-    <!-- Header -->
+    <!-- Project Header -->
     <header class="project-header">
-      <p class="section-label" data-animate style="transition-delay:0s">Project</p>
-      <h1 class="project-title" data-animate style="transition-delay:0.08s">Banking App</h1>
-      <div data-animate style="transition-delay:0.14s">
+      <p class="section-label" data-animate style="transition-delay: 0s">Project</p>
+      <h1 class="project-title" data-animate style="transition-delay: 0.07s">Temulen's Bank</h1>
+      <div data-animate style="transition-delay: 0.13s">
         <span class="project-tag">Java</span>
       </div>
-      <p class="project-desc" data-animate style="transition-delay:0.2s">
+      <p class="project-desc" data-animate style="transition-delay: 0.19s">
         A two-class Java CLI banking system (Bank + Account). On launch, the user creates
         a 4-digit PIN and registers a name, then re-authenticates before accessing the
         menu. Supports deposits, withdrawals with overdraft protection, and compound
@@ -341,8 +363,8 @@
       </p>
     </header>
 
-    <!-- Terminal mockup -->
-    <section class="terminal-section" data-animate style="transition-delay:0.1s" aria-label="Terminal demo of the banking app">
+    <!-- Terminal Mockup -->
+    <section class="terminal-section" data-animate style="transition-delay: 0.08s" aria-label="Terminal demo of the banking app">
       <div class="terminal" role="img" aria-label="Java banking app terminal session">
         <div class="terminal-bar" aria-hidden="true">
           <span class="t-dot red"></span>
@@ -393,9 +415,9 @@
       </div>
     </section>
 
-    <!-- Actions -->
-    <div class="actions" data-animate style="transition-delay:0.15s">
-      <a href="https://github.com/temulendev/console-banking-system" target="_blank" rel="noopener noreferrer" class="github-pill">
+    <!-- GitHub Link -->
+    <div class="actions" data-animate style="transition-delay: 0.12s">
+      <a href="https://github.com/temulendev/console-banking-system" target="_blank" rel="noopener noreferrer" class="github-btn">
         <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
         </svg>
@@ -405,7 +427,27 @@
 
   </div>
 
+  <!-- Footer -->
+  <footer>
+    Banking App · Temulen Iveelt · 2026
+  </footer>
+
   <script>
+    // Dark mode
+    function toggleDark() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      document.getElementById('dark-icon').textContent = isDark ? '☀' : '☾';
+      document.getElementById('dark-label').textContent = isDark ? 'Light' : 'Dark';
+      localStorage.setItem('darkMode', isDark ? 'on' : 'off');
+    }
+    if (localStorage.getItem('darkMode') === 'on') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('dark-icon').textContent = '☀';
+      document.getElementById('dark-label').textContent = 'Light';
+    }
+
+    // Fade-in
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -413,19 +455,8 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.06 });
-
+    }, { threshold: 0.05 });
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
-
-    // Background shifts from dark matrix green to lighter green on scroll
-    window.addEventListener('scroll', function() {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const p = Math.min(window.scrollY / maxScroll, 1);
-      const r = Math.round(2  + (7  - 2)  * p);
-      const g = Math.round(12 + (26 - 12) * p);
-      const b = Math.round(6  + (13 - 6)  * p);
-      document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
-    });
   </script>
 
 </body>
