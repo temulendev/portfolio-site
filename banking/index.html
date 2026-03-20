@@ -7,12 +7,12 @@
   <title>Banking App — Temulen Iveelt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0e1f16;
+      --bg: #020c06;
       --accent-green: #4ade80;
       --accent-ice: #7dd3fc;
       --accent-amber: #f5a623;
@@ -23,19 +23,73 @@
     body {
       background: var(--bg);
       color: var(--text-primary);
-      font-family: 'Cabin', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       overflow-x: hidden;
       min-height: 100vh;
     }
 
     /* ── BACKGROUND ── */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(74,222,128,0.11) 0%, transparent 65%);
+      top: -160px; right: -100px;
+      filter: blur(80px);
+      animation: drift-1 22s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,180,80,0.09) 0%, transparent 65%);
+      bottom: -100px; left: -120px;
+      filter: blur(90px);
+      animation: drift-2 28s ease-in-out infinite alternate;
+    }
+    .orb-3 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(1,40,16,0.22) 0%, transparent 65%);
+      top: 30%; left: 20%;
+      filter: blur(100px);
+      animation: drift-3 35s ease-in-out infinite alternate;
+    }
+    @keyframes drift-1 {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(-60px,80px) scale(1.1); }
+    }
+    @keyframes drift-2 {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(80px,-60px) scale(1.15); }
+    }
+    @keyframes drift-3 {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(-40px,50px) scale(0.9); }
+    }
+
+    .dot-texture {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
     .noise-overlay {
       position: fixed;
       inset: 0;
       z-index: -1;
       pointer-events: none;
-      opacity: 0.07;
+      opacity: 0.04;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 200px 200px;
@@ -102,7 +156,7 @@
     }
 
     .project-title {
-      font-family: 'Cabin', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: clamp(2.6rem, 6vw, 4.5rem);
       font-weight: 300;
       letter-spacing: -0.025em;
@@ -258,6 +312,12 @@
 <body>
 
   <!-- Background -->
+  <div class="bg-canvas" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="dot-texture" aria-hidden="true"></div>
   <div class="noise-overlay" aria-hidden="true"></div>
 
   <!-- Back button -->
@@ -356,6 +416,16 @@
     }, { threshold: 0.06 });
 
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+    // Background shifts from dark matrix green to lighter green on scroll
+    window.addEventListener('scroll', function() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const p = Math.min(window.scrollY / maxScroll, 1);
+      const r = Math.round(2  + (7  - 2)  * p);
+      const g = Math.round(12 + (26 - 12) * p);
+      const b = Math.round(6  + (13 - 6)  * p);
+      document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+    });
   </script>
 
 </body>
