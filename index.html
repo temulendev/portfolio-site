@@ -24,7 +24,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -42,7 +42,7 @@
     body {
       background: var(--bg);
       color: var(--text-primary);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Cabin', sans-serif;
       font-weight: 400;
       overflow-x: hidden;
       min-height: 100vh;
@@ -205,7 +205,7 @@
       display: inline;
     }
     .name-last {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Cabin', sans-serif;
       font-weight: 300;
       font-size: clamp(3.5rem, 7vw, 8rem);
       color: var(--text-primary);
@@ -548,7 +548,7 @@
       border-radius: 100px;
       color: var(--text-muted);
       font-size: 0.73rem;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Cabin', sans-serif;
       padding: 0.38rem 1rem;
       cursor: pointer;
       margin-top: 0.7rem;
@@ -603,7 +603,7 @@
       opacity: 0;
     }
     .scroll-hint__text {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Cabin', sans-serif;
       font-weight: 300;
       font-size: 0.7rem;
       letter-spacing: 0.2em;
@@ -707,57 +707,9 @@
 
     /* ── CRIBCUB ── */
     .projects-inner.cribcub {
-      position: relative;
       background: rgba(255,255,255,0.016);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 16px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      --mx: 50%;
-      --my: 50%;
-      --border-glow: 0;
-      --mystery-glow: 0;
-    }
-    /* Spotlight: soft white glow that follows cursor */
-    .projects-inner.cribcub::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 16px;
-      background: radial-gradient(circle 380px at var(--mx) var(--my),
-        rgba(255,255,255,0.045) 0%,
-        rgba(255,255,255,0.018) 35%,
-        transparent 70%);
-      opacity: var(--border-glow);
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-      z-index: 0;
-    }
-    /* Border arc: amber glow on nearest edge */
-    .projects-inner.cribcub::after {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 16px;
-      background:
-        radial-gradient(circle 200px at var(--mx) var(--my),
-          rgba(245,166,35,0.7), transparent 70%)
-        border-box;
-      -webkit-mask:
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask:
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      opacity: var(--border-glow);
-      transition: opacity 0.2s ease;
-      pointer-events: none;
-    }
-    .projects-inner.cribcub > * {
-      position: relative;
-      z-index: 1;
     }
     .cribcub-title {
       font-size: 3rem !important;
@@ -790,12 +742,10 @@
     }
     .cribcub-mystery-icon {
       font-size: 2.5rem;
-      opacity: calc(0.3 + 0.7 * var(--mystery-glow, 0));
+      opacity: 0.75;
       animation: mystery-float 6s ease-in-out infinite;
       position: relative;
       z-index: 1;
-      transition: opacity 0.3s ease, filter 0.3s ease;
-      filter: brightness(calc(1 + 0.6 * var(--mystery-glow, 0))) drop-shadow(0 0 calc(16px * var(--mystery-glow, 0)) rgba(255,255,255,0.95));
     }
     @keyframes mystery-float {
       0%, 100% { transform: translateY(0); }
@@ -805,13 +755,10 @@
       font-size: 0.63rem;
       letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: rgba(255,255,255, calc(0.55 + 0.45 * var(--mystery-glow, 0)));
-      opacity: calc(0.55 + 0.45 * var(--mystery-glow, 0));
-      text-shadow: 0 0 calc(20px * var(--mystery-glow, 0)) rgba(255,255,255,0.9), 0 0 calc(40px * var(--mystery-glow, 0)) rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.65);
       animation: mystery-pulse 4s ease-in-out infinite;
       position: relative;
       z-index: 1;
-      transition: color 0.3s ease, opacity 0.3s ease, text-shadow 0.3s ease;
     }
     @keyframes mystery-pulse {
       0%, 100% { letter-spacing: 0.38em; }
@@ -828,22 +775,14 @@
     .cribcub-visit {
       font-size: 0.68rem;
       letter-spacing: 0.14em;
-      font-family: 'Inter', sans-serif;
-      color: rgba(245, 166, 35, calc(0.45 + 0.55 * var(--mystery-glow, 0)));
-      text-shadow:
-        0 0 calc(12px * var(--mystery-glow, 0)) rgba(245,166,35,0.9),
-        0 0 calc(28px * var(--mystery-glow, 0)) rgba(245,166,35,0.4);
+      font-family: 'Cabin', sans-serif;
+      color: rgba(245, 166, 35, 0.7);
       position: relative;
       z-index: 1;
-      transition: color 0.3s ease, text-shadow 0.3s ease, letter-spacing 0.4s ease;
-      animation: visit-drift 7s ease-in-out infinite;
+      transition: letter-spacing 0.4s ease;
     }
     .cribcub-mystery:hover .cribcub-visit {
       letter-spacing: 0.2em;
-    }
-    @keyframes visit-drift {
-      0%, 100% { opacity: calc(0.45 + 0.55 * var(--mystery-glow, 0)); }
-      50%       { opacity: calc(0.6  + 0.4  * var(--mystery-glow, 0)); }
     }
 
     /* ── RESPONSIVE: TABLET (768px–1199px) ── */
@@ -1092,7 +1031,7 @@
     }
 
     /* ── LINKEDIN MINI DEMO ── */
-    .ln-demo { background: #030608; border-radius: 12px; overflow: hidden; font-family: 'Inter', sans-serif; }
+    .ln-demo { background: #030608; border-radius: 12px; overflow: hidden; font-family: 'Cabin', sans-serif; }
     .ln-body { padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: 0.9rem; min-height: 310px; }
     .ln-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
     .ln-chip {
@@ -1108,7 +1047,7 @@
       background: var(--accent-green); color: #050810;
       border: none; border-radius: 8px;
       padding: 0.48rem 1.05rem;
-      font-size: 0.76rem; font-weight: 600; font-family: 'Inter', sans-serif;
+      font-size: 0.76rem; font-weight: 600; font-family: 'Cabin', sans-serif;
       cursor: pointer; transition: opacity 0.2s;
     }
     .ln-generate:hover { opacity: 0.85; }
@@ -1128,7 +1067,7 @@
     .ln-char.amber { color: var(--accent-amber); background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); }
     .ln-copy {
       background: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
-      color: var(--text-muted); font-size: 0.66rem; font-family: 'Inter', sans-serif;
+      color: var(--text-muted); font-size: 0.66rem; font-family: 'Cabin', sans-serif;
       padding: 0.16rem 0.5rem; cursor: pointer; transition: color 0.2s, border-color 0.2s;
     }
     .ln-copy:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.22); }
@@ -1330,7 +1269,7 @@
       <div class="project-left">
         <h2 class="project-title cribcub-title">CribCub</h2>
         <span class="project-tag in-progress">In Progress</span>
-        <p class="project-desc">A hub for all things housing.</p>
+        <p class="project-desc">A communication and community platform for residential life. CribCub gives RAs and residents a shared dorm space to chat, coordinate, and connect — replacing apps like GroupMe with something built specifically for the people who actually live there. Built by an incoming Lehigh Gryphon (RA), for the dorms.</p>
       </div>
 
       <a href="https://cribcub.com" target="_blank" rel="noopener noreferrer" class="cribcub-mystery" aria-label="Visit CribCub">
@@ -1483,35 +1422,6 @@
       toggleBtn.innerHTML = isLight ? lnMoonSVG : lnSunSVG;
     }
 
-    // CribCub proximity border glow + mystery text/emoji spotlight glow
-    const cribcubEl = document.querySelector('.projects-inner.cribcub');
-    const cribcubMysteryEl = document.querySelector('.cribcub-mystery');
-    if (cribcubEl) {
-      const PROXIMITY = 140;
-      const MYSTERY_RADIUS = 120;
-      document.addEventListener('mousemove', (e) => {
-        const r = cribcubEl.getBoundingClientRect();
-        const cx = Math.max(r.left, Math.min(e.clientX, r.right));
-        const cy = Math.max(r.top,  Math.min(e.clientY, r.bottom));
-        const dx = Math.max(0, r.left - e.clientX, e.clientX - r.right);
-        const dy = Math.max(0, r.top  - e.clientY, e.clientY - r.bottom);
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const glow = Math.max(0, 1 - dist / PROXIMITY).toFixed(3);
-        const px = ((cx - r.left) / r.width  * 100).toFixed(1) + '%';
-        const py = ((cy - r.top)  / r.height * 100).toFixed(1) + '%';
-        cribcubEl.style.setProperty('--mx', px);
-        cribcubEl.style.setProperty('--my', py);
-        cribcubEl.style.setProperty('--border-glow', glow);
-        if (cribcubMysteryEl) {
-          const m = cribcubMysteryEl.getBoundingClientRect();
-          const mx = m.left + m.width / 2;
-          const my = m.top + m.height / 2;
-          const mDist = Math.hypot(e.clientX - mx, e.clientY - my);
-          const mysteryGlow = Math.max(0, 1 - mDist / MYSTERY_RADIUS).toFixed(3);
-          cribcubEl.style.setProperty('--mystery-glow', mysteryGlow);
-        }
-      });
-    }
   </script>
 
 </body>
