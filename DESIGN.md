@@ -10,29 +10,39 @@ Two-column CSS grid on desktop (`1.1fr 1fr`, max-width 960px, centered).
 
 | Column | Content |
 |---|---|
-| **Left — Card** | Bordered card with color stripes, About Me, Projects list, Resume preview, goat decoration, Blog |
+| **Left — Card** | Bordered card with color stripes, What I'm Up To, Projects (expandable), Resume, goat decoration, Blog, Contact |
 | **Right — Sidebar** | Circular headshot, name + subtitle, Y2K music player |
 
 On mobile (≤820px): single column, sidebar stacks above the card. Player follows headshot/name.
 
 ---
 
-## Design tokens
+## Design tokens (light mode default)
 
 | Token | Value |
 |---|---|
-| Background | `#fff` |
-| Text primary | `#1a1a1a` |
-| Text secondary | `#333` / `#555` |
-| Card border | `1.5px solid #aaa` |
-| Stripe blue | `#3558A0` |
-| Stripe yellow | `#E8B832` |
-| Stripe red | `#C4342D` |
-| Resume date red | `#c41e1e` |
-| Headings font | System sans-serif (`-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial`) |
-| Body font | `Georgia, 'Times New Roman', serif` |
-| Player LCD green | `#00ff41` |
-| Player body | `#1c1c1f` gradient |
+| Background | `#ffffff` (dark: `#131316`) |
+| Text primary | `#1a1a1a` (dark: `#c8c8cc`) |
+| Text secondary | `#555` (dark: `#999`) |
+| Text muted | `#888` (dark: `#666`) |
+| Card background | `#f7f7f7` (dark: `#1c1c20`) |
+| Card border | `#d0d0d0` (dark: `#3a3a3e`) |
+| Heading color | `#1a1a1a` (dark: `#e8e8ec`) |
+| Stripe blue | `#3558A0` (10px tall) |
+| Stripe yellow | `#E8B832` (7px tall) |
+| Stripe red | `#C4342D` (4px tall) |
+| Font | `Cabin` (Google Fonts) with system fallbacks |
+| Player body | `#1c1c1f` flat |
+| Player LCD | `#111` flat |
+| Player accent | `#fff` (white — no green) |
+
+**Style rules:** No gradients, no border-radius on rectangles, no drop shadows. Hard edges throughout. Headshot circle is the only rounded element.
+
+---
+
+## Dark mode
+
+Toggle button (☾/☀) fixed top-right. Preference saved to `localStorage`. CSS custom properties on `[data-theme="dark"]` handle all color swaps. Default is light mode.
 
 ---
 
@@ -50,29 +60,34 @@ portfoliosite/
 └── DESIGN.md           ← this file
 ```
 
-No external CSS/JS files. No build step. Deployed via GitHub Pages on `main`.
+No external CSS/JS files (except Google Fonts). No build step. Deployed via GitHub Pages on `main`.
 
 ---
 
 ## Sections
 
 ### Color stripes
-Three horizontal bars at top of card (blue, yellow, red). Decorative, ~7px tall each.
+Three horizontal bars at top of card: blue (thickest, 10px), yellow (7px), red (thinnest, 4px). Decorative.
 
-### About Me
-Placeholder lorem ipsum. Replace with real bio.
+### What I'm Up To
+Personal bio text. Links to CribCub and Instagram inline.
 
 ### Projects
-List with `——` line decorators. Each links to a project page (currently `#` placeholder).
+Click-to-expand toggle with `(click)` / `(hide)` hint. Dash decorators are part of the anchor tag (full row is clickable). CribCub links to www.cribcub.com.
 - Banking App
 - LinkedIn Note Generator
 - CribCub
 
 ### Resume
-Small preview thumbnail (`resumepreview.png`) + "Last updated" date in red + "Click to download" link to PDF.
+Preview thumbnail + "Status: Up to date!" + last updated date + download link. No red text.
 
 ### Blog
 "Coming soon..." placeholder.
+
+### Contact
+- temulen.iveelt@gmail.com
+- LinkedIn
+- GitHub
 
 ### Goat
 `goatYellow.png` floated right at card bottom. Decorative.
@@ -81,24 +96,23 @@ Small preview thumbnail (`resumepreview.png`) + "Last updated" date in red + "Cl
 
 ## Y2K Music Player
 
-Standalone audio player inspired by late-1990s Sony hardware and Aphex Twin / Warp Records visual aesthetic.
+Simplified audio player inspired by late-1990s Sony hardware.
 
-**Body:** Dark metallic gradient with chrome edge highlight and plastic sheen overlay.
+**Body:** Flat dark background (`#1c1c1f`), no gradients, no shadows.
 
-**LCD screen:** Dark green-tinted background with CRT scanline overlay and vignette. Green monospace text (`Courier New`). Displays:
+**LCD screen:** Dark background (`#111`) with CRT scanline overlay. White monospace text (`Courier New`). Displays:
 - Track filename, artist, date
-- 32-bar waveform visualization (Web Audio API `AnalyserNode`, falls back to random animation)
-- Progress bar with seek-on-click and glowing scrub head
+- 32-bar waveform visualization (Web Audio API `AnalyserNode`, white bars)
+- Progress bar with smooth drag-to-seek and scrub head dot
 
-**Transport controls:** Five metallic buttons (skip back, rewind, play/pause, fast-forward, skip forward). Rewind and FF support hold-to-seek (mouse and touch).
+**Transport controls:** Single play/pause button (one song only).
 
-**Loop toggle:** Hardware-style button with LED indicator.
+**Loop toggle:** Button with LED indicator (white when active).
 
 **Animations:**
 - `glitch` — occasional text distortion on track title (~0.5s every 10s cycle)
-- `breathe` — power LED pulsing glow
+- `breathe` — power LED pulsing opacity
 - `idlePulse` — gentle bar wave when not playing
-- CRT vignette on LCD
 
 **Keyboard:** Spacebar toggles play/pause.
 
@@ -109,7 +123,7 @@ Standalone audio player inspired by late-1990s Sony hardware and Aphex Twin / Wa
 | Breakpoint | Changes |
 |---|---|
 | ≤820px | Single column, sidebar first, headshot 200px, max-width 480px container |
-| ≤480px | Tighter padding, smaller headshot (170px), resume stacks vertically, smaller player controls |
+| ≤480px | Tighter padding, smaller headshot (170px), resume stacks vertically |
 
 ---
 
