@@ -172,9 +172,13 @@
       margin-bottom: 26px;
     }
 
-    .stripe--blue { height: 10px; background: #3558A0; }
-    .stripe--yellow { height: 7px; background: #E8B832; }
-    .stripe--red { height: 4px; background: #C4342D; }
+    .stripe--blue { height: 10px; background: #3558A0; transition: background 0.3s; }
+    .stripe--yellow { height: 7px; background: #E8B832; transition: background 0.3s; }
+    .stripe--red { height: 4px; background: #C4342D; transition: background 0.3s; }
+
+    [data-theme="dark"] .stripe--blue { background: #004d87; }
+    [data-theme="dark"] .stripe--yellow { background: #ffd900; }
+    [data-theme="dark"] .stripe--red { background: #ad0000; }
 
     /* Sections */
     .section {
@@ -478,7 +482,6 @@
       font-weight: bold;
       color: var(--lcd-text);
       margin-bottom: 3px;
-      animation: glitch 10s infinite;
       transition: color 0.3s;
     }
 
@@ -679,29 +682,6 @@
     @keyframes breathe {
       0%, 100% { opacity: 0.4; }
       50% { opacity: 1; }
-    }
-
-    @keyframes glitch {
-      0%, 93%, 100% {
-        transform: none;
-        opacity: 1;
-      }
-      93.5% {
-        transform: translateX(-3px) skewX(1.5deg);
-        opacity: 0.85;
-      }
-      94% {
-        transform: translateX(2px);
-        opacity: 0.92;
-      }
-      94.5% {
-        transform: translateX(-1px) skewX(-0.8deg);
-        opacity: 0.87;
-      }
-      95% {
-        transform: none;
-        opacity: 1;
-      }
     }
 
     @keyframes idlePulse {
