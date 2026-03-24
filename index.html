@@ -14,28 +14,32 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Temulen Iveelt","url":"https://temuleniveelt.com/"}
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ===== RESET & BASE ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: Georgia, 'Times New Roman', serif;
-      background: #fff;
-      color: #1a1a1a;
+      font-family: 'Cabin', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #131316;
+      color: #c8c8cc;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
     }
 
     h1, h2, h3 {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-family: 'Cabin', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       line-height: 1.25;
+      color: #e8e8ec;
     }
 
     a { color: inherit; }
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
-    button { font: inherit; cursor: pointer; border: none; background: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
     audio { display: none; }
 
     /* ===== LAYOUT ===== */
@@ -51,13 +55,31 @@
 
     /* ===== LEFT CARD ===== */
     .card {
-      border: 1.5px solid #aaa;
-      border-radius: 2px;
-      background: #fff;
+      background: linear-gradient(168deg, #232328, #1c1c20, #212126);
+      border: 1px solid #3a3a3e;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 2px 0 rgba(55,55,60,0.5),
+        0 6px 24px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    /* Chrome top edge on card */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 14px; right: 14px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), rgba(255,255,255,0.06), rgba(255,255,255,0.1), transparent);
+      z-index: 2;
     }
 
     .card-body {
       padding: 26px 30px 30px;
+      position: relative;
+      z-index: 1;
     }
 
     /* Stripes */
@@ -70,6 +92,7 @@
 
     .stripe {
       height: 7px;
+      border-radius: 1px;
     }
 
     .stripe--blue { background: #3558A0; }
@@ -93,11 +116,53 @@
 
     .section p {
       font-size: 15px;
-      color: #333;
+      color: #999;
       line-height: 1.7;
     }
 
-    /* Project list */
+    /* Projects toggle */
+    .projects-toggle {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
+      user-select: none;
+      transition: color 0.2s;
+    }
+
+    .projects-toggle:hover {
+      color: #00ff41;
+    }
+
+    .projects-hint {
+      font-size: 11px;
+      font-weight: 400;
+      color: #555;
+      font-style: italic;
+      transition: color 0.2s;
+    }
+
+    .projects-toggle:hover .projects-hint {
+      color: #00cc33;
+    }
+
+    /* Project list expand */
+    .project-list-wrap {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s ease,
+                  margin 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 0;
+    }
+
+    .project-list-wrap.open {
+      max-height: 160px;
+      opacity: 1;
+      margin-top: 10px;
+    }
+
     .project-list {
       display: flex;
       flex-direction: column;
@@ -114,20 +179,26 @@
       display: inline-block;
       width: 48px;
       height: 1.5px;
-      background: #333;
+      background: linear-gradient(90deg, #444, #666, #444);
       margin-right: 14px;
       flex-shrink: 0;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .project-item:hover::before {
+      background: linear-gradient(90deg, #00aa33, #00ff41, #00aa33);
+      box-shadow: 0 0 4px rgba(0,255,65,0.2);
     }
 
     .project-item a {
       font-size: 15px;
       text-decoration: none;
-      color: #1a1a1a;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      color: #bbb;
+      transition: color 0.15s;
     }
 
     .project-item a:hover {
-      text-decoration: underline;
+      color: #00ff41;
     }
 
     /* Resume */
@@ -139,9 +210,10 @@
 
     .resume-thumb {
       width: 85px;
-      border: 1px solid #ddd;
+      border: 1px solid #3a3a3e;
+      border-radius: 2px;
       flex-shrink: 0;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
     .resume-meta {
@@ -154,19 +226,19 @@
     .resume-date {
       font-size: 13px;
       font-weight: 700;
-      color: #c41e1e;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      color: #e84040;
     }
 
     .resume-download {
       font-size: 14px;
       font-style: italic;
       text-decoration: underline;
-      color: #1a1a1a;
+      color: #999;
+      transition: color 0.15s;
     }
 
     .resume-download:hover {
-      color: #3558A0;
+      color: #00ff41;
     }
 
     /* Goat */
@@ -193,7 +265,6 @@
       border-radius: 50%;
       overflow: hidden;
       margin: 0 auto 20px;
-      background: #d0d0d0;
     }
 
     .headshot {
@@ -207,18 +278,17 @@
       font-size: 27px;
       font-weight: 600;
       margin-bottom: 6px;
+      color: #f0f0f4;
     }
 
     .subtitle {
       font-size: 14px;
-      color: #555;
+      color: #888;
       margin-bottom: 3px;
     }
 
     /* ========================================
        Y2K MUSIC PLAYER
-       Inspired by late-90s Sony hardware
-       and Aphex Twin / Warp Records aesthetic
        ======================================== */
 
     .y2k-player {
@@ -234,7 +304,6 @@
         inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
-    /* Chrome highlight on top edge */
     .y2k-player::before {
       content: '';
       position: absolute;
@@ -244,7 +313,6 @@
       z-index: 2;
     }
 
-    /* Plastic sheen */
     .y2k-player::after {
       content: '';
       position: absolute;
@@ -264,23 +332,15 @@
         inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
-    /* Player header */
     .player-header {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
+      gap: 10px;
       margin-bottom: 10px;
       padding: 0 2px;
       position: relative;
       z-index: 3;
-    }
-
-    .player-brand {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      color: #777;
-      letter-spacing: 4px;
     }
 
     .player-label {
@@ -318,7 +378,6 @@
       z-index: 3;
     }
 
-    /* Scanlines */
     .lcd-screen::after {
       content: '';
       position: absolute;
@@ -334,7 +393,6 @@
       z-index: 4;
     }
 
-    /* CRT flicker */
     .lcd-screen::before {
       content: '';
       position: absolute;
@@ -375,7 +433,6 @@
       margin-bottom: 12px;
     }
 
-    /* Waveform visualization */
     .lcd-waveform {
       display: flex;
       align-items: flex-end;
@@ -393,7 +450,6 @@
       box-shadow: 0 0 2px rgba(0,255,65,0.15);
     }
 
-    /* Idle bar animation when not playing */
     .y2k-player:not(.playing) .waveform-bar {
       animation: idlePulse 2.5s ease-in-out infinite;
     }
@@ -423,33 +479,46 @@
 
     .progress-track {
       flex: 1;
-      height: 3px;
+      height: 6px;
       background: #0a2a0a;
-      border-radius: 2px;
+      border-radius: 3px;
       cursor: pointer;
       position: relative;
+      touch-action: none;
     }
 
     .progress-fill {
       height: 100%;
       background: #00ff41;
-      border-radius: 2px;
+      border-radius: 3px;
       width: 0%;
       box-shadow: 0 0 4px rgba(0,255,65,0.3);
       position: relative;
       transition: width 0.15s linear;
+      pointer-events: none;
+    }
+
+    .progress-fill.dragging {
+      transition: none;
     }
 
     .progress-fill::after {
       content: '';
       position: absolute;
-      right: -3px;
-      top: -2.5px;
-      width: 8px;
-      height: 8px;
+      right: -5px;
+      top: -3px;
+      width: 12px;
+      height: 12px;
       background: #00ff41;
       border-radius: 50%;
       box-shadow: 0 0 6px rgba(0,255,65,0.5);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .progress-track:hover .progress-fill::after,
+    .progress-fill.dragging::after {
+      opacity: 1;
     }
 
     /* Transport controls */
@@ -532,9 +601,7 @@
       transition: all 0.15s;
     }
 
-    .loop-btn:hover {
-      color: #999;
-    }
+    .loop-btn:hover { color: #999; }
 
     .loop-btn.active {
       color: #00cc33;
@@ -556,7 +623,6 @@
       border-color: #00ff41;
     }
 
-    /* Vent slits */
     .player-vents {
       display: flex;
       gap: 3px;
@@ -619,30 +685,20 @@
         max-width: 480px;
       }
 
-      .sidebar {
-        order: -1;
-      }
+      .sidebar { order: -1; }
 
       .headshot-wrap {
         width: 200px;
         height: 200px;
       }
 
-      .name {
-        font-size: 24px;
-      }
+      .name { font-size: 24px; }
 
-      .card-body {
-        padding: 22px 24px 26px;
-      }
+      .card-body { padding: 22px 24px 26px; }
 
-      .section h2 {
-        font-size: 21px;
-      }
+      .section h2 { font-size: 21px; }
 
-      .goat {
-        width: 120px;
-      }
+      .goat { width: 120px; }
 
       .y2k-player {
         max-width: 360px;
@@ -661,17 +717,11 @@
         height: 170px;
       }
 
-      .name {
-        font-size: 22px;
-      }
+      .name { font-size: 22px; }
 
-      .card-body {
-        padding: 18px 20px 22px;
-      }
+      .card-body { padding: 18px 20px 22px; }
 
-      .section h2 {
-        font-size: 19px;
-      }
+      .section h2 { font-size: 19px; }
 
       .stripes { margin-bottom: 20px; }
       .section { margin-bottom: 22px; }
@@ -681,9 +731,7 @@
         gap: 10px;
       }
 
-      .resume-thumb {
-        width: 100px;
-      }
+      .resume-thumb { width: 100px; }
 
       .goat {
         width: 100px;
@@ -695,13 +743,9 @@
         margin-right: 10px;
       }
 
-      .y2k-player {
-        padding: 14px 14px;
-      }
+      .y2k-player { padding: 14px; }
 
-      .lcd-title {
-        font-size: 14px;
-      }
+      .lcd-title { font-size: 14px; }
 
       .transport-btn {
         width: 32px;
@@ -737,12 +781,14 @@
         </div>
 
         <div class="section">
-          <h2>Projects</h2>
-          <ul class="project-list">
-            <li class="project-item"><a href="#">Banking App</a></li>
-            <li class="project-item"><a href="#">LinkedIn Note Generator</a></li>
-            <li class="project-item"><a href="#">CribCub</a></li>
-          </ul>
+          <h2 class="projects-toggle" id="projectsToggle">Projects <span class="projects-hint" id="projectsHint">(click)</span></h2>
+          <div class="project-list-wrap" id="projectListWrap">
+            <ul class="project-list">
+              <li class="project-item"><a href="#">Banking App</a></li>
+              <li class="project-item"><a href="#">LinkedIn Note Generator</a></li>
+              <li class="project-item"><a href="#">CribCub</a></li>
+            </ul>
+          </div>
         </div>
 
         <div class="section">
@@ -784,7 +830,6 @@
       <div class="y2k-player" id="player">
 
         <div class="player-header">
-          <span class="player-brand">TI</span>
           <span class="player-label">DIGITAL AUDIO</span>
           <span class="power-led" id="powerLed"></span>
         </div>
@@ -876,6 +921,9 @@
     var totalTimeEl = document.getElementById('totalTime');
     var waveformEl = document.getElementById('waveform');
     var player = document.getElementById('player');
+    var projectsToggle = document.getElementById('projectsToggle');
+    var projectListWrap = document.getElementById('projectListWrap');
+    var projectsHint = document.getElementById('projectsHint');
 
     // Web Audio API
     var audioCtx, analyser, source, isSetup = false;
@@ -916,14 +964,9 @@
 
     function togglePlay() {
       setupAudio();
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      if (audio.paused) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      if (audio.paused) audio.play();
+      else audio.pause();
     }
 
     // UI state sync
@@ -952,9 +995,8 @@
 
     // Progress tracking
     audio.addEventListener('timeupdate', function() {
-      if (!audio.duration) return;
-      var pct = (audio.currentTime / audio.duration) * 100;
-      progressFill.style.width = pct + '%';
+      if (!audio.duration || isDragging) return;
+      progressFill.style.width = (audio.currentTime / audio.duration) * 100 + '%';
       currentTimeEl.textContent = formatTime(audio.currentTime);
     });
 
@@ -962,12 +1004,52 @@
       totalTimeEl.textContent = formatTime(audio.duration);
     });
 
-    // Seek on click
-    progressTrack.addEventListener('click', function(e) {
+    // ---- Smooth drag-to-seek ----
+    var isDragging = false;
+
+    function seekTo(clientX) {
       if (!audio.duration) return;
       var rect = progressTrack.getBoundingClientRect();
-      var pct = (e.clientX - rect.left) / rect.width;
-      audio.currentTime = Math.max(0, Math.min(audio.duration, pct * audio.duration));
+      var pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      audio.currentTime = pct * audio.duration;
+      progressFill.style.width = (pct * 100) + '%';
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+    }
+
+    progressTrack.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      progressFill.classList.add('dragging');
+      seekTo(e.clientX);
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (isDragging) seekTo(e.clientX);
+    });
+
+    document.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        progressFill.classList.remove('dragging');
+      }
+    });
+
+    progressTrack.addEventListener('touchstart', function(e) {
+      isDragging = true;
+      progressFill.classList.add('dragging');
+      seekTo(e.touches[0].clientX);
+    }, {passive: true});
+
+    document.addEventListener('touchmove', function(e) {
+      if (isDragging) {
+        seekTo(e.touches[0].clientX);
+      }
+    }, {passive: true});
+
+    document.addEventListener('touchend', function() {
+      if (isDragging) {
+        isDragging = false;
+        progressFill.classList.remove('dragging');
+      }
     });
 
     // Transport controls
@@ -993,7 +1075,6 @@
     ffBtn.addEventListener('mouseup', stopSeek);
     ffBtn.addEventListener('mouseleave', stopSeek);
 
-    // Touch support for hold-to-seek
     rewindBtn.addEventListener('touchstart', function(e) { e.preventDefault(); startSeek(-1); }, {passive: false});
     rewindBtn.addEventListener('touchend', stopSeek);
     ffBtn.addEventListener('touchstart', function(e) { e.preventDefault(); startSeek(1); }, {passive: false});
@@ -1013,29 +1094,29 @@
       }
     });
 
-    // Audio visualization
+    // ---- Projects toggle ----
+    projectsToggle.addEventListener('click', function() {
+      var isOpen = projectListWrap.classList.toggle('open');
+      projectsHint.textContent = isOpen ? '(hide)' : '(click)';
+    });
+
+    // ---- Audio visualization ----
     function visualize() {
-      if (!analyser) {
-        randomVisualize();
-        return;
-      }
+      if (!analyser) { randomVisualize(); return; }
       var bufLen = analyser.frequencyBinCount;
       var data = new Uint8Array(bufLen);
-
       function draw() {
         if (audio.paused) return;
         requestAnimationFrame(draw);
         analyser.getByteFrequencyData(data);
         for (var i = 0; i < NUM_BARS; i++) {
           var idx = Math.floor(i * bufLen / NUM_BARS);
-          var val = data[idx] / 255;
-          bars[i].style.height = Math.max(2, val * 100) + '%';
+          bars[i].style.height = Math.max(2, (data[idx] / 255) * 100) + '%';
         }
       }
       draw();
     }
 
-    // Fallback if Web Audio API unavailable
     function randomVisualize() {
       function draw() {
         if (audio.paused) return;
