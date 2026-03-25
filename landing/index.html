@@ -260,19 +260,15 @@
     .project-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 14px;
     }
 
-    .project-item a {
-      display: inline-flex;
-      align-items: center;
-      font-size: 15px;
-      text-decoration: none;
-      color: var(--text-secondary);
-      transition: color 0.15s;
+    .project-item {
+      display: flex;
+      align-items: flex-start;
     }
 
-    .project-item a::before {
+    .project-item::before {
       content: '';
       display: inline-block;
       width: 48px;
@@ -280,15 +276,43 @@
       background: var(--dash-color);
       margin-right: 14px;
       flex-shrink: 0;
+      margin-top: 10px;
       transition: background 0.2s;
     }
 
-    .project-item a:hover {
+    .project-item:hover::before {
+      background: var(--heading-color);
+    }
+
+    .project-info {
+      min-width: 0;
+    }
+
+    .project-item a {
+      display: inline;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text-secondary);
+      transition: color 0.15s;
+    }
+
+    .project-item:hover a {
       color: var(--heading-color);
     }
 
-    .project-item a:hover::before {
-      background: var(--heading-color);
+    .project-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+
+    .project-stack {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-style: italic;
     }
 
     /* Resume */
@@ -768,7 +792,7 @@
 
       .resume-thumb { width: 100px; }
 
-      .project-item a::before {
+      .project-item::before {
         width: 35px;
         margin-right: 10px;
       }
@@ -805,9 +829,25 @@
           <h2 class="projects-toggle" id="projectsToggle">Projects <span class="projects-hint" id="projectsHint">(click)</span></h2>
           <div class="project-list-wrap" id="projectListWrap">
             <ul class="project-list">
-              <li class="project-item"><a href="#">Banking App</a></li>
-              <li class="project-item"><a href="https://linkedin-connector-one.vercel.app/" target="_blank" rel="noopener">LinkedIn Note Generator</a></li>
-              <li class="project-item"><a href="https://www.cribcub.com" target="_blank" rel="noopener">CribCub</a></li>
+              <li class="project-item">
+                <div class="project-info">
+                  <a href="https://www.cribcub.com" target="_blank" rel="noopener">CribCub</a>
+                </div>
+              </li>
+              <li class="project-item">
+                <div class="project-info">
+                  <a href="https://linkedin-connector-one.vercel.app/" target="_blank" rel="noopener">LinkedIn Note Generator</a>
+                  <div class="project-desc">Personalized connection notes from LinkedIn profiles</div>
+                  <div class="project-stack">Next.js, Vercel, OpenAI API</div>
+                </div>
+              </li>
+              <li class="project-item">
+                <div class="project-info">
+                  <a href="#">Banking App</a>
+                  <div class="project-desc">PIN verification, deposit/withdraw/view balance, interest calculation</div>
+                  <div class="project-stack">Java, CLI</div>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
