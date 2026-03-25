@@ -181,7 +181,7 @@
     }
 
     .flag-img {
-      height: 27px;
+      height: 34px;
       width: auto;
       flex-shrink: 0;
       object-fit: contain;
@@ -193,21 +193,19 @@
       flex-direction: column;
       gap: 3px;
       flex: 1;
-      cursor: pointer;
-      transition: opacity 0.15s;
     }
 
-    .stripes:hover {
-      opacity: 0.8;
-    }
+    .stripe { transition: background 0.3s, opacity 0.6s ease; opacity: 0; }
+    .stripe.visible { opacity: 1; }
 
-    .stripe--blue { height: 10px; background: #3558A0; transition: background 0.3s, opacity 0.6s ease; opacity: 0; }
-    .stripe--yellow { height: 7px; background: #E8B832; transition: background 0.3s, opacity 0.6s ease 0.15s; opacity: 0; }
-    .stripe--red { height: 4px; background: #C4342D; transition: background 0.3s, opacity 0.6s ease 0.3s; opacity: 0; }
+    .stripe--red { background: #C4342D; }
+    .stripe--yellow { background: #E8B832; }
+    .stripe--blue { background: #3558A0; }
 
-    .stripe--blue.visible { opacity: 1; }
-    .stripe--yellow.visible { opacity: 1; }
-    .stripe--red.visible { opacity: 1; }
+    .stripe-1 { height: 10px; transition-delay: 0s; }
+    .stripe-2 { height: 7px; transition-delay: 0.1s; }
+    .stripe-3 { height: 5px; transition-delay: 0.2s; }
+    .stripe-4 { height: 3px; transition-delay: 0.3s; }
 
     [data-theme="dark"] .stripe--blue { background: #004d87; }
     [data-theme="dark"] .stripe--yellow { background: #ffd900; }
@@ -884,10 +882,11 @@
 
         <div class="flag-stripes">
           <img src="../mongolianflag.png" alt="Mongolian flag" class="flag-img" loading="lazy">
-          <div class="stripes" id="stripesBtn" title="Play Every Breath You Take">
-            <div class="stripe--blue"></div>
-            <div class="stripe--yellow"></div>
-            <div class="stripe--red"></div>
+          <div class="stripes" aria-hidden="true">
+            <div class="stripe stripe--red stripe-1"></div>
+            <div class="stripe stripe--yellow stripe-2"></div>
+            <div class="stripe stripe--blue stripe-3"></div>
+            <div class="stripe stripe--red stripe-4"></div>
           </div>
         </div>
 
@@ -1050,7 +1049,6 @@
     var lcdArtist = document.getElementById('lcdArtist');
     var lcdAlbum = document.getElementById('lcdAlbum');
     var lcdDate = document.getElementById('lcdDate');
-    var stripesBtn = document.getElementById('stripesBtn');
     var projectsToggle = document.getElementById('projectsToggle');
     var projectListWrap = document.getElementById('projectListWrap');
     var projectsHint = document.getElementById('projectsHint');
@@ -1235,13 +1233,6 @@
     playPauseBtn.addEventListener('click', togglePlay);
     skipBtn.addEventListener('click', skipTrack);
 
-    // Stripes → play Every Breath You Take
-    stripesBtn.addEventListener('click', function() {
-      setupAudio();
-      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-      loadTrack(1, true);
-    });
-
     // Loop toggle
     loopBtn.addEventListener('click', function() {
       audio.loop = !audio.loop;
@@ -1294,9 +1285,10 @@
 
     // ---- Stripes fade-in on load ----
     requestAnimationFrame(function() {
-      document.querySelector('.stripe--blue').classList.add('visible');
-      document.querySelector('.stripe--yellow').classList.add('visible');
-      document.querySelector('.stripe--red').classList.add('visible');
+      var stripes = document.querySelectorAll('.stripe');
+      for (var i = 0; i < stripes.length; i++) {
+        stripes[i].classList.add('visible');
+      }
     });
 
   })();
