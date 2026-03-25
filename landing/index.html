@@ -144,11 +144,15 @@
       cursor: pointer;
       font-size: 16px;
       z-index: 100;
-      transition: background 0.3s, border-color 0.3s, color 0.3s;
+      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.4s ease;
     }
 
     .theme-toggle:hover {
       border-color: var(--text-secondary);
+    }
+
+    .theme-toggle.spinning {
+      transform: rotate(360deg);
     }
 
     /* ===== LEFT CARD ===== */
@@ -182,9 +186,13 @@
       opacity: 0.8;
     }
 
-    .stripe--blue { height: 10px; background: #3558A0; transition: background 0.3s; }
-    .stripe--yellow { height: 7px; background: #E8B832; transition: background 0.3s; }
-    .stripe--red { height: 4px; background: #C4342D; transition: background 0.3s; }
+    .stripe--blue { height: 10px; background: #3558A0; transition: background 0.3s, opacity 0.6s ease; opacity: 0; }
+    .stripe--yellow { height: 7px; background: #E8B832; transition: background 0.3s, opacity 0.6s ease 0.15s; opacity: 0; }
+    .stripe--red { height: 4px; background: #C4342D; transition: background 0.3s, opacity 0.6s ease 0.3s; opacity: 0; }
+
+    .stripe--blue.visible { opacity: 1; }
+    .stripe--yellow.visible { opacity: 1; }
+    .stripe--red.visible { opacity: 1; }
 
     [data-theme="dark"] .stripe--blue { background: #004d87; }
     [data-theme="dark"] .stripe--yellow { background: #ffd900; }
@@ -283,11 +291,12 @@
       margin-right: 14px;
       flex-shrink: 0;
       margin-top: 10px;
-      transition: background 0.2s;
+      transition: background 0.2s, width 0.25s ease;
     }
 
     .project-item:hover::before {
       background: var(--heading-color);
+      width: 64px;
     }
 
     .project-info {
@@ -332,6 +341,12 @@
       width: 85px;
       border: 1px solid var(--card-border);
       flex-shrink: 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .resume-thumb:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .resume-meta {
@@ -375,13 +390,15 @@
       font-size: 14px;
       color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.15s;
+      transition: color 0.15s, transform 0.2s ease;
       width: fit-content;
+      display: inline-block;
     }
 
     .contact-list a:hover {
       color: var(--heading-color);
       text-decoration: underline;
+      transform: translateX(4px);
     }
 
     /* Goat */
@@ -547,6 +564,13 @@
     .lcd-album:empty {
       display: none;
     }
+
+    .sync-blue { color: #3558A0; }
+    .sync-yellow { color: #E8B832; }
+    .sync-red { color: #C4342D; }
+    [data-theme="dark"] .sync-blue { color: #5b8bd4; }
+    [data-theme="dark"] .sync-yellow { color: #ffd900; }
+    [data-theme="dark"] .sync-red { color: #e85550; }
 
     .lcd-date {
       font-family: 'Courier New', 'Lucida Console', monospace;
@@ -787,6 +811,16 @@
       }
     }
 
+    /* ===== FOOTER ===== */
+    .site-footer {
+      text-align: center;
+      padding: 32px 20px 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+    }
+
     @media (max-width: 480px) {
       .container {
         padding: 0 16px;
@@ -825,7 +859,7 @@
 
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
 
-  <audio id="audio" src="../angelIns.wav" preload="metadata"></audio>
+  <audio id="audio" src="../angelIns.mp3" preload="metadata"></audio>
 
   <main class="container">
 
@@ -851,6 +885,7 @@
               <li class="project-item">
                 <div class="project-info">
                   <a href="https://www.cribcub.com" target="_blank" rel="noopener">CribCub</a>
+                  <div class="project-desc">The student housing platform built for campus life.</div>
                 </div>
               </li>
               <li class="project-item">
@@ -926,7 +961,7 @@
 
         <div class="lcd-screen">
           <div class="lcd-content">
-            <div class="lcd-title" id="lcdTitle">angel.wav</div>
+            <div class="lcd-title" id="lcdTitle">angel.mp3</div>
             <div class="lcd-artist" id="lcdArtist">Temulen Iveelt</div>
             <div class="lcd-album" id="lcdAlbum"></div>
             <div class="lcd-date" id="lcdDate">12.31.2025</div>
@@ -975,6 +1010,7 @@
 
   </main>
 
+  <footer class="site-footer">Website by Temulen Iveelt | 2026</footer>
 
 <script>
   (function() {
@@ -1004,8 +1040,8 @@
 
     // ---- Track list ----
     var tracks = [
-      { src: '../angelIns.wav', title: 'angel.wav', artist: 'Temulen Iveelt', album: '', date: '12.31.2025' },
-      { src: '../everybreathyoutake.wav', title: 'Every Breath You Take.wav', artist: 'Temulen Iveelt', album: 'The Police — Synchronicity', date: '07.30.2025' }
+      { src: '../angelIns.mp3', title: 'angel.mp3', artist: 'Temulen Iveelt', album: '', date: '12.31.2025' },
+      { src: '../everybreathyoutake.mp3', title: 'Every Breath You Take.mp3', artist: 'Temulen Iveelt', album: 'The Police — <span class="sync-blue">Synch</span><span class="sync-yellow">roni</span><span class="sync-red">city</span>', date: '07.30.2025' }
     ];
     var currentTrack = 0;
 
@@ -1017,7 +1053,7 @@
       audio.load();
       lcdTitle.textContent = t.title;
       lcdArtist.textContent = t.artist;
-      lcdAlbum.textContent = t.album;
+      lcdAlbum.innerHTML = t.album;
       lcdDate.textContent = t.date;
       progressFill.style.width = '0%';
       currentTimeEl.textContent = '0:00';
@@ -1039,6 +1075,9 @@
     }
 
     themeToggle.addEventListener('click', function() {
+      themeToggle.classList.remove('spinning');
+      void themeToggle.offsetWidth;
+      themeToggle.classList.add('spinning');
       var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       if (isDark) {
         document.documentElement.removeAttribute('data-theme');
@@ -1049,6 +1088,7 @@
         localStorage.setItem('theme', 'dark');
         themeToggle.innerHTML = '&#9788;';
       }
+      setTimeout(function() { themeToggle.classList.remove('spinning'); }, 400);
     });
 
     // Web Audio API
@@ -1233,6 +1273,13 @@
       }
       draw();
     }
+
+    // ---- Stripes fade-in on load ----
+    requestAnimationFrame(function() {
+      document.querySelector('.stripe--blue').classList.add('visible');
+      document.querySelector('.stripe--yellow').classList.add('visible');
+      document.querySelector('.stripe--red').classList.add('visible');
+    });
 
   })();
   </script>
