@@ -363,7 +363,13 @@
       height: auto;
       opacity: 0.17;
       pointer-events: none;
-      transition: filter 0.5s ease, opacity 0.5s ease;
+      transform-origin: bottom right;
+      transform: scale(1);
+      transition: filter 0.5s ease, opacity 0.5s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .goat.zoomed {
+      transform: scale(1.12);
     }
 
     [data-theme="dark"] .goat {
@@ -1086,9 +1092,11 @@
     });
 
     // ---- Projects toggle ----
+    var goat = document.querySelector('.goat');
     projectsToggle.addEventListener('click', function() {
       var isOpen = projectListWrap.classList.toggle('open');
       projectsHint.textContent = isOpen ? '(hide)' : '(click)';
+      if (goat) goat.classList.toggle('zoomed', isOpen);
     });
 
     // ---- Audio visualization ----
