@@ -170,14 +170,29 @@
       z-index: 1;
     }
 
+    /* Flag + Stripes row */
+    .flag-stripes {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .flag-img {
+      height: 27px;
+      width: auto;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+
     /* Stripes */
     .stripes {
       display: flex;
       flex-direction: column;
       gap: 3px;
-      margin-bottom: 26px;
-      position: relative;
-      z-index: 1;
+      flex: 1;
       cursor: pointer;
       transition: opacity 0.15s;
     }
@@ -835,7 +850,7 @@
       .name { font-size: 22px; }
       .card-body { padding: 18px 20px 45px; }
       .section h2 { font-size: 19px; }
-      .stripes { margin-bottom: 20px; }
+      .flag-stripes { margin-bottom: 20px; }
       .section { margin-bottom: 22px; }
 
       .resume-row {
@@ -867,10 +882,13 @@
     <section class="card">
       <div class="card-body">
 
-        <div class="stripes" id="stripesBtn" title="Play Every Breath You Take">
-          <div class="stripe--blue"></div>
-          <div class="stripe--yellow"></div>
-          <div class="stripe--red"></div>
+        <div class="flag-stripes">
+          <img src="../mongolianflag.png" alt="Mongolian flag" class="flag-img" loading="lazy">
+          <div class="stripes" id="stripesBtn" title="Play Every Breath You Take">
+            <div class="stripe--blue"></div>
+            <div class="stripe--yellow"></div>
+            <div class="stripe--red"></div>
+          </div>
         </div>
 
         <div class="section">
