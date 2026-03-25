@@ -170,27 +170,38 @@
       z-index: 1;
     }
 
-    /* Stripes */
-    .stripes {
+    /* Flag + Stripes row */
+    .flag-stripes {
       display: flex;
-      flex-direction: column;
-      gap: 3px;
+      align-items: center;
+      gap: 10px;
       margin-bottom: 26px;
       position: relative;
       z-index: 1;
     }
 
-    .stripe { transition: background 0.3s, opacity 0.6s ease; opacity: 0; }
-    .stripe.visible { opacity: 1; }
+    .flag-img {
+      height: 27px;
+      width: auto;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
 
-    .stripe--red { background: #C4342D; }
-    .stripe--yellow { background: #E8B832; }
-    .stripe--blue { background: #3558A0; }
+    /* Stripes */
+    .stripes {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+    }
 
-    .stripe-1 { height: 10px; transition-delay: 0s; }
-    .stripe-2 { height: 7px; transition-delay: 0.1s; }
-    .stripe-3 { height: 5px; transition-delay: 0.2s; }
-    .stripe-4 { height: 3px; transition-delay: 0.3s; }
+    .stripe--blue { height: 10px; background: #3558A0; transition: background 0.3s, opacity 0.6s ease; opacity: 0; }
+    .stripe--yellow { height: 7px; background: #E8B832; transition: background 0.3s, opacity 0.6s ease 0.15s; opacity: 0; }
+    .stripe--red { height: 4px; background: #C4342D; transition: background 0.3s, opacity 0.6s ease 0.3s; opacity: 0; }
+
+    .stripe--blue.visible { opacity: 1; }
+    .stripe--yellow.visible { opacity: 1; }
+    .stripe--red.visible { opacity: 1; }
 
     [data-theme="dark"] .stripe--blue { background: #004d87; }
     [data-theme="dark"] .stripe--yellow { background: #ffd900; }
@@ -833,7 +844,7 @@
       .name { font-size: 22px; }
       .card-body { padding: 18px 20px 45px; }
       .section h2 { font-size: 19px; }
-      .stripes { margin-bottom: 20px; }
+      .flag-stripes { margin-bottom: 20px; }
       .section { margin-bottom: 22px; }
 
       .resume-row {
@@ -865,10 +876,13 @@
     <section class="card">
       <div class="card-body">
 
-        <div class="stripes" aria-hidden="true">
-          <div class="stripe stripe--yellow stripe-1"></div>
-          <div class="stripe stripe--blue stripe-2"></div>
-          <div class="stripe stripe--red stripe-3"></div>
+        <div class="flag-stripes">
+          <img src="../mongolianflag.png" alt="Mongolian flag" class="flag-img" loading="lazy">
+          <div class="stripes" aria-hidden="true">
+            <div class="stripe--blue"></div>
+            <div class="stripe--yellow"></div>
+            <div class="stripe--red"></div>
+          </div>
         </div>
 
         <div class="section">
@@ -1266,10 +1280,9 @@
 
     // ---- Stripes fade-in on load ----
     requestAnimationFrame(function() {
-      var stripes = document.querySelectorAll('.stripe');
-      for (var i = 0; i < stripes.length; i++) {
-        stripes[i].classList.add('visible');
-      }
+      document.querySelector('.stripe--blue').classList.add('visible');
+      document.querySelector('.stripe--yellow').classList.add('visible');
+      document.querySelector('.stripe--red').classList.add('visible');
     });
 
   })();
