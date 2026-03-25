@@ -170,29 +170,14 @@
       z-index: 1;
     }
 
-    /* Flag + Stripes row */
-    .flag-stripes {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 26px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .flag-img {
-      height: 34px;
-      width: auto;
-      flex-shrink: 0;
-      object-fit: contain;
-    }
-
     /* Stripes */
     .stripes {
       display: flex;
       flex-direction: column;
       gap: 3px;
-      flex: 1;
+      margin-bottom: 26px;
+      position: relative;
+      z-index: 1;
     }
 
     .stripe { transition: background 0.3s, opacity 0.6s ease; opacity: 0; }
@@ -848,7 +833,7 @@
       .name { font-size: 22px; }
       .card-body { padding: 18px 20px 45px; }
       .section h2 { font-size: 19px; }
-      .flag-stripes { margin-bottom: 20px; }
+      .stripes { margin-bottom: 20px; }
       .section { margin-bottom: 22px; }
 
       .resume-row {
@@ -880,14 +865,10 @@
     <section class="card">
       <div class="card-body">
 
-        <div class="flag-stripes">
-          <img src="../mongolianflag.png" alt="Mongolian flag" class="flag-img" loading="lazy">
-          <div class="stripes" aria-hidden="true">
-            <div class="stripe stripe--red stripe-1"></div>
-            <div class="stripe stripe--yellow stripe-2"></div>
-            <div class="stripe stripe--blue stripe-3"></div>
-            <div class="stripe stripe--red stripe-4"></div>
-          </div>
+        <div class="stripes" aria-hidden="true">
+          <div class="stripe stripe--yellow stripe-1"></div>
+          <div class="stripe stripe--blue stripe-2"></div>
+          <div class="stripe stripe--red stripe-3"></div>
         </div>
 
         <div class="section">
