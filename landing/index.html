@@ -820,6 +820,63 @@
       }
     }
 
+    /* ===== BLOG CARD ===== */
+    .blog-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 30px 34px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .blog-card h2 {
+      font-size: 23px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .blog-empty {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .blog-wrap {
+      padding: 0 32px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 820px) {
+      .blog-wrap {
+        padding: 0 20px;
+        margin-top: 28px;
+      }
+
+      .blog-card {
+        padding: 24px 24px;
+      }
+
+      .blog-card h2 {
+        font-size: 21px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .blog-wrap {
+        padding: 0 16px;
+        margin-top: 24px;
+      }
+
+      .blog-card {
+        padding: 20px 20px;
+      }
+
+      .blog-card h2 {
+        font-size: 19px;
+      }
+    }
+
     /* ===== FOOTER ===== */
     .site-footer {
       text-align: center;
@@ -897,7 +954,7 @@
               <li class="project-item">
                 <div class="project-info">
                   <a href="https://www.cribcub.com" target="_blank" rel="noopener">CribCub</a>
-                  <div class="project-desc">The student housing platform built for campus life.</div>
+                  <div class="project-desc">Making dorming at college an easier experience for university administration, resident advisors, and students.</div>
                 </div>
               </li>
               <li class="project-item">
@@ -909,7 +966,7 @@
               </li>
               <li class="project-item">
                 <div class="project-info">
-                  <a href="#">Banking App</a>
+                  <a href="https://github.com/temulendev/console-banking-system" target="_blank" rel="noopener">Banking App</a>
                   <div class="project-desc">PIN verification, deposit/withdraw/view balance, interest calculation</div>
                   <div class="project-stack">Java, CLI</div>
                 </div>
@@ -930,11 +987,6 @@
               <a href="../Temulen_Resume.pdf" download class="resume-download">Click to download</a>
             </div>
           </div>
-        </div>
-
-        <div class="section">
-          <h2><a href="../blog/" style="text-decoration:none;color:inherit">Blog</a></h2>
-          <p><a href="../blog/" style="text-decoration:none;color:inherit">Coming soon...</a></p>
         </div>
 
         <div class="section">
@@ -967,8 +1019,13 @@
       <div class="y2k-player" id="player">
 
         <div class="player-header">
-          <span class="player-label">DIGITAL AUDIO</span>
-          <span class="power-led" id="powerLed"></span>
+          <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+            <div>
+              <span class="player-label">DIGITAL AUDIO</span>
+              <span style="margin-left: 8px; font-size: 0.75em; opacity: 0.8;">(my guitar covers)</span>
+            </div>
+            <span class="power-led" id="powerLed"></span>
+          </div>
         </div>
 
         <div class="lcd-screen">
@@ -1021,6 +1078,13 @@
     </aside>
 
   </main>
+
+  <div class="blog-wrap">
+    <section class="blog-card">
+      <h2>Blog</h2>
+      <p class="blog-empty">Coming soon...</p>
+    </section>
+  </div>
 
   <footer class="site-footer">Website by Temulen Iveelt | 2026</footer>
 
