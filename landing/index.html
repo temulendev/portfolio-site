@@ -421,7 +421,9 @@
       pointer-events: none;
       transform-origin: bottom right;
       transform: scale(1);
-      transition: filter 0.5s ease, opacity 0.5s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --goat-glow: drop-shadow(0 0 0 transparent);
+      filter: var(--goat-glow);
+      transition: filter 0.4s ease, opacity 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .goat.zoomed {
@@ -429,38 +431,7 @@
     }
 
     [data-theme="dark"] .goat {
-      filter: sepia(0.2) hue-rotate(70deg) brightness(0.95) saturate(1.1);
-    }
-
-    /* Goat ambient effects — only when user hasn't opted out of motion */
-    @media (prefers-reduced-motion: no-preference) {
-      .goat {
-        --goat-glow: drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent);
-        filter: var(--goat-glow);
-        will-change: opacity, filter;
-        transition: filter 300ms ease-out, opacity 0.5s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        animation: goatBreathing 6s ease-in-out infinite;
-      }
-
-      [data-theme="dark"] .goat {
-        filter: sepia(0.2) hue-rotate(70deg) brightness(0.95) saturate(1.1) var(--goat-glow);
-      }
-
-      .goat.flickering {
-        animation: goatBreathing 6s ease-in-out infinite, goatFlicker 400ms ease-out;
-      }
-
-      @keyframes goatBreathing {
-        0%, 100% { opacity: 0.17; }
-        50% { opacity: 0.1445; }
-      }
-
-      @keyframes goatFlicker {
-        0% { opacity: 0.17; }
-        20% { opacity: 0.068; }
-        35% { opacity: 0.204; }
-        100% { opacity: 0.17; }
-      }
+      filter: sepia(0.2) hue-rotate(70deg) brightness(0.95) saturate(1.1) var(--goat-glow);
     }
 
     /* ===== SIDEBAR ===== */
@@ -1437,65 +1408,24 @@
 <script>
   (function() {
     'use strict';
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
     var goat = document.querySelector('.goat');
-    var card = document.querySelector('.card');
-    if (!goat || !card) return;
-
-    // ---- Cursor proximity glow ----
-    var MAX_DIST = 400;
-    var MAX_BLUR = 12;
-    var MAX_ALPHA = 0.35;
-    var lastUpdate = 0;
-    var rafQueued = false;
-    var lastEvent = null;
-
-    function applyGlow() {
-      rafQueued = false;
-      if (!lastEvent) return;
-      var rect = card.getBoundingClientRect();
-      var cx = rect.left + rect.width / 2;
-      var cy = rect.top + rect.height / 2;
-      var dx = lastEvent.clientX - cx;
-      var dy = lastEvent.clientY - cy;
-      var dist = Math.sqrt(dx * dx + dy * dy);
-      var t = Math.max(0, Math.min(1, 1 - dist / MAX_DIST));
-      var blur = MAX_BLUR * t;
-      var alpha = MAX_ALPHA * t;
-      goat.style.setProperty(
-        '--goat-glow',
-        'drop-shadow(0 0 ' + blur.toFixed(2) + 'px rgba(255,255,255,' + alpha.toFixed(3) + ')) ' +
-        'drop-shadow(0 0 ' + (blur * 0.6).toFixed(2) + 'px rgba(255,255,255,' + (alpha * 0.7).toFixed(3) + '))'
-      );
-    }
-
+    if (!goat) return;
+    var hovered = false;
     document.addEventListener('mousemove', function(e) {
-      lastEvent = e;
-      var now = performance.now();
-      if (now - lastUpdate < 50) return;
-      lastUpdate = now;
-      if (rafQueued) return;
-      rafQueued = true;
-      requestAnimationFrame(applyGlow);
+      var r = goat.getBoundingClientRect();
+      var over = e.clientX >= r.left && e.clientX <= r.right &&
+                 e.clientY >= r.top  && e.clientY <= r.bottom;
+      if (over === hovered) return;
+      hovered = over;
+      if (over) {
+        goat.style.setProperty('--goat-glow',
+          'drop-shadow(0 0 16px rgba(255,255,255,0.4)) drop-shadow(0 0 6px rgba(255,255,255,0.2))');
+        goat.style.opacity = '0.3';
+      } else {
+        goat.style.setProperty('--goat-glow', 'drop-shadow(0 0 0 transparent)');
+        goat.style.opacity = '0.17';
+      }
     });
-
-    // ---- Rare flicker ----
-    function scheduleFlicker() {
-      var next = 25000 + Math.random() * 20000;
-      setTimeout(function() {
-        goat.addEventListener('animationend', function onEnd(e) {
-          if (e.animationName === 'goatFlicker') {
-            goat.removeEventListener('animationend', onEnd);
-            goat.classList.remove('flickering');
-          }
-        });
-        goat.classList.add('flickering');
-        scheduleFlicker();
-      }, next);
-    }
-    scheduleFlicker();
   })();
   </script>
 
