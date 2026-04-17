@@ -632,7 +632,7 @@
       flex: 1;
       background: var(--waveform-color);
       min-height: 2px;
-      transition: height 0.08s ease-out, background 0.3s;
+      transition: background 0.3s;
     }
 
     .y2k-player:not(.playing) .waveform-bar {
@@ -1215,6 +1215,25 @@
       bars.push(bar);
     }
 
+    // Visualizer smoothing state (persists across play/pause so decay is natural)
+    var smoothed = new Float32Array(NUM_BARS);
+    var binRanges = null;
+    var ATTACK = 0.45;
+    var RELEASE = 0.14;
+
+    function computeBinRanges() {
+      if (!analyser) return;
+      var bufLen = analyser.frequencyBinCount;
+      var minBin = 2;
+      var maxBin = Math.floor(bufLen * 0.75);
+      binRanges = [];
+      for (var i = 0; i < NUM_BARS; i++) {
+        var start = Math.max(minBin, Math.round(minBin * Math.pow(maxBin / minBin, i / NUM_BARS)));
+        var end   = Math.max(start + 1, Math.round(minBin * Math.pow(maxBin / minBin, (i + 1) / NUM_BARS)));
+        binRanges.push([start, Math.min(end, bufLen)]);
+      }
+    }
+
     function formatTime(s) {
       if (isNaN(s) || !isFinite(s)) return '0:00';
       var m = Math.floor(s / 60);
@@ -1230,8 +1249,8 @@
         source = audioCtx.createMediaElementSource(audio);
         source.connect(analyser);
         analyser.connect(audioCtx.destination);
-        analyser.fftSize = 128;
-        analyser.smoothingTimeConstant = 0.72;
+        analyser.fftSize = 256;
+        analyser.smoothingTimeConstant = 0.82;
         isSetup = true;
       } catch(e) {
         console.warn('Web Audio API not available:', e);
@@ -1257,7 +1276,22 @@
       playIcon.style.display = 'block';
       pauseIcon.style.display = 'none';
       player.classList.remove('playing');
-      bars.forEach(function(b) { b.style.height = '2px'; });
+      (function decay() {
+        if (!audio.paused) return;
+        var active = false;
+        for (var i = 0; i < NUM_BARS; i++) {
+          smoothed[i] *= 0.78;
+          if (smoothed[i] > 0.005) active = true;
+          bars[i].style.height = Math.max(2, smoothed[i] * 100) + '%';
+        }
+        if (active) requestAnimationFrame(decay);
+        else {
+          for (var j = 0; j < NUM_BARS; j++) {
+            smoothed[j] = 0;
+            bars[j].style.height = '2px';
+          }
+        }
+      })();
     });
 
     audio.addEventListener('ended', function() {
@@ -1352,6 +1386,7 @@
     // ---- Audio visualization ----
     function visualize() {
       if (!analyser) { randomVisualize(); return; }
+      if (!binRanges) computeBinRanges();
       var bufLen = analyser.frequencyBinCount;
       var data = new Uint8Array(bufLen);
       function draw() {
@@ -1359,8 +1394,17 @@
         requestAnimationFrame(draw);
         analyser.getByteFrequencyData(data);
         for (var i = 0; i < NUM_BARS; i++) {
-          var idx = Math.floor(i * bufLen / NUM_BARS);
-          bars[i].style.height = Math.max(2, (data[idx] / 255) * 100) + '%';
+          var r = binRanges[i];
+          var sum = 0;
+          var count = r[1] - r[0];
+          for (var j = r[0]; j < r[1]; j++) sum += data[j];
+          var avg = (sum / count) / 255;
+          // Tilt: boost highs so the spectrum reads evenly across the bar row.
+          var gain = 1 + (i / (NUM_BARS - 1)) * 1.0;
+          var target = Math.min(1, avg * gain);
+          var rate = target > smoothed[i] ? ATTACK : RELEASE;
+          smoothed[i] += (target - smoothed[i]) * rate;
+          bars[i].style.height = Math.max(2, smoothed[i] * 100) + '%';
         }
       }
       draw();
@@ -1371,7 +1415,10 @@
         if (audio.paused) return;
         requestAnimationFrame(draw);
         for (var i = 0; i < NUM_BARS; i++) {
-          bars[i].style.height = (Math.random() * 70 + 10) + '%';
+          var target = Math.random() * 0.7 + 0.1;
+          var rate = target > smoothed[i] ? ATTACK : RELEASE;
+          smoothed[i] += (target - smoothed[i]) * rate;
+          bars[i].style.height = Math.max(2, smoothed[i] * 100) + '%';
         }
       }
       draw();
