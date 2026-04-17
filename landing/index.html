@@ -165,7 +165,7 @@
     }
 
     .card-body {
-      padding: 26px 30px 60px;
+      padding: 29px 33px 66px;
       position: relative;
       z-index: 1;
     }
@@ -175,7 +175,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 26px;
+      margin-bottom: 29px;
       position: relative;
       z-index: 1;
     }
@@ -209,7 +209,7 @@
 
     /* Sections */
     .section {
-      margin-bottom: 26px;
+      margin-bottom: 29px;
     }
 
     .section:last-child {
@@ -217,13 +217,13 @@
     }
 
     .section h2 {
-      font-size: 23px;
+      font-size: 25px;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
 
     .section p {
-      font-size: 15px;
+      font-size: 17px;
       color: var(--text-secondary);
       line-height: 1.7;
     }
@@ -242,7 +242,7 @@
       cursor: pointer;
       display: inline-flex;
       align-items: baseline;
-      gap: 10px;
+      gap: 11px;
       user-select: none;
       transition: color 0.2s;
     }
@@ -252,7 +252,7 @@
     }
 
     .projects-hint {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 400;
       color: var(--text-muted);
       font-style: italic;
@@ -277,13 +277,13 @@
     .project-list-wrap.open {
       max-height: 400px;
       opacity: 1;
-      margin-top: 10px;
+      margin-top: 11px;
     }
 
     .project-list {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 15px;
     }
 
     .project-item {
@@ -297,9 +297,9 @@
       width: 48px;
       height: 1.5px;
       background: var(--dash-color);
-      margin-right: 14px;
+      margin-right: 15px;
       flex-shrink: 0;
-      margin-top: 10px;
+      margin-top: 11px;
       transition: background 0.2s, width 0.25s ease;
     }
 
@@ -314,7 +314,7 @@
 
     .project-item a {
       display: inline;
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 500;
       text-decoration: none;
       color: var(--text-secondary);
@@ -326,14 +326,14 @@
     }
 
     .project-desc {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-muted);
       line-height: 1.5;
       margin-top: 2px;
     }
 
     .project-stack {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
       margin-top: 2px;
       font-style: italic;
@@ -343,11 +343,11 @@
     .resume-row {
       display: flex;
       align-items: flex-start;
-      gap: 18px;
+      gap: 20px;
     }
 
     .resume-thumb {
-      width: 85px;
+      width: 94px;
       border: 1px solid var(--card-border);
       flex-shrink: 0;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -366,18 +366,18 @@
     }
 
     .resume-status {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--text);
     }
 
     .resume-date {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
     }
 
     .resume-download {
-      font-size: 14px;
+      font-size: 15px;
       font-style: italic;
       text-decoration: underline;
       color: var(--text-secondary);
@@ -392,11 +392,11 @@
     .contact-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
     }
 
     .contact-list a {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.15s, transform 0.2s ease;
@@ -432,11 +432,42 @@
       filter: sepia(0.2) hue-rotate(70deg) brightness(0.95) saturate(1.1);
     }
 
+    /* Goat ambient effects — only when user hasn't opted out of motion */
+    @media (prefers-reduced-motion: no-preference) {
+      .goat {
+        --goat-glow: drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent);
+        filter: var(--goat-glow);
+        will-change: opacity, filter;
+        transition: filter 300ms ease-out, opacity 0.5s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: goatBreathing 6s ease-in-out infinite;
+      }
+
+      [data-theme="dark"] .goat {
+        filter: sepia(0.2) hue-rotate(70deg) brightness(0.95) saturate(1.1) var(--goat-glow);
+      }
+
+      .goat.flickering {
+        animation: goatBreathing 6s ease-in-out infinite, goatFlicker 400ms ease-out;
+      }
+
+      @keyframes goatBreathing {
+        0%, 100% { opacity: 0.17; }
+        50% { opacity: 0.1445; }
+      }
+
+      @keyframes goatFlicker {
+        0% { opacity: 0.17; }
+        20% { opacity: 0.068; }
+        35% { opacity: 0.204; }
+        100% { opacity: 0.17; }
+      }
+    }
+
     /* ===== SIDEBAR ===== */
     .sidebar {
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 24px;
     }
 
     .profile {
@@ -777,6 +808,53 @@
       50% { height: 5px; opacity: 0.7; }
     }
 
+    /* ===== NOW CARD ===== */
+    .now-heading {
+      font-size: 23px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .now-hint {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .now-grid {
+      display: grid;
+      grid-template-columns: max-content max-content 1fr;
+      column-gap: 8px;
+      row-gap: 4px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      transition: color 0.3s;
+    }
+
+    .now-sep {
+      color: var(--dash-color);
+      transition: color 0.3s;
+    }
+
+    /* ===== SKILLS STRIP ===== */
+    .skills-strip {
+      font-family: 'Courier New', 'Lucida Console', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      max-width: 960px;
+      margin: 80px auto 8px;
+      padding: 0 32px;
+      transition: color 0.3s;
+    }
+
 /* ===== RESPONSIVE ===== */
 
     @media (max-width: 820px) {
@@ -795,6 +873,8 @@
       .profile { order: -1; }
       .card { order: 0; }
       .y2k-player { order: 10; }
+      .now-card { order: 11; max-width: 360px; margin: 0 auto; width: 100%; }
+      .skills-strip { padding: 0 20px; margin-top: 60px; }
 
 
       .headshot-wrap {
@@ -803,8 +883,8 @@
       }
 
       .name { font-size: 24px; }
-      .card-body { padding: 22px 24px 50px; }
-      .section h2 { font-size: 21px; }
+      .card-body { padding: 24px 26px 55px; }
+      .section h2 { font-size: 23px; }
       .y2k-player {
         max-width: 360px;
         margin: 0 auto;
@@ -836,6 +916,7 @@
         padding: 0 16px;
         margin: 24px auto;
       }
+      .skills-strip { padding: 0 16px; }
 
       .headshot-wrap {
         width: 170px;
@@ -843,17 +924,17 @@
       }
 
       .name { font-size: 22px; }
-      .card-body { padding: 18px 20px 45px; }
-      .section h2 { font-size: 19px; }
-      .flag-stripes { margin-bottom: 20px; }
-      .section { margin-bottom: 22px; }
+      .card-body { padding: 20px 22px 50px; }
+      .section h2 { font-size: 21px; }
+      .flag-stripes { margin-bottom: 22px; }
+      .section { margin-bottom: 24px; }
 
       .resume-row {
         flex-direction: column;
         gap: 10px;
       }
 
-      .resume-thumb { width: 100px; }
+      .resume-thumb { width: 110px; }
 
       .project-item::before {
         width: 35px;
@@ -878,6 +959,7 @@
       <div class="card-body">
 
         <div class="flag-stripes">
+          <img src="../usaflag.png" alt="US flag" class="flag-img" loading="lazy">
           <img src="../mongolianflag.png" alt="Mongolian flag" class="flag-img" loading="lazy">
           <div class="stripes" aria-hidden="true">
             <div class="stripe--blue"></div>
@@ -938,7 +1020,7 @@
           <div class="contact-list">
             <a href="mailto:temulen.iveelt@gmail.com">temulen.iveelt@gmail.com</a>
             <a href="https://www.linkedin.com/in/temulen-iveelt/" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://github.com/temulendev" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://github.com/temulendev" target="_blank" rel="noopener">GitHub (@temulendev)</a>
           </div>
         </div>
 
@@ -955,7 +1037,7 @@
           <img src="../headshot.webp" alt="Temulen Iveelt" class="headshot">
         </div>
         <h1 class="name">Temulen Iveelt</h1>
-        <p class="subtitle">Computer Science & Business @ Lehigh</p>
+        <p class="subtitle">Computer Science & Business @ Lehigh University</p>
         <p class="subtitle">Co-Founder at CribCub</p>
       </div>
 
@@ -1017,9 +1099,27 @@
 
       </div>
 
+      <!-- Now card -->
+      <div class="now-card">
+        <h2 class="now-heading">Now <span class="now-hint">(updated April 2026)</span></h2>
+        <div class="now-grid">
+          <span class="now-label">Building</span>
+          <span class="now-sep">—</span>
+          <span>CribCub's Resident Advisor dashboard</span>
+          <span class="now-label">Learning</span>
+          <span class="now-sep">—</span>
+          <span>Data structures in Java (Hash tables, BSTs, priority queues)</span>
+          <span class="now-label">Listening to</span>
+          <span class="now-sep">—</span>
+          <span>In Utero, Nirvana</span>
+        </div>
+      </div>
+
     </aside>
 
   </main>
+
+  <div class="skills-strip">JAVA &nbsp;·&nbsp; HTML/CSS &nbsp;·&nbsp; LUA &nbsp;·&nbsp; FIGMA &nbsp;·&nbsp; ABLETON &nbsp;·&nbsp; GIT</div>
 
   <footer class="site-footer">Website by Temulen Iveelt | 2026</footer>
 
@@ -1284,6 +1384,71 @@
       document.querySelector('.stripe--red').classList.add('visible');
     });
 
+  })();
+  </script>
+
+<script>
+  (function() {
+    'use strict';
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var goat = document.querySelector('.goat');
+    var card = document.querySelector('.card');
+    if (!goat || !card) return;
+
+    // ---- Cursor proximity glow ----
+    var MAX_DIST = 400;
+    var MAX_BLUR = 12;
+    var MAX_ALPHA = 0.35;
+    var lastUpdate = 0;
+    var rafQueued = false;
+    var lastEvent = null;
+
+    function applyGlow() {
+      rafQueued = false;
+      if (!lastEvent) return;
+      var rect = card.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      var dx = lastEvent.clientX - cx;
+      var dy = lastEvent.clientY - cy;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var t = Math.max(0, Math.min(1, 1 - dist / MAX_DIST));
+      var blur = MAX_BLUR * t;
+      var alpha = MAX_ALPHA * t;
+      goat.style.setProperty(
+        '--goat-glow',
+        'drop-shadow(0 0 ' + blur.toFixed(2) + 'px rgba(255,255,255,' + alpha.toFixed(3) + ')) ' +
+        'drop-shadow(0 0 ' + (blur * 0.6).toFixed(2) + 'px rgba(255,255,255,' + (alpha * 0.7).toFixed(3) + '))'
+      );
+    }
+
+    document.addEventListener('mousemove', function(e) {
+      lastEvent = e;
+      var now = performance.now();
+      if (now - lastUpdate < 50) return;
+      lastUpdate = now;
+      if (rafQueued) return;
+      rafQueued = true;
+      requestAnimationFrame(applyGlow);
+    });
+
+    // ---- Rare flicker ----
+    function scheduleFlicker() {
+      var next = 25000 + Math.random() * 20000;
+      setTimeout(function() {
+        goat.addEventListener('animationend', function onEnd(e) {
+          if (e.animationName === 'goatFlicker') {
+            goat.removeEventListener('animationend', onEnd);
+            goat.classList.remove('flickering');
+          }
+        });
+        goat.classList.add('flickering');
+        scheduleFlicker();
+      }, next);
+    }
+    scheduleFlicker();
   })();
   </script>
 
