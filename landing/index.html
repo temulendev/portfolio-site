@@ -813,6 +813,19 @@
     }
 
     /* ===== SKILLS STRIP ===== */
+    .skills-title {
+      font-family: 'Courier New', 'Lucida Console', monospace;
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      max-width: 960px;
+      margin: 80px auto 20px;
+      padding: 0 32px;
+      transition: color 0.3s;
+    }
+
     .skills-strip {
       font-family: 'Courier New', 'Lucida Console', monospace;
       font-size: 11px;
@@ -821,7 +834,7 @@
       text-transform: uppercase;
       text-align: center;
       max-width: 960px;
-      margin: 80px auto 8px;
+      margin: 0 auto 8px;
       padding: 0 32px;
       transition: color 0.3s;
     }
@@ -845,7 +858,8 @@
       .card { order: 0; }
       .y2k-player { order: 10; }
       .now-card { order: 11; max-width: 360px; margin: 0 auto; width: 100%; }
-      .skills-strip { padding: 0 20px; margin-top: 60px; }
+      .skills-title { padding: 0 20px; margin-top: 60px; }
+      .skills-strip { padding: 0 20px; }
 
 
       .headshot-wrap {
@@ -887,6 +901,7 @@
         padding: 0 16px;
         margin: 24px auto;
       }
+      .skills-title { padding: 0 16px; }
       .skills-strip { padding: 0 16px; }
 
       .headshot-wrap {
@@ -1076,20 +1091,20 @@
         <div class="now-grid">
           <span class="now-label">Building</span>
           <span class="now-sep">—</span>
-          <span>CribCub's Resident Advisor dashboard</span>
+          <span>A 3D isometric map</span>
           <span class="now-label">Learning</span>
           <span class="now-sep">—</span>
-          <span>Data structures in Java (Hash tables, BSTs, priority queues)</span>
+          <span>Sorting algorithms (Quicksort, Merge Sort, Heap Sorting)</span>
           <span class="now-label">Listening to</span>
           <span class="now-sep">—</span>
-          <span>In Utero, Nirvana</span>
+          <span>Easter Pink, fakemink</span>
         </div>
       </div>
 
     </aside>
 
   </main>
-
+  <div class="skills-title">MY TECHNICAL STACK</div>
   <div class="skills-strip">JAVA &nbsp;·&nbsp; HTML/CSS &nbsp;·&nbsp; LUA &nbsp;·&nbsp; FIGMA &nbsp;·&nbsp; ABLETON &nbsp;·&nbsp; GIT</div>
 
   <footer class="site-footer">Website by Temulen Iveelt | 2026</footer>
