@@ -34,6 +34,10 @@
   var projectListWrap = document.getElementById('projectListWrap');
   var projectsHint = document.getElementById('projectsHint');
   var themeToggle = document.getElementById('themeToggle');
+  var themePicker = document.querySelector('.theme-picker');
+  var themePickerToggle = document.getElementById('themePickerToggle');
+  var themePickerMenu = document.getElementById('themePickerMenu');
+  var themeSwatches = document.querySelectorAll('.theme-swatch');
 
   // ---- Track list ----
   // Paths are relative to index.html (site root). `album` accepts HTML (used for the colored "Synchronicity" title).
@@ -100,7 +104,78 @@
       localStorage.setItem('theme', 'dark');
       themeToggle.innerHTML = '&#9788;';
     }
+    // If the visitor hasn't explicitly chosen a theme color, switch to the
+    // mode-appropriate default: amber in light, forest in dark.
+    if (!localStorage.getItem('theme-color-explicit')) {
+      applyThemeColor(getDefaultColor());
+    }
     setTimeout(function() { themeToggle.classList.remove('spinning'); }, 400);
+  });
+
+  // ---- Color theme picker ----
+  // Default color is mode-dependent: amber in light mode, forest in dark mode.
+  // Explicit swatch picks are saved separately; until then switching modes auto-
+  // switches the default. Explicit choice persists across mode toggles.
+
+  // Returns the mode-appropriate default — amber for light, forest for dark.
+  function getDefaultColor() {
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'forest' : 'amber';
+  }
+
+  // Apply a color theme to the page. When explicit=true the choice is saved to
+  // localStorage and persists across mode toggles. Auto-defaults are not saved
+  // so that mode switches can re-apply the correct default.
+  function applyThemeColor(color, explicit) {
+    if (color) {
+      document.documentElement.setAttribute('data-color', color);
+      if (explicit) localStorage.setItem('theme-color-explicit', color);
+    } else {
+      document.documentElement.removeAttribute('data-color');
+    }
+    for (var i = 0; i < themeSwatches.length; i++) {
+      var sw = themeSwatches[i];
+      sw.setAttribute('data-active', sw.dataset.themeColor === color ? 'true' : 'false');
+      sw.setAttribute('aria-checked', sw.dataset.themeColor === color ? 'true' : 'false');
+    }
+  }
+
+  // On load: use the explicit saved choice, or fall back to the mode default.
+  applyThemeColor(localStorage.getItem('theme-color-explicit') || getDefaultColor());
+
+  function setPickerOpen(open) {
+    if (open) {
+      themePickerMenu.removeAttribute('hidden');
+      themePickerToggle.setAttribute('aria-expanded', 'true');
+    } else {
+      themePickerMenu.setAttribute('hidden', '');
+      themePickerToggle.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  themePickerToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    setPickerOpen(themePickerMenu.hasAttribute('hidden'));
+  });
+
+  for (var s = 0; s < themeSwatches.length; s++) {
+    themeSwatches[s].addEventListener('click', function() {
+      applyThemeColor(this.dataset.themeColor, true); // explicit = saves to localStorage
+    });
+  }
+
+  // Clicking anywhere outside the picker closes the menu.
+  document.addEventListener('click', function(e) {
+    if (!themePickerMenu.hasAttribute('hidden') && !themePicker.contains(e.target)) {
+      setPickerOpen(false);
+    }
+  });
+
+  // Escape key closes the menu (keyboard parity).
+  document.addEventListener('keydown', function(e) {
+    if (e.code === 'Escape' && !themePickerMenu.hasAttribute('hidden')) {
+      setPickerOpen(false);
+      themePickerToggle.focus();
+    }
   });
 
   // ---- Web Audio API setup (for the frequency-bar visualizer) ----

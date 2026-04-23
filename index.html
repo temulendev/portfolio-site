@@ -32,6 +32,23 @@
   <!-- Dark-mode toggle (fixed top-right). Wired up in script.js. -->
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
 
+  <!-- Color-theme picker: hamburger toggles a narrow dropdown with 4 theme swatches.
+       Applied theme sets data-color on <html> and drives --accent / --accent-alt. -->
+  <div class="theme-picker">
+    <button class="theme-picker-toggle" id="themePickerToggle" aria-label="Color themes" aria-expanded="false" aria-controls="themePickerMenu" title="Color themes">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+    <div class="theme-picker-menu" id="themePickerMenu" role="menu" hidden>
+      <span class="theme-picker-label">THEMES</span>
+      <button class="theme-swatch" data-theme-color="rose"   role="menuitemradio" aria-label="Rose theme"></button>
+      <button class="theme-swatch" data-theme-color="forest" role="menuitemradio" aria-label="Forest theme"></button>
+      <button class="theme-swatch" data-theme-color="ocean"  role="menuitemradio" aria-label="Ocean theme"></button>
+      <button class="theme-swatch" data-theme-color="amber"  role="menuitemradio" aria-label="Amber theme"></button>
+    </div>
+  </div>
+
   <!-- Audio element powering the Y2K player. Hidden via CSS; controlled from script.js. -->
   <audio id="audio" src="angelIns.mp3" preload="metadata"></audio>
 
