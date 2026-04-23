@@ -2,9 +2,241 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=landing/">
-  <link rel="canonical" href="https://temuleniveelt.com/landing/">
-  <title>Redirecting…</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Temulen Iveelt — Computer Science & Business at Lehigh University. Co-Founder at CribCub.">
+  <title>Temulen Iveelt</title>
+  <link rel="canonical" href="https://temuleniveelt.com/">
+
+  <!-- Open Graph / social preview metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://temuleniveelt.com/">
+  <meta property="og:title" content="Temulen Iveelt">
+  <meta property="og:description" content="Computer Science & Business at Lehigh University. Co-Founder at CribCub.">
+  <meta property="og:image" content="https://temuleniveelt.com/headshot.webp">
+
+  <!-- Schema.org Person tag for search engines -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Temulen Iveelt","url":"https://temuleniveelt.com/"}
+  </script>
+
+  <!-- Google Fonts: Cabin (body) — preconnect to speed up the handshake -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Page styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body></body>
+<body>
+
+  <!-- Dark-mode toggle (fixed top-right). Wired up in script.js. -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+  <!-- Audio element powering the Y2K player. Hidden via CSS; controlled from script.js. -->
+  <audio id="audio" src="angelIns.mp3" preload="metadata"></audio>
+
+  <main class="container">
+
+    <!-- ===== LEFT: CONTENT CARD ===== -->
+    <section class="card">
+      <div class="card-body">
+
+        <!-- Flag row + Mongolian tricolor stripes at the top of the card -->
+        <div class="flag-stripes">
+          <img src="usaflag.png" alt="US flag" class="flag-img" loading="lazy">
+          <img src="mongolianflag.png" alt="Mongolian flag" class="flag-img" loading="lazy">
+          <div class="stripes" aria-hidden="true">
+            <div class="stripe--blue"></div>
+            <div class="stripe--yellow"></div>
+            <div class="stripe--red"></div>
+          </div>
+        </div>
+
+        <!-- What I'm Up To — short bio paragraph -->
+        <div class="section">
+          <h2>What I'm Up To</h2>
+          <p>I am a freshman in college trying to learn everything I can to make useful products. Right now, I'm working with two of my very smart friends on a site that turns college housing into a tight-knit digital community. We call it <a href="https://www.cribcub.com" target="_blank" rel="noopener">CribCub</a>. I can also be found playing a bunch of songs on my Fender and even posting recordings to Instagram. <a href="https://www.instagram.com/temuleniveelt" target="_blank" rel="noopener">@temuleniveelt</a> if you're curious!</p>
+        </div>
+
+        <!-- Projects — click the heading to expand the list. Real <button> nested inside <h2> so
+             keyboard + screen readers treat it as both a heading and an interactive control. -->
+        <div class="section">
+          <h2>
+            <button class="projects-toggle" id="projectsToggle" aria-expanded="false" aria-controls="projectListWrap">
+              Projects <span class="projects-hint" id="projectsHint">(click)</span>
+            </button>
+          </h2>
+          <div class="project-list-wrap" id="projectListWrap">
+            <ul class="project-list">
+              <li class="project-item">
+                <div class="project-info">
+                  <a href="https://www.cribcub.com" target="_blank" rel="noopener">CribCub</a>
+                  <div class="project-desc">Making dorming at college an easier experience for university administration, resident advisors, and students.</div>
+                </div>
+              </li>
+              <li class="project-item">
+                <div class="project-info">
+                  <a href="https://linkedin-connector-one.vercel.app/" target="_blank" rel="noopener">LinkedIn Note Generator</a>
+                  <div class="project-desc">Personalized connection notes from LinkedIn profiles</div>
+                  <div class="project-stack">Next.js, Vercel, OpenAI API</div>
+                </div>
+              </li>
+              <li class="project-item">
+                <div class="project-info">
+                  <a href="https://github.com/temulendev/console-banking-system" target="_blank" rel="noopener">Banking App</a>
+                  <div class="project-desc">PIN verification, deposit/withdraw/view balance, interest calculation</div>
+                  <div class="project-stack">Java, CLI</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Resume — thumbnail + status + download link -->
+        <div class="section">
+          <h2>Resume</h2>
+          <div class="resume-row">
+            <a href="Temulen_Resume.pdf" download>
+              <img src="resumepreview.png" alt="Resume preview" class="resume-thumb" loading="lazy">
+            </a>
+            <div class="resume-meta">
+              <span class="resume-status">Status: Up to date!</span>
+              <span class="resume-date">Last updated: 3/23/2026</span>
+              <a href="Temulen_Resume.pdf" download class="resume-download">Click to download</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact links -->
+        <div class="section">
+          <h2>Contact</h2>
+          <div class="contact-list">
+            <a href="mailto:temulen.iveelt@gmail.com">temulen.iveelt@gmail.com</a>
+            <a href="https://www.linkedin.com/in/temulen-iveelt/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/temulendev" target="_blank" rel="noopener">GitHub (@temulendev)</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Decorative goat (bottom-right of card). Hover glow + projects-open zoom handled in script.js. -->
+      <img src="goatYellow.png" alt="" class="goat" aria-hidden="true" loading="lazy">
+    </section>
+
+    <!-- ===== RIGHT: PROFILE & PLAYER ===== -->
+    <aside class="sidebar">
+
+      <!-- Profile: headshot + name + subtitle lines -->
+      <div class="profile">
+        <div class="headshot-wrap">
+          <img src="headshot.webp" alt="Temulen Iveelt" class="headshot">
+        </div>
+        <h1 class="name">Temulen Iveelt</h1>
+        <p class="subtitle">Computer Science & Business @ Lehigh University</p>
+        <p class="subtitle">Co-Founder at CribCub</p>
+      </div>
+
+      <!-- Y2K Music Player -->
+      <div class="y2k-player" id="player">
+
+        <!-- Header: "(my guitar covers)" label on the left, DIGITAL AUDIO + power LED on the right -->
+        <div class="player-header" style="justify-content: space-between;">
+          <span class="player-label" style="letter-spacing: 1px; opacity: 1;">(my guitar covers)</span>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="player-label">DIGITAL AUDIO</span>
+            <span class="power-led" id="powerLed"></span>
+          </div>
+        </div>
+
+        <!-- LCD screen: track metadata, waveform bars (populated by JS), progress bar -->
+        <div class="lcd-screen">
+          <div class="lcd-content">
+            <div class="lcd-title" id="lcdTitle">angel.mp3</div>
+            <div class="lcd-artist" id="lcdArtist">Temulen Iveelt</div>
+            <div class="lcd-album" id="lcdAlbum"></div>
+            <!-- Date on the left, track-number readout (e.g. "01/02") on the right -->
+            <div class="lcd-date-row">
+              <span class="lcd-date" id="lcdDate">12.31.2025</span>
+              <span class="lcd-track-num" id="lcdTrackNum">01/02</span>
+            </div>
+            <div class="lcd-waveform" id="waveform"></div>
+            <div class="lcd-progress">
+              <span class="lcd-time" id="currentTime">0:00</span>
+              <!-- Progress track is keyboard-seekable: tabindex + slider role + arrow-key handler in script.js -->
+              <div class="progress-track" id="progressTrack"
+                   role="slider"
+                   tabindex="0"
+                   aria-label="Seek"
+                   aria-valuemin="0"
+                   aria-valuemax="100"
+                   aria-valuenow="0">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <span class="lcd-time" id="totalTime">0:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transport: play/pause + skip buttons -->
+        <div class="transport">
+          <button class="transport-btn" id="playPauseBtn" title="Play / Pause" aria-label="Play or Pause">
+            <svg width="14" height="14" viewBox="0 0 14 14" id="playIcon">
+              <polygon points="3,1 3,13 12,7" fill="currentColor"/>
+            </svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" id="pauseIcon" style="display:none">
+              <rect x="2" y="1" width="3.5" height="12" fill="currentColor"/>
+              <rect x="8.5" y="1" width="3.5" height="12" fill="currentColor"/>
+            </svg>
+          </button>
+          <button class="transport-btn" id="skipBtn" title="Next track" aria-label="Next track">
+            <svg width="14" height="14" viewBox="0 0 14 14">
+              <polygon points="1,1 1,13 8,7" fill="currentColor"/>
+              <rect x="9" y="1" width="3" height="12" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Footer: LOOP toggle + decorative vents -->
+        <div class="player-footer">
+          <button class="loop-btn" id="loopBtn" aria-label="Toggle loop">
+            <span class="loop-led"></span>
+            LOOP
+          </button>
+          <div class="player-vents" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Now card — what I'm currently building / learning / listening to -->
+      <div class="now-card">
+        <h2 class="now-heading">Now <span class="now-hint">(updated April 2026)</span></h2>
+        <div class="now-grid">
+          <span class="now-label">Building</span>
+          <span class="now-sep">—</span>
+          <span>A 3D isometric map</span>
+          <span class="now-label">Learning</span>
+          <span class="now-sep">—</span>
+          <span>Sorting algorithms (Quicksort, Merge Sort, Heap Sort)</span>
+          <span class="now-label">Listening to</span>
+          <span class="now-sep">—</span>
+          <span>Easter Pink, fakemink</span>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- Tech stack strip below the main grid -->
+  <div class="skills-title">MY TECHNICAL STACK</div>
+  <div class="skills-strip">JAVA &nbsp;·&nbsp; HTML/CSS &nbsp;·&nbsp; LUA &nbsp;·&nbsp; FIGMA &nbsp;·&nbsp; ABLETON &nbsp;·&nbsp; GIT</div>
+
+  <footer class="site-footer">Website by Temulen Iveelt | 2026</footer>
+
+  <!-- Player, theme toggle, projects expand, stripes fade-in, goat hover glow -->
+  <script src="script.js"></script>
+
+</body>
 </html>

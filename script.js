@@ -29,19 +29,22 @@
   var lcdArtist = document.getElementById('lcdArtist');
   var lcdAlbum = document.getElementById('lcdAlbum');
   var lcdDate = document.getElementById('lcdDate');
+  var lcdTrackNum = document.getElementById('lcdTrackNum');
   var projectsToggle = document.getElementById('projectsToggle');
   var projectListWrap = document.getElementById('projectListWrap');
   var projectsHint = document.getElementById('projectsHint');
   var themeToggle = document.getElementById('themeToggle');
 
   // ---- Track list ----
-  // Paths are relative to landing/index.html so the audio files in the repo root
-  // need the ../ prefix. `album` accepts HTML (used for the colored "Synchronicity" title).
+  // Paths are relative to index.html (site root). `album` accepts HTML (used for the colored "Synchronicity" title).
   var tracks = [
-    { src: '../angelIns.mp3', title: 'angel.mp3', artist: 'Temulen Iveelt', album: '', date: '12.31.2025' },
-    { src: '../everybreathyoutake.mp3', title: 'Every Breath You Take.mp3', artist: 'Temulen Iveelt', album: 'The Police — <span class="sync-blue">Synch</span><span class="sync-yellow">roni</span><span class="sync-red">city</span>', date: '07.30.2025' }
+    { src: 'angelIns.mp3', title: 'angel.mp3', artist: 'Temulen Iveelt', album: '', date: '12.31.2025' },
+    { src: 'everybreathyoutake.mp3', title: 'Every Breath You Take.mp3', artist: 'Temulen Iveelt', album: 'The Police — <span class="sync-blue">Synch</span><span class="sync-yellow">roni</span><span class="sync-red">city</span>', date: '07.30.2025' }
   ];
   var currentTrack = 0;
+
+  // Zero-pad a number to 2 digits ("1" → "01"). Used for the LCD track-number readout.
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
   // Swap the audio element to a new track and update the LCD metadata.
   // If already playing (or autoplay=true), resume playback on the new track.
@@ -55,13 +58,18 @@
     lcdArtist.textContent = t.artist;
     lcdAlbum.innerHTML = t.album;
     lcdDate.textContent = t.date;
+    lcdTrackNum.textContent = pad2(currentTrack + 1) + '/' + pad2(tracks.length);
     progressFill.style.width = '0%';
+    progressTrack.setAttribute('aria-valuenow', '0');
     currentTimeEl.textContent = '0:00';
     totalTimeEl.textContent = '0:00';
     if (autoplay || wasPlaying) {
       audio.play();
     }
   }
+
+  // Populate the track-number readout for track 0 before any user interaction.
+  lcdTrackNum.textContent = pad2(currentTrack + 1) + '/' + pad2(tracks.length);
 
   // Advance to the next track, wrapping around. Used by the skip button and track-ended handler.
   function skipTrack() {
@@ -100,14 +108,25 @@
   var audioCtx, analyser, source, isSetup = false;
 
   // ---- Generate the 32 waveform bars ----
+  // Each bar is clickable: clicking bar i seeks the audio to fraction i/(NUM_BARS-1) of duration.
   var NUM_BARS = 32;
   var bars = [];
   for (var i = 0; i < NUM_BARS; i++) {
     var bar = document.createElement('div');
     bar.className = 'waveform-bar';
     bar.style.animationDelay = (i * 0.07) + 's';
+    bar.dataset.index = i;
+    bar.addEventListener('click', onBarClick);
     waveformEl.appendChild(bar);
     bars.push(bar);
+  }
+
+  // Seek to the fraction corresponding to the clicked bar's index.
+  function onBarClick(e) {
+    if (!audio.duration) return;
+    var idx = Number(e.currentTarget.dataset.index);
+    var pct = idx / (NUM_BARS - 1);
+    seekToPct(pct);
   }
 
   // Visualizer smoothing state — persists across play/pause so the bars decay naturally
@@ -208,11 +227,13 @@
   });
 
   // ---- Progress tracking ----
-  // Update fill width + current time as playback advances (skipped while dragging).
+  // Update fill width + current time + ARIA value as playback advances (skipped while dragging).
   audio.addEventListener('timeupdate', function() {
     if (!audio.duration || isDragging) return;
-    progressFill.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+    var pct = audio.currentTime / audio.duration;
+    progressFill.style.width = (pct * 100) + '%';
     currentTimeEl.textContent = formatTime(audio.currentTime);
+    progressTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
   });
 
   audio.addEventListener('loadedmetadata', function() {
@@ -224,13 +245,20 @@
   // keep seeking working even when the pointer leaves the track.
   var isDragging = false;
 
-  function seekTo(clientX) {
+  // Shared seek helper — used by mouse/touch drag, bar clicks, and keyboard arrows.
+  function seekToPct(pct) {
     if (!audio.duration) return;
-    var rect = progressTrack.getBoundingClientRect();
-    var pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    pct = Math.max(0, Math.min(1, pct));
     audio.currentTime = pct * audio.duration;
     progressFill.style.width = (pct * 100) + '%';
     currentTimeEl.textContent = formatTime(audio.currentTime);
+    progressTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
+  }
+
+  function seekTo(clientX) {
+    if (!audio.duration) return;
+    var rect = progressTrack.getBoundingClientRect();
+    seekToPct((clientX - rect.left) / rect.width);
   }
 
   progressTrack.addEventListener('mousedown', function(e) {
@@ -267,6 +295,38 @@
     }
   });
 
+  // ---- Keyboard seek on the progress bar (role="slider") ----
+  // Arrow keys ± 5s, PageUp/Down ± 10%, Home/End jump to start/end.
+  progressTrack.addEventListener('keydown', function(e) {
+    if (!audio.duration) return;
+    var step = 5; // seconds for arrow keys
+    var page = 0.1 * audio.duration; // 10% of track for PageUp/Down
+    var t = audio.currentTime;
+    var handled = true;
+    switch (e.code) {
+      case 'ArrowLeft':
+      case 'ArrowDown':
+        t = Math.max(0, t - step); break;
+      case 'ArrowRight':
+      case 'ArrowUp':
+        t = Math.min(audio.duration, t + step); break;
+      case 'PageDown':
+        t = Math.max(0, t - page); break;
+      case 'PageUp':
+        t = Math.min(audio.duration, t + page); break;
+      case 'Home':
+        t = 0; break;
+      case 'End':
+        t = audio.duration; break;
+      default:
+        handled = false;
+    }
+    if (handled) {
+      e.preventDefault();
+      seekToPct(t / audio.duration);
+    }
+  });
+
   // ---- Transport button wiring ----
   playPauseBtn.addEventListener('click', togglePlay);
   skipBtn.addEventListener('click', skipTrack);
@@ -279,21 +339,30 @@
   });
 
   // ---- Keyboard shortcut: spacebar plays/pauses ----
-  // Only when focus is on <body> so typing elsewhere doesn't steal the key.
+  // Allow spacebar from anywhere except form controls (where it types a space) and
+  // native buttons (where Space triggers their own click). This fixes the bug where
+  // clicking Play moved focus to the button and then Space stopped working on empty page clicks.
   document.addEventListener('keydown', function(e) {
-    if (e.code === 'Space' && e.target === document.body) {
-      e.preventDefault();
-      togglePlay();
-    }
+    if (e.code !== 'Space') return;
+    var target = e.target;
+    var tag = (target.tagName || '').toLowerCase();
+    var isFormInput = tag === 'input' || tag === 'textarea' || tag === 'select' || target.isContentEditable;
+    var isNativeButton = tag === 'button';
+    var isSlider = target === progressTrack;
+    if (isFormInput || isNativeButton || isSlider) return;
+    e.preventDefault();
+    togglePlay();
   });
 
   // ---- Projects expand/collapse ----
-  // Clicking the heading toggles the project list + updates the "(click)/(hide)" hint.
+  // Clicking the heading toggles the project list + updates the "(click)/(hide)" hint
+  // and mirrors state onto aria-expanded for assistive tech.
   // Also zooms the decorative goat as a small delight.
   var goat = document.querySelector('.goat');
   projectsToggle.addEventListener('click', function() {
     var isOpen = projectListWrap.classList.toggle('open');
     projectsHint.textContent = isOpen ? '(hide)' : '(click)';
+    projectsToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     if (goat) goat.classList.toggle('zoomed', isOpen);
   });
 

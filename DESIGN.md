@@ -1,6 +1,6 @@
 # Portfolio Site — Design Guide
 
-Minimal, personal landing page. All CSS/JS inline in `index.html`.
+Minimal, personal landing page. HTML, CSS, and JS split across three files at the repo root.
 
 ---
 
@@ -50,17 +50,21 @@ Toggle button (☾/☀) fixed top-right. Preference saved to `localStorage`. CSS
 
 ```
 portfoliosite/
-├── index.html          ← landing page (all CSS + JS inline)
+├── index.html          ← landing page markup
+├── styles.css          ← all styles (design tokens on :root + [data-theme="dark"])
+├── script.js           ← player, theme toggle, projects expand, stripes fade-in, goat glow
 ├── headshot.webp       ← profile photo (circle-cropped in CSS)
 ├── goatYellow.png      ← decorative goat in card
 ├── resumepreview.png   ← resume thumbnail preview
 ├── Temulen_Resume.pdf  ← downloadable resume
-├── angelIns.wav        ← music track for Y2K player
+├── angelIns.mp3        ← guitar cover track
+├── everybreathyoutake.mp3 ← guitar cover track
+├── usaflag.png, mongolianflag.png
 ├── CNAME               ← custom domain config
 └── DESIGN.md           ← this file
 ```
 
-No external CSS/JS files (except Google Fonts). No build step. Deployed via GitHub Pages on `main`.
+Only external dependency is Google Fonts (Cabin). No build step. Deployed via GitHub Pages on `main` — site serves at `/` (no redirect).
 
 ---
 
