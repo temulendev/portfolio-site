@@ -1,0 +1,436 @@
+/* ============================================================
+   Blog styles — layered on top of styles.css (loaded first).
+   Used by both the index (post list) and individual post pages.
+   Inherits all design tokens (--accent, --card-bg, etc.) from styles.css.
+   ============================================================ */
+
+
+/* ===== PAGE FRAME =====
+   Blog pages drop the two-column landing grid for a single centered column. */
+
+.blog-page {
+  max-width: 720px;
+  margin: 60px auto 80px;
+  padding: 0 32px;
+}
+
+/* Back link — top-left, monospace, quiet. Matches the tech-stack-strip vibe. */
+.blog-back {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  z-index: 100;
+  transition: color 0.15s, transform 0.2s ease;
+}
+
+.blog-back:hover {
+  color: var(--accent);
+  transform: translateX(-3px);
+}
+
+
+/* ===== INDEX PAGE HEADER ===== */
+
+.blog-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.blog-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+
+.blog-header p {
+  font-size: 15px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 24px;
+}
+
+/* Reuse the Mongolian-flag tricolor as a divider — ties the blog back to landing. */
+.blog-stripes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.blog-stripes div { height: 5px; }
+.blog-stripes .stripe--blue   { height: 7px; background: #3558A0; transition: background 0.3s; }
+.blog-stripes .stripe--yellow { height: 5px; background: #E8B832; transition: background 0.3s; }
+.blog-stripes .stripe--red    { height: 3px; background: #C4342D; transition: background 0.3s; }
+
+[data-theme="dark"] .blog-stripes .stripe--blue   { background: #004d87; }
+[data-theme="dark"] .blog-stripes .stripe--yellow { background: #ffd900; }
+[data-theme="dark"] .blog-stripes .stripe--red    { background: #ad0000; }
+
+
+/* ===== INDEX POST LIST ===== */
+
+.blog-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Two-column grid per row: date+status on left, title+dek on right.
+   Stacks to one column on mobile. */
+.blog-list-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 28px;
+  padding: 24px 4px;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, var(--card-border));
+  transition: border-color 0.3s, transform 0.2s ease;
+}
+
+.blog-list-item:hover {
+  transform: translateX(3px);
+}
+
+.blog-list-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 4px;
+}
+
+.blog-list-date {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.blog-list-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.blog-list-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 6px;
+  transition: color 0.15s;
+}
+
+.blog-list-link:hover .blog-list-title {
+  color: var(--accent);
+}
+
+.blog-list-dek {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+
+/* ===== STATUS BADGE =====
+   Tiny colored-dot label for a post's state — shipped / wip / thinking / abandoned.
+   Status colors are independent of the theme accent so a "shipped" post always
+   reads green regardless of which color theme the visitor has picked. */
+
+.post-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.post-status::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.post-status[data-status="shipped"]   { color: #4a7c57; }
+.post-status[data-status="wip"]       { color: #a06e2a; }
+.post-status[data-status="thinking"]  { color: var(--text-secondary); }
+.post-status[data-status="abandoned"] { color: var(--text-muted); opacity: 0.55; }
+
+[data-theme="dark"] .post-status[data-status="shipped"] { color: #7aa884; }
+[data-theme="dark"] .post-status[data-status="wip"]     { color: #d4a05c; }
+
+
+/* ===== SINGLE POST PAGE ===== */
+
+.post-article {
+  /* width inherited from .blog-page */
+}
+
+/* Title block: title, then meta line (date · status · tag). */
+.post-title {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  color: var(--heading-color);
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  letter-spacing: 0.5px;
+  margin-bottom: 28px;
+}
+
+.post-meta-sep {
+  color: var(--card-border);
+}
+
+.post-tag {
+  color: var(--accent);
+  text-transform: lowercase;
+  letter-spacing: 1px;
+}
+
+.post-tag::before {
+  content: '#';
+  margin-right: 1px;
+  opacity: 0.7;
+}
+
+/* Stripe divider between header and body — the recurring motif. */
+.post-stripes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 40px;
+}
+
+.post-stripes div { transition: background 0.3s; }
+.post-stripes .stripe--blue   { height: 6px; background: #3558A0; }
+.post-stripes .stripe--yellow { height: 4px; background: #E8B832; }
+.post-stripes .stripe--red    { height: 2px; background: #C4342D; }
+
+[data-theme="dark"] .post-stripes .stripe--blue   { background: #004d87; }
+[data-theme="dark"] .post-stripes .stripe--yellow { background: #ffd900; }
+[data-theme="dark"] .post-stripes .stripe--red    { background: #ad0000; }
+
+
+/* ===== POST CONTENT TYPOGRAPHY ===== */
+
+.post-content {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.post-content > * + * {
+  margin-top: 1.4em;
+}
+
+.post-content h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  color: var(--heading-color);
+  letter-spacing: -0.2px;
+}
+
+.post-content h3 {
+  font-size: 19px;
+  font-weight: 600;
+  margin-top: 1.6em;
+  margin-bottom: 0.4em;
+  color: var(--heading-color);
+}
+
+.post-content p {
+  color: var(--text);
+}
+
+.post-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness 0.15s;
+}
+
+.post-content a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.post-content ul,
+.post-content ol {
+  padding-left: 1.5em;
+  list-style: revert;
+}
+
+.post-content ul li,
+.post-content ol li {
+  margin-bottom: 0.4em;
+}
+
+/* Blockquote — left border in accent, italic. Good for pulling quotes or asides. */
+.post-content blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 4px 0 4px 20px;
+  margin-left: 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Inline code — subtle background tint and monospace. */
+.post-content code {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 0.9em;
+  padding: 2px 5px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--card-bg));
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--card-border));
+}
+
+/* Block code — full background, padded. */
+.post-content pre {
+  background: var(--card-bg);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--card-border));
+  padding: 16px 20px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.post-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Inline images get the same color-mixed border as the cards. */
+.post-content img,
+.post-content figure {
+  display: block;
+  margin: 1.6em auto;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--card-border));
+  transition: border-color 0.3s;
+}
+
+.post-content figure img {
+  margin: 0;
+  border: none;
+}
+
+.post-content figcaption {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Horizontal rule — uses accent for a subtle theme tie-in. */
+.post-content hr {
+  border: none;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent) 30%, var(--card-border));
+  margin: 2.4em 0;
+}
+
+
+/* ===== POST FOOTER ===== */
+
+.post-footer {
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 18%, var(--card-border));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.post-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.post-footer a:hover {
+  color: var(--accent);
+}
+
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 640px) {
+  .blog-page {
+    margin: 40px auto 60px;
+    padding: 0 20px;
+  }
+
+  .blog-back {
+    top: 16px;
+    left: 16px;
+    font-size: 11px;
+  }
+
+  .blog-header h1 {
+    font-size: 30px;
+  }
+
+  /* Stack the date column on top on narrow screens. */
+  .blog-list-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 20px 0;
+  }
+
+  .blog-list-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .blog-list-title {
+    font-size: 19px;
+  }
+
+  .post-title {
+    font-size: 30px;
+  }
+
+  .post-content {
+    font-size: 16px;
+  }
+
+  .post-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Blog — Temulen Iveelt. Notes on building CribCub, startup ventures, and findings worth sharing.">
+  <title>Blog — Temulen Iveelt</title>
+  <link rel="canonical" href="https://temuleniveelt.com/blog/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://temuleniveelt.com/blog/">
+  <meta property="og:title" content="Blog — Temulen Iveelt">
+  <meta property="og:description" content="Notes on building CribCub, startup ventures, and findings worth sharing.">
+
+  <!-- Same fonts as the landing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Shared landing styles, then blog-specific layered on top -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+  <!-- Back to landing — fixed top-left -->
+  <a class="blog-back" href="../">← Home</a>
+
+  <!-- Same chrome as landing: dark/light toggle + color theme picker, both fixed top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+  <div class="theme-picker">
+    <button class="theme-picker-toggle" id="themePickerToggle" aria-label="Color themes" aria-expanded="false" aria-controls="themePickerMenu" title="Color themes">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+    <div class="theme-picker-menu" id="themePickerMenu" role="menu" hidden>
+      <span class="theme-picker-label">THEMES</span>
+      <button class="theme-swatch" data-theme-color="rose"   role="menuitemradio" aria-label="Rose theme"></button>
+      <button class="theme-swatch" data-theme-color="forest" role="menuitemradio" aria-label="Forest theme"></button>
+      <button class="theme-swatch" data-theme-color="ocean"  role="menuitemradio" aria-label="Ocean theme"></button>
+      <button class="theme-swatch" data-theme-color="amber"  role="menuitemradio" aria-label="Amber theme"></button>
+    </div>
+  </div>
+
+  <main class="blog-page">
+
+    <!-- Header: title + dek + tricolor stripe divider (motif from landing) -->
+    <header class="blog-header">
+      <h1>Blog</h1>
+      <p>Notes on building CribCub, ventures, and findings.</p>
+      <div class="blog-stripes" aria-hidden="true">
+        <div class="stripe--blue"></div>
+        <div class="stripe--yellow"></div>
+        <div class="stripe--red"></div>
+      </div>
+    </header>
+
+    <!-- Post list — populated by JS from posts.js (window.BLOG_POSTS) -->
+    <ul class="blog-list" id="blogList"></ul>
+
+  </main>
+
+  <!-- Manifest: defines window.BLOG_POSTS -->
+  <script src="posts.js"></script>
+
+  <!-- Render the post list -->
+  <script>
+    (function() {
+      'use strict';
+      var list = document.getElementById('blogList');
+      var posts = (window.BLOG_POSTS || []).slice();
+
+      // Newest first by date string (ISO sorts lexicographically).
+      posts.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+
+      // Render only the date portion (YYYY-MM-DD) on the index for compactness.
+      function shortDate(iso) {
+        return (iso || '').slice(0, 10);
+      }
+
+      var html = posts.map(function(p) {
+        var statusBadge = p.status
+          ? '<span class="post-status" data-status="' + p.status + '">' + p.status + '</span>'
+          : '';
+        return ''
+          + '<li class="blog-list-item">'
+          +   '<div class="blog-list-meta">'
+          +     '<span class="blog-list-date">' + shortDate(p.date) + '</span>'
+          +     statusBadge
+          +   '</div>'
+          +   '<a class="blog-list-link" href="posts/' + p.slug + '.html">'
+          +     '<h2 class="blog-list-title">' + p.title + '</h2>'
+          +     (p.dek ? '<p class="blog-list-dek">' + p.dek + '</p>' : '')
+          +   '</a>'
+          + '</li>';
+      }).join('');
+
+      list.innerHTML = html || '<li style="color: var(--text-muted); padding: 24px 0;">No posts yet.</li>';
+    })();
+  </script>
+
+  <!-- Shared site script — handles theme toggle + color picker on this page;
+       the player/projects/goat blocks are guarded and skipped automatically. -->
+  <script src="../script.js"></script>
+
+</body>
+</html>

@@ -1,8 +1,10 @@
 /* ============================================================
-   Temulen Iveelt — portfolio landing page script
+   Temulen Iveelt — site script
    Two IIFEs:
-     1) Main — music player, theme toggle, projects expand, stripes fade-in
-     2) Goat — hover glow on the decorative goat image
+     1) Main — theme toggle + color picker (always run); music player,
+               projects expand, stripes fade-in (landing-only, guarded
+               by the presence of the <audio id="audio"> element).
+     2) Goat — hover glow on the decorative goat image (self-guarded).
    ============================================================ */
 
 
@@ -12,8 +14,118 @@
 (function() {
   'use strict';
 
-  // ---- DOM refs (all elements the player/theme/projects logic touches) ----
+  // ===== SHARED CHROME (runs on any page with these elements) =====
+
+  var themeToggle = document.getElementById('themeToggle');
+  var themePicker = document.querySelector('.theme-picker');
+  var themePickerToggle = document.getElementById('themePickerToggle');
+  var themePickerMenu = document.getElementById('themePickerMenu');
+  var themeSwatches = document.querySelectorAll('.theme-swatch');
+
+  // Returns the mode-appropriate default theme color — amber for light, forest for dark.
+  function getDefaultColor() {
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'forest' : 'amber';
+  }
+
+  // Apply a color theme to the page. When explicit=true the choice is saved to
+  // localStorage and persists across mode toggles. Auto-defaults are not saved
+  // so that mode switches can re-apply the correct default.
+  function applyThemeColor(color, explicit) {
+    if (color) {
+      document.documentElement.setAttribute('data-color', color);
+      if (explicit) localStorage.setItem('theme-color-explicit', color);
+    } else {
+      document.documentElement.removeAttribute('data-color');
+    }
+    for (var i = 0; i < themeSwatches.length; i++) {
+      var sw = themeSwatches[i];
+      sw.setAttribute('data-active', sw.dataset.themeColor === color ? 'true' : 'false');
+      sw.setAttribute('aria-checked', sw.dataset.themeColor === color ? 'true' : 'false');
+    }
+  }
+
+  // Restore saved light/dark theme on load.
+  var savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    if (themeToggle) themeToggle.innerHTML = '&#9788;';
+  }
+
+  // Apply explicit saved color (or fall back to the mode default).
+  applyThemeColor(localStorage.getItem('theme-color-explicit') || getDefaultColor());
+
+  // ---- Theme toggle wiring ----
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      // Remove + reflow + re-add to restart the rotate animation every click.
+      themeToggle.classList.remove('spinning');
+      void themeToggle.offsetWidth;
+      themeToggle.classList.add('spinning');
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        themeToggle.innerHTML = '&#9790;';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        themeToggle.innerHTML = '&#9788;';
+      }
+      // If the visitor hasn't explicitly chosen a theme color, switch to the
+      // mode-appropriate default: amber in light, forest in dark.
+      if (!localStorage.getItem('theme-color-explicit')) {
+        applyThemeColor(getDefaultColor());
+      }
+      setTimeout(function() { themeToggle.classList.remove('spinning'); }, 400);
+    });
+  }
+
+  // ---- Theme color picker wiring ----
+  if (themePickerToggle && themePickerMenu) {
+    var setPickerOpen = function(open) {
+      if (open) {
+        themePickerMenu.removeAttribute('hidden');
+        themePickerToggle.setAttribute('aria-expanded', 'true');
+      } else {
+        themePickerMenu.setAttribute('hidden', '');
+        themePickerToggle.setAttribute('aria-expanded', 'false');
+      }
+    };
+
+    themePickerToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      setPickerOpen(themePickerMenu.hasAttribute('hidden'));
+    });
+
+    for (var s = 0; s < themeSwatches.length; s++) {
+      themeSwatches[s].addEventListener('click', function() {
+        applyThemeColor(this.dataset.themeColor, true); // explicit = saves to localStorage
+      });
+    }
+
+    // Clicking anywhere outside the picker closes the menu.
+    document.addEventListener('click', function(e) {
+      if (!themePickerMenu.hasAttribute('hidden') && !themePicker.contains(e.target)) {
+        setPickerOpen(false);
+      }
+    });
+
+    // Escape key closes the menu (keyboard parity).
+    document.addEventListener('keydown', function(e) {
+      if (e.code === 'Escape' && !themePickerMenu.hasAttribute('hidden')) {
+        setPickerOpen(false);
+        themePickerToggle.focus();
+      }
+    });
+  }
+
+
+  // ===== LANDING-ONLY (everything below requires the audio player markup) =====
+
   var audio = document.getElementById('audio');
+  if (!audio) return;
+
+  // ---- DOM refs (player + projects) ----
   var playPauseBtn = document.getElementById('playPauseBtn');
   var skipBtn = document.getElementById('skipBtn');
   var playIcon = document.getElementById('playIcon');
@@ -33,11 +145,6 @@
   var projectsToggle = document.getElementById('projectsToggle');
   var projectListWrap = document.getElementById('projectListWrap');
   var projectsHint = document.getElementById('projectsHint');
-  var themeToggle = document.getElementById('themeToggle');
-  var themePicker = document.querySelector('.theme-picker');
-  var themePickerToggle = document.getElementById('themePickerToggle');
-  var themePickerMenu = document.getElementById('themePickerMenu');
-  var themeSwatches = document.querySelectorAll('.theme-swatch');
 
   // ---- Track list ----
   // Paths are relative to index.html (site root). `album` accepts HTML (used for the colored "Synchronicity" title).
@@ -79,104 +186,6 @@
   function skipTrack() {
     loadTrack((currentTrack + 1) % tracks.length, true);
   }
-
-  // ---- Theme toggle ----
-  // Restore saved theme on load; click flips the attribute on <html>, persists to localStorage,
-  // swaps the icon (☾/☀), and triggers a one-shot 360° rotation via the .spinning class.
-  var savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    themeToggle.innerHTML = '&#9788;';
-  }
-
-  themeToggle.addEventListener('click', function() {
-    // Remove + reflow + re-add to restart the rotate animation every click.
-    themeToggle.classList.remove('spinning');
-    void themeToggle.offsetWidth;
-    themeToggle.classList.add('spinning');
-    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    if (isDark) {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
-      themeToggle.innerHTML = '&#9790;';
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-      themeToggle.innerHTML = '&#9788;';
-    }
-    // If the visitor hasn't explicitly chosen a theme color, switch to the
-    // mode-appropriate default: amber in light, forest in dark.
-    if (!localStorage.getItem('theme-color-explicit')) {
-      applyThemeColor(getDefaultColor());
-    }
-    setTimeout(function() { themeToggle.classList.remove('spinning'); }, 400);
-  });
-
-  // ---- Color theme picker ----
-  // Default color is mode-dependent: amber in light mode, forest in dark mode.
-  // Explicit swatch picks are saved separately; until then switching modes auto-
-  // switches the default. Explicit choice persists across mode toggles.
-
-  // Returns the mode-appropriate default — amber for light, forest for dark.
-  function getDefaultColor() {
-    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'forest' : 'amber';
-  }
-
-  // Apply a color theme to the page. When explicit=true the choice is saved to
-  // localStorage and persists across mode toggles. Auto-defaults are not saved
-  // so that mode switches can re-apply the correct default.
-  function applyThemeColor(color, explicit) {
-    if (color) {
-      document.documentElement.setAttribute('data-color', color);
-      if (explicit) localStorage.setItem('theme-color-explicit', color);
-    } else {
-      document.documentElement.removeAttribute('data-color');
-    }
-    for (var i = 0; i < themeSwatches.length; i++) {
-      var sw = themeSwatches[i];
-      sw.setAttribute('data-active', sw.dataset.themeColor === color ? 'true' : 'false');
-      sw.setAttribute('aria-checked', sw.dataset.themeColor === color ? 'true' : 'false');
-    }
-  }
-
-  // On load: use the explicit saved choice, or fall back to the mode default.
-  applyThemeColor(localStorage.getItem('theme-color-explicit') || getDefaultColor());
-
-  function setPickerOpen(open) {
-    if (open) {
-      themePickerMenu.removeAttribute('hidden');
-      themePickerToggle.setAttribute('aria-expanded', 'true');
-    } else {
-      themePickerMenu.setAttribute('hidden', '');
-      themePickerToggle.setAttribute('aria-expanded', 'false');
-    }
-  }
-
-  themePickerToggle.addEventListener('click', function(e) {
-    e.stopPropagation();
-    setPickerOpen(themePickerMenu.hasAttribute('hidden'));
-  });
-
-  for (var s = 0; s < themeSwatches.length; s++) {
-    themeSwatches[s].addEventListener('click', function() {
-      applyThemeColor(this.dataset.themeColor, true); // explicit = saves to localStorage
-    });
-  }
-
-  // Clicking anywhere outside the picker closes the menu.
-  document.addEventListener('click', function(e) {
-    if (!themePickerMenu.hasAttribute('hidden') && !themePicker.contains(e.target)) {
-      setPickerOpen(false);
-    }
-  });
-
-  // Escape key closes the menu (keyboard parity).
-  document.addEventListener('keydown', function(e) {
-    if (e.code === 'Escape' && !themePickerMenu.hasAttribute('hidden')) {
-      setPickerOpen(false);
-      themePickerToggle.focus();
-    }
-  });
 
   // ---- Web Audio API setup (for the frequency-bar visualizer) ----
   // Lazily initialized on first play because browsers require a user gesture.
@@ -503,6 +512,7 @@
    The goat has pointer-events: none (so it doesn't block clicks),
    which means :hover won't fire. Instead we hit-test mouse position
    against its bounding rect and apply the glow via a CSS custom property.
+   Self-guarded: returns early on pages without a .goat.
    ============================================================ */
 (function() {
   'use strict';

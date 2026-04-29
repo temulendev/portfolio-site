@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  POST TEMPLATE — copy this file to blog/posts/<slug>.html for each new post.
+
+  CHECKLIST (search for "POST_" placeholders):
+    1. POST_TITLE         — the headline
+    2. POST_SLUG          — URL slug (matches the filename, lowercase, dash-separated)
+    3. POST_DATE_ISO      — ISO datetime, e.g. 2026-04-28T22:17
+    4. POST_DATE_DISPLAY  — human-readable, e.g. April 28, 2026 · 10:17 PM
+    5. POST_DEK           — 1-2 sentence pitch (also goes in posts.js)
+    6. POST_TAG           — single tag: cribcub | building | findings | personal
+    7. POST_STATUS        — shipped | wip | thinking | abandoned   (or remove if N/A)
+    8. Replace the body inside <div class="post-content"> with your prose.
+    9. Add an entry at the top of blog/posts.js with the same metadata.
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="POST_DEK">
+  <title>POST_TITLE — Temulen Iveelt</title>
+  <link rel="canonical" href="https://temuleniveelt.com/blog/posts/POST_SLUG.html">
+
+  <meta name="post-title"   content="POST_TITLE">
+  <meta name="post-date"    content="POST_DATE_ISO">
+  <meta name="post-tag"     content="POST_TAG">
+  <meta name="post-status"  content="POST_STATUS">
+  <meta name="post-dek"     content="POST_DEK">
+
+  <meta property="og:type"        content="article">
+  <meta property="og:url"         content="https://temuleniveelt.com/blog/posts/POST_SLUG.html">
+  <meta property="og:title"       content="POST_TITLE">
+  <meta property="og:description" content="POST_DEK">
+  <meta property="article:published_time" content="POST_DATE_ISO">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../blog.css">
+</head>
+<body>
+
+  <a class="blog-back" href="../">← Blog</a>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+  <div class="theme-picker">
+    <button class="theme-picker-toggle" id="themePickerToggle" aria-label="Color themes" aria-expanded="false" aria-controls="themePickerMenu" title="Color themes">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+    <div class="theme-picker-menu" id="themePickerMenu" role="menu" hidden>
+      <span class="theme-picker-label">THEMES</span>
+      <button class="theme-swatch" data-theme-color="rose"   role="menuitemradio" aria-label="Rose theme"></button>
+      <button class="theme-swatch" data-theme-color="forest" role="menuitemradio" aria-label="Forest theme"></button>
+      <button class="theme-swatch" data-theme-color="ocean"  role="menuitemradio" aria-label="Ocean theme"></button>
+      <button class="theme-swatch" data-theme-color="amber"  role="menuitemradio" aria-label="Amber theme"></button>
+    </div>
+  </div>
+
+  <main class="blog-page">
+
+    <article class="post-article">
+
+      <h1 class="post-title">POST_TITLE</h1>
+
+      <div class="post-meta">
+        <time datetime="POST_DATE_ISO">POST_DATE_DISPLAY</time>
+        <span class="post-meta-sep">·</span>
+        <span class="post-status" data-status="POST_STATUS">POST_STATUS</span>
+        <span class="post-meta-sep">·</span>
+        <span class="post-tag">POST_TAG</span>
+      </div>
+
+      <div class="post-stripes" aria-hidden="true">
+        <div class="stripe--blue"></div>
+        <div class="stripe--yellow"></div>
+        <div class="stripe--red"></div>
+      </div>
+
+      <!-- ===== BODY — replace everything below with your post ===== -->
+      <div class="post-content">
+
+        <p>Lead paragraph. Hooks the reader. State the thing.</p>
+
+        <p>Supporting context. What did you do, why does it matter, what changed.</p>
+
+        <h2>A subhead, if you need one</h2>
+
+        <p>More prose. <a href="https://example.com">Inline links</a> get the accent color. <em>Italics</em> for emphasis, <strong>bold</strong> when something really matters.</p>
+
+        <blockquote>Pull quotes get a left border in the theme accent. Use sparingly — they earn their weight when they punctuate a turn in the argument.</blockquote>
+
+        <ul>
+          <li>Lists work normally.</li>
+          <li>Each item has a small bottom margin for breathing room.</li>
+        </ul>
+
+        <p>Inline <code>code</code> gets a subtle accent-tinted background. Block code:</p>
+
+        <pre><code>const x = 1;
+console.log(x);</code></pre>
+
+        <hr>
+
+        <p>Closing thought. What's next, what changed, what you're chewing on.</p>
+
+      </div>
+      <!-- ===== END BODY ===== -->
+
+      <footer class="post-footer">
+        <a href="../">← All posts</a>
+        <span>Temulen Iveelt · 2026</span>
+      </footer>
+
+    </article>
+
+  </main>
+
+  <script src="../../script.js"></script>
+
+</body>
+</html>
