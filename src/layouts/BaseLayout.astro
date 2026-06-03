@@ -47,7 +47,7 @@ const {
   <Fragment set:html={extraHead} />
   <slot name="head" />
 </head>
-<body class={bodyClass}>
+<body {...(bodyClass ? { class: bodyClass } : {})}>
   <slot name="before-chrome" />
   <ThemeChrome />
   <slot />

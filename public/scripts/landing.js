@@ -90,8 +90,8 @@
   // instead of snapping to zero. ATTACK/RELEASE control how fast bars rise/fall.
   var smoothed = new Float32Array(NUM_BARS);
   var binRanges = null;
-  var ATTACK = 0.35;
-  var RELEASE = 0.14;
+  var ATTACK = 0.52;
+  var RELEASE = 0.1;
 
   // Precompute which FFT bins feed each bar. Log-spaced so bass doesn't dominate
   // and highs get enough resolution to actually show up.
@@ -102,10 +102,25 @@
     var maxBin = Math.floor(bufLen * 0.75);
     binRanges = [];
     for (var i = 0; i < NUM_BARS; i++) {
-      var start = Math.max(minBin, Math.round(minBin * Math.pow(maxBin / minBin, i / NUM_BARS)));
-      var end   = Math.max(start + 1, Math.round(minBin * Math.pow(maxBin / minBin, (i + 1) / NUM_BARS)));
+      var t0 = i / NUM_BARS;
+      var t1 = (i + 1) / NUM_BARS;
+      var start = Math.max(minBin, Math.round(minBin * Math.pow(maxBin / minBin, t0)));
+      var end = Math.max(start + 1, Math.round(minBin * Math.pow(maxBin / minBin, t1)));
       binRanges.push([start, Math.min(end, bufLen)]);
     }
+  }
+
+  function peakForBar(data, range) {
+    var peak = 0;
+    for (var j = range[0]; j < range[1]; j++) {
+      if (data[j] > peak) peak = data[j];
+    }
+    return peak / 255;
+  }
+
+  function setBarHeight(index, level) {
+    var h = 8 + level * 92;
+    bars[index].style.height = h + '%';
   }
 
   // Seconds → "m:ss" for the LCD time readouts.
@@ -127,8 +142,10 @@
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
       analyser.fftSize = 256;
-      analyser.smoothingTimeConstant = 0.82;
+      analyser.smoothingTimeConstant = 0.55;
+      binRanges = null;
       isSetup = true;
+      computeBinRanges();
     } catch(e) {
       console.warn('Web Audio API not available:', e);
     }
@@ -164,13 +181,13 @@
       for (var i = 0; i < NUM_BARS; i++) {
         smoothed[i] *= 0.78;
         if (smoothed[i] > 0.005) active = true;
-        bars[i].style.height = Math.max(2, smoothed[i] * 100) + '%';
+        setBarHeight(i, smoothed[i]);
       }
       if (active) requestAnimationFrame(decay);
       else {
         for (var j = 0; j < NUM_BARS; j++) {
           smoothed[j] = 0;
-          bars[j].style.height = '2px';
+          bars[j].style.height = '8%';
         }
       }
     })();
@@ -329,40 +346,41 @@
   function visualize() {
     if (!analyser) { randomVisualize(); return; }
     if (!binRanges) computeBinRanges();
-    var bufLen = analyser.frequencyBinCount;
-    var data = new Uint8Array(bufLen);
+    var data = new Uint8Array(analyser.frequencyBinCount);
     function draw() {
       if (audio.paused) return;
       requestAnimationFrame(draw);
       analyser.getByteFrequencyData(data);
+      var targets = new Float32Array(NUM_BARS);
+      var maxT = 0;
       for (var i = 0; i < NUM_BARS; i++) {
-        var r = binRanges[i];
-        var sum = 0;
-        var count = r[1] - r[0];
-        for (var j = r[0]; j < r[1]; j++) sum += data[j];
-        var avg = (sum / count) / 255;
-        // Tilt: boost highs so the spectrum reads evenly across the bar row.
-        var gain = 1 + (i / (NUM_BARS - 1)) * 1.0;
-        var target = Math.min(1, avg * gain);
+        var raw = peakForBar(data, binRanges[i]);
+        targets[i] = Math.pow(raw, 0.65);
+        if (targets[i] > maxT) maxT = targets[i];
+      }
+      var scale = maxT > 0.06 ? 1 / maxT : 1;
+      for (var i = 0; i < NUM_BARS; i++) {
+        var target = Math.min(1, targets[i] * scale);
         var rate = target > smoothed[i] ? ATTACK : RELEASE;
         smoothed[i] += (target - smoothed[i]) * rate;
-        bars[i].style.height = Math.max(2, smoothed[i] * 100) + '%';
+        setBarHeight(i, smoothed[i]);
       }
     }
     draw();
   }
 
-  // Fallback visualizer used when Web Audio isn't available — just noise,
-  // but smoothed through the same attack/release so it still looks alive.
   function randomVisualize() {
+    var phase = 0;
     function draw() {
       if (audio.paused) return;
       requestAnimationFrame(draw);
+      phase += 0.14;
       for (var i = 0; i < NUM_BARS; i++) {
-        var target = Math.random() * 0.7 + 0.1;
+        var wave = (Math.sin(phase + i * 0.42) + 1) * 0.22;
+        var target = Math.min(1, wave + Math.random() * 0.32);
         var rate = target > smoothed[i] ? ATTACK : RELEASE;
         smoothed[i] += (target - smoothed[i]) * rate;
-        bars[i].style.height = Math.max(2, smoothed[i] * 100) + '%';
+        setBarHeight(i, smoothed[i]);
       }
     }
     draw();
@@ -377,5 +395,4 @@
     document.querySelector('.stripe--red').classList.add('visible');
   });
 
-})();
 })();

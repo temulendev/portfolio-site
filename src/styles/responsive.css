@@ -110,6 +110,11 @@
       }
 
       .y2k-player { padding: 14px; }
-      .lcd-title { font-size: 14px; }
+      .lcd-title { font-size: 15px; }
+      .lcd-artist { font-size: 11px; }
+      .lcd-album,
+      .lcd-date,
+      .lcd-track-num,
+      .lcd-time { font-size: 10px; }
     }
 

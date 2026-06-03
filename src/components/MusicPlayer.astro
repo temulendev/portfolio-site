@@ -17,9 +17,9 @@ const totalNum = String(tracks.length).padStart(2, '0');
 ---
 
 <div class="y2k-player" id="player">
-  <div class="player-header" style="justify-content: space-between;">
-    <span class="player-label" style="letter-spacing: 1px; opacity: 1;">(my guitar covers)</span>
-    <div style="display: flex; align-items: center; gap: 6px;">
+  <div class="player-header player-header--split">
+    <span class="player-label player-label--covers">(my guitar covers)</span>
+    <div class="player-header__right">
       <span class="player-label">DIGITAL AUDIO</span>
       <span class="power-led" id="powerLed"></span>
     </div>
@@ -73,10 +73,7 @@ const totalNum = String(tracks.length).padStart(2, '0');
   </div>
 
   <div class="player-footer">
-    <button class="loop-btn" id="loopBtn" aria-label="Toggle loop">
-      <span class="loop-led"></span>
-      LOOP
-    </button>
+          <button class="loop-btn" id="loopBtn" aria-label="Toggle loop"><span class="loop-led"></span> LOOP</button>
     <div class="player-vents" aria-hidden="true">
       <span></span><span></span><span></span><span></span><span></span><span></span>
     </div>

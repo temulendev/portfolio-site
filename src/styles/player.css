@@ -22,12 +22,27 @@
   padding: 0 2px;
 }
 
+.player-header--split {
+  justify-content: space-between;
+}
+
+.player-header__right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .player-label {
   font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 7px;
+  font-size: 9px;
   color: var(--player-label);
   letter-spacing: 2.5px;
   text-transform: uppercase;
+}
+
+.player-label--covers {
+  letter-spacing: 1px;
+  opacity: 1;
 }
 
 .power-led {
@@ -88,7 +103,7 @@
 
 .lcd-artist {
   font-family: 'Courier New', 'Lucida Console', monospace;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--lcd-text-secondary);
   margin-bottom: 2px;
   transition: color 0.3s;
@@ -96,7 +111,7 @@
 
 .lcd-album {
   font-family: 'Courier New', 'Lucida Console', monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--lcd-text-muted);
   font-style: italic;
   margin-bottom: 1px;
@@ -125,14 +140,14 @@
 
 .lcd-date {
   font-family: 'Courier New', 'Lucida Console', monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--lcd-text-muted);
   transition: color 0.3s;
 }
 
 .lcd-track-num {
   font-family: 'Courier New', 'Lucida Console', monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--lcd-text-muted);
   letter-spacing: 0.5px;
   transition: color 0.3s;
@@ -143,17 +158,19 @@
 .lcd-waveform {
   display: flex;
   align-items: flex-end;
-  gap: 1.5px;
-  height: 36px;
+  gap: 2px;
+  height: 44px;
   margin-bottom: 10px;
 }
 
 .waveform-bar {
   flex: 1;
   background: var(--waveform-color);
-  min-height: 2px;
+  min-height: 3px;
+  height: 8%;
   cursor: pointer;
   transition: background 0.3s;
+  transform-origin: bottom;
 }
 
 .y2k-player:not(.playing) .waveform-bar {
@@ -176,9 +193,9 @@
 
 .lcd-time {
   font-family: 'Courier New', 'Lucida Console', monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--lcd-text-muted);
-  min-width: 28px;
+  min-width: 32px;
   transition: color 0.3s;
 }
 
@@ -281,7 +298,7 @@
   border: 1px solid var(--loop-border);
   padding: 4px 10px;
   font-family: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: bold;
   color: var(--loop-color);
   letter-spacing: 2px;

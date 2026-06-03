@@ -1,8 +1,6 @@
 /* Goat hover glow (landing card). */
 (function() {
   'use strict';
-(function() {
-  'use strict';
   var goat = document.querySelector('.goat');
   if (!goat) return;
   var hovered = false;
@@ -21,5 +19,4 @@
       goat.style.opacity = '0.17';
     }
   });
-})();
 })();
