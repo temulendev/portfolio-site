@@ -65,7 +65,30 @@ Open the URL shown in the terminal (usually `http://localhost:4321`).
 
 Pushes to `main` run [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds `dist/` and publishes via GitHub Pages.
 
-**One-time repo setup:** Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+**One-time repo setup:**
+
+1. [Repo Settings → Pages](https://github.com/temulendev/portfolio-site/settings/pages)
+2. **Build and deployment → Source:** **GitHub Actions** (not “Deploy from a branch”)
+3. **Custom domain:** enter `temuleniveelt.com` and click **Save** (required after switching to Actions — GitHub often clears the old binding)
+4. Wait until the DNS check is green, then enable **Enforce HTTPS**
+
+`public/CNAME` is copied into `dist/` on every build so GitHub knows the domain.
+
+### Troubleshooting “There isn’t a GitHub Pages site here”
+
+| Check | What to do |
+|-------|------------|
+| Actions deploy | [Actions tab](https://github.com/temulendev/portfolio-site/actions) → latest **Deploy to GitHub Pages** must be green (build + deploy jobs) |
+| Custom domain | Re-save `temuleniveelt.com` under Settings → Pages (see step 3 above) |
+| Wrong URL | Project URL is `https://temulendev.github.io/portfolio-site/` until the custom domain is linked; `https://temuleniveelt.com/` is the real site |
+| DNS | Apex should use GitHub’s A records (`185.199.108.153` etc.); `www` can CNAME to `temulendev.github.io` |
+| Propagation | After re-saving the domain, allow 5–15 minutes |
+
+The legacy **pages build and deployment** workflow may fail on `main` after the Astro migration (no `index.html` at repo root). That is expected; ignore it if **Deploy to GitHub Pages** succeeds.
+
+### Re-deploy manually
+
+Actions → **Deploy to GitHub Pages** → **Run workflow** → Run on `main`.
 
 ## Parity checklist (before shipping visual changes)
 
