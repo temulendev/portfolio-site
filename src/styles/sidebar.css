@@ -1,9 +1,9 @@
 /* ===== SIDEBAR =====
-   Right column: headshot + name/subtitle, Y2K music player, Now card. */
+   Right column: headshot, skills carousel, player, Now card. */
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: clamp(16px, 2vh, 22px);
   min-width: 0;
   max-width: 100%;
 }

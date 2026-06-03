@@ -1,0 +1,38 @@
+---
+import skills from '../../data/skills.json';
+
+interface Skill {
+  name: string;
+  icon: string;
+}
+
+const skillList = skills as Skill[];
+const marqueeItems = [...skillList, ...skillList];
+
+function iconSrc(filename: string) {
+  return `/icons/${filename.includes('.') ? filename : `${filename}.svg`}`;
+}
+---
+
+<section class="skills-carousel" aria-labelledby="skills-heading">
+  <h2 class="skills-title" id="skills-heading">MY TECHNICAL STACK</h2>
+  <div class="skills-carousel-viewport">
+    <div class="skills-carousel-track" aria-hidden="true">
+      {marqueeItems.map((skill) => (
+        <div class="skills-carousel-item">
+          <img
+            class={`skills-carousel-icon${skill.icon.endsWith('.png') ? ' skills-carousel-icon--round' : ''}`}
+            src={iconSrc(skill.icon)}
+            alt=""
+            width="28"
+            height="28"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="skills-carousel-label">{skill.name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+  <p class="skills-carousel-sr">{skillList.map((s) => s.name).join(', ')}</p>
+</section>

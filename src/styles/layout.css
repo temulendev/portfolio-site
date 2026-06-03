@@ -3,9 +3,9 @@
 .container {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 55px;
+  gap: clamp(28px, 3vh, 48px);
   max-width: 960px;
-  margin: 55px auto;
+  margin: clamp(28px, 4vh, 48px) auto;
   padding: 0 32px;
   align-items: start;
 }

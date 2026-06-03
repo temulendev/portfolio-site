@@ -11,7 +11,7 @@
 }
 
 .card-body {
-  padding: 29px 33px 66px;
+  padding: 29px 33px clamp(44px, 5vw, 58px);
   position: relative;
   z-index: 1;
 }
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 29px;
+  margin-bottom: clamp(20px, 2.5vw, 26px);
   position: relative;
   z-index: 1;
 }
@@ -55,7 +55,7 @@
 
 /* Sections inside the card (What I'm Up To, Projects, Resume, Contact). */
 .section {
-  margin-bottom: 29px;
+  margin-bottom: clamp(20px, 2.5vw, 26px);
 }
 
 .section:last-child {

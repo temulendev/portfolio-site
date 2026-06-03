@@ -11,6 +11,7 @@ The site is built with [Astro](https://astro.build). Source lives under `src/`; 
 | Projects list | [`data/projects.json`](data/projects.json) |
 | Now card | [`data/now.json`](data/now.json) |
 | Blog index entries | [`data/blog-posts.json`](data/blog-posts.json) |
+| Tech stack carousel | [`data/skills.json`](data/skills.json) + SVG files in [`public/icons/`](public/icons/) |
 
 After changing JSON, run `npm run build` (or `npm run dev` for local preview).
 

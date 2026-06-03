@@ -1,0 +1,9 @@
+[
+  { "name": "Java", "icon": "java" },
+  { "name": "HTML", "icon": "html5" },
+  { "name": "CSS", "icon": "css3" },
+  { "name": "Lua", "icon": "lua" },
+  { "name": "Figma", "icon": "figma" },
+  { "name": "Ableton", "icon": "ableton.png" },
+  { "name": "Git", "icon": "git" }
+]

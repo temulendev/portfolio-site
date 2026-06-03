@@ -1,6 +1,6 @@
 /* ===== REDUCED MOTION =====
    Honors OS-level "reduce motion" preference. Kills the breathe LED,
-   idlePulse waveform, theme-toggle spin, stripes fade-in transition,
+   idlePulse waveform, skills marquee, theme-toggle spin, stripes fade-in transition,
    project expand animation, and goat zoom. Stripes get forced to opacity:1
    so they remain visible even if the .visible class hasn't been added yet. */
 @media (prefers-reduced-motion: reduce) {
@@ -10,4 +10,17 @@
     transition-duration: 0.01ms !important;
   }
   .stripe--blue, .stripe--yellow, .stripe--red { opacity: 1; }
+
+  .skills-carousel-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 28px 40px;
+  }
+
+  .skills-carousel-viewport {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 }
