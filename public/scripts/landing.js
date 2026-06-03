@@ -27,6 +27,42 @@
 
   var tracks = window.__TRACKS__ || [];
   var currentTrack = typeof window.__DEFAULT_TRACK_INDEX__ === 'number' ? window.__DEFAULT_TRACK_INDEX__ : 0;
+  var killswitchVideo = document.getElementById('killswitchVideo');
+
+  function currentTrackHasVideo() {
+    var t = tracks[currentTrack];
+    return !!(t && t.video);
+  }
+
+  function syncVideoTime() {
+    if (!killswitchVideo || !currentTrackHasVideo() || !audio.duration) return;
+    var target = audio.currentTime % (killswitchVideo.duration || audio.duration);
+    if (isFinite(target) && Math.abs(killswitchVideo.currentTime - target) > 0.3) {
+      killswitchVideo.currentTime = target;
+    }
+  }
+
+  function syncVideoPlayback() {
+    if (!killswitchVideo) return;
+    if (!currentTrackHasVideo() || audio.paused) {
+      killswitchVideo.classList.remove('is-active');
+      killswitchVideo.pause();
+      return;
+    }
+    killswitchVideo.classList.add('is-active');
+    syncVideoTime();
+    var playPromise = killswitchVideo.play();
+    if (playPromise && playPromise.catch) {
+      playPromise.catch(function() {});
+    }
+  }
+
+  function hideVideo() {
+    if (!killswitchVideo) return;
+    killswitchVideo.classList.remove('is-active');
+    killswitchVideo.pause();
+  }
+
   // Zero-pad a number to 2 digits ("1" → "01"). Used for the LCD track-number readout.
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
@@ -47,6 +83,10 @@
     progressTrack.setAttribute('aria-valuenow', '0');
     currentTimeEl.textContent = '0:00';
     totalTimeEl.textContent = '0:00';
+    hideVideo();
+    if (tracks[currentTrack].video && killswitchVideo) {
+      killswitchVideo.currentTime = 0;
+    }
     if (autoplay || wasPlaying) {
       audio.play();
     }
@@ -166,6 +206,7 @@
     playIcon.style.display = 'none';
     pauseIcon.style.display = 'block';
     player.classList.add('playing');
+    syncVideoPlayback();
     visualize();
   });
 
@@ -175,6 +216,7 @@
     playIcon.style.display = 'block';
     pauseIcon.style.display = 'none';
     player.classList.remove('playing');
+    hideVideo();
     (function decay() {
       if (!audio.paused) return;
       var active = false;
@@ -208,6 +250,7 @@
     progressFill.style.width = (pct * 100) + '%';
     currentTimeEl.textContent = formatTime(audio.currentTime);
     progressTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
+    if (currentTrackHasVideo() && !audio.paused) syncVideoTime();
   });
 
   audio.addEventListener('loadedmetadata', function() {
@@ -227,6 +270,7 @@
     progressFill.style.width = (pct * 100) + '%';
     currentTimeEl.textContent = formatTime(audio.currentTime);
     progressTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
+    if (currentTrackHasVideo()) syncVideoTime();
   }
 
   function seekTo(clientX) {

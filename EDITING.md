@@ -6,7 +6,7 @@ The site is built with [Astro](https://astro.build). Source lives under `src/`; 
 
 | What | File |
 |------|------|
-| Music tracks | [`data/tracks.json`](data/tracks.json) |
+| Music tracks | [`data/tracks.json`](data/tracks.json) (optional `"video": "/file.mov"` per track) |
 | Default track on load | [`data/player.json`](data/player.json) (`defaultTrackIndex`, 0-based) |
 | Projects list | [`data/projects.json`](data/projects.json) |
 | Now card | [`data/now.json`](data/now.json) |
@@ -45,6 +45,8 @@ Visual rules and tokens: [`DESIGN.md`](DESIGN.md).
 | [`src/scripts/goat.js`](src/scripts/goat.js) | Goat hover glow (home only) |
 
 Run `npm run build:assets` after editing so `public/scripts/` stays in sync.
+
+Track videos (e.g. Killswitch) live in [`public/`](public/) and play muted behind the waveform only while that track is playing.
 
 ## New blog post
 
@@ -98,3 +100,4 @@ Actions → **Deploy to GitHub Pages** → **Run workflow** → Run on `main`.
 - [ ] Player: default track, play/pause, skip, loop, seek, waveform, title glitch
 - [ ] Blog index and post pages; back links
 - [ ] Resume download and external links
+Here to push

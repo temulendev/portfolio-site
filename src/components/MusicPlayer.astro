@@ -34,7 +34,19 @@ const totalNum = String(tracks.length).padStart(2, '0');
         <span class="lcd-date" id="lcdDate">{initial.date}</span>
         <span class="lcd-track-num" id="lcdTrackNum">{trackNum}/{totalNum}</span>
       </div>
-      <div class="lcd-waveform" id="waveform"></div>
+      <div class="lcd-waveform" id="waveform">
+        <video
+          id="killswitchVideo"
+          class="lcd-waveform-video"
+          muted
+          playsinline
+          loop
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source src="/killswitch.mov" type="video/quicktime" />
+        </video>
+      </div>
       <div class="lcd-progress">
         <span class="lcd-time" id="currentTime">0:00</span>
         <div
