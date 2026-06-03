@@ -150,7 +150,8 @@
   // Paths are relative to index.html (site root). `album` accepts HTML (used for the colored "Synchronicity" title).
   var tracks = [
     { src: 'angelIns.mp3', title: 'angel.mp3', artist: 'Temulen Iveelt', album: '', date: '12.31.2025' },
-    { src: 'everybreathyoutake.mp3', title: 'Every Breath You Take.mp3', artist: 'Temulen Iveelt', album: 'The Police — <span class="sync-blue">Synch</span><span class="sync-yellow">roni</span><span class="sync-red">city</span>', date: '07.30.2025' }
+    { src: 'everybreathyoutake.mp3', title: 'Every Breath You Take.mp3', artist: 'Temulen Iveelt', album: 'The Police — <span class="sync-blue">Synch</span><span class="sync-yellow">roni</span><span class="sync-red">city</span>', date: '07.30.2025' },
+    { src: 'killswitch.mp3', title: 'Killswitch Lullaby.mp3', artist: 'Temulen Iveelt', album: '', date: '06.02.2026' }
   ];
   var currentTrack = 0;
 
