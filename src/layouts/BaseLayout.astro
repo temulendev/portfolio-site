@@ -1,0 +1,61 @@
+---
+import ThemeChrome from '../components/ThemeChrome.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogType?: string;
+  ogImage?: string;
+  includeLandingScripts?: boolean;
+  extraHead?: string;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogType = 'website',
+  ogImage = 'https://temuleniveelt.com/headshot.webp',
+  includeLandingScripts = false,
+  extraHead = '',
+  bodyClass = '',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="canonical" href={canonical} />
+
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <Fragment set:html={extraHead} />
+  <slot name="head" />
+</head>
+<body class={bodyClass}>
+  <slot name="before-chrome" />
+  <ThemeChrome />
+  <slot />
+  {includeLandingScripts && (
+    <>
+      <script src="/scripts/landing.js" is:inline></script>
+      <script src="/scripts/goat.js" is:inline></script>
+    </>
+  )}
+</body>
+</html>

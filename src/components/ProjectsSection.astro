@@ -1,0 +1,31 @@
+---
+import projects from '../../data/projects.json';
+
+interface Project {
+  name: string;
+  url: string;
+  desc: string;
+  stack: string | null;
+}
+---
+
+<div class="section">
+  <h2>
+    <button class="projects-toggle" id="projectsToggle" aria-expanded="false" aria-controls="projectListWrap">
+      Projects <span class="projects-hint" id="projectsHint">(click)</span>
+    </button>
+  </h2>
+  <div class="project-list-wrap" id="projectListWrap">
+    <ul class="project-list">
+      {(projects as Project[]).map((project) => (
+        <li class="project-item">
+          <div class="project-info">
+            <a href={project.url} target="_blank" rel="noopener">{project.name}</a>
+            <div class="project-desc">{project.desc}</div>
+            {project.stack && <div class="project-stack">{project.stack}</div>}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

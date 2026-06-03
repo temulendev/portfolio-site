@@ -1,0 +1,56 @@
+---
+/**
+ * Copy to: src/pages/blog/posts/<slug>.html.astro
+ * Add matching entry in data/blog-posts.json
+ */
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+
+const title = 'Post Title';
+const description = 'One-line summary for meta and the blog index.';
+const canonical = 'https://temuleniveelt.com/blog/posts/your-slug.html';
+const dateIso = '2026-01-01T12:00';
+const dateLabel = 'January 1, 2026 · 12:00 PM';
+const tag = 'cribcub';
+const status = 'shipped';
+---
+
+<BlogLayout
+  title={`${title} — Temulen Iveelt`}
+  description={description}
+  canonical={canonical}
+  ogType="article"
+>
+  <meta slot="head" name="post-title" content={title} />
+  <meta slot="head" name="post-date" content={dateIso} />
+  <meta slot="head" name="post-tag" content={tag} />
+  <meta slot="head" name="post-status" content={status} />
+  <meta slot="head" name="post-dek" content={description} />
+  <meta slot="head" property="article:published_time" content={dateIso} />
+
+  <article class="post-article">
+    <h1 class="post-title">{title}</h1>
+
+    <div class="post-meta">
+      <time datetime={dateIso}>{dateLabel}</time>
+      <span class="post-meta-sep">·</span>
+      <span class="post-status" data-status={status}>{status}</span>
+      <span class="post-meta-sep">·</span>
+      <span class="post-tag">{tag}</span>
+    </div>
+
+    <div class="post-stripes" aria-hidden="true">
+      <div class="stripe--blue"></div>
+      <div class="stripe--yellow"></div>
+      <div class="stripe--red"></div>
+    </div>
+
+    <div class="post-content">
+      <p>Your post body here.</p>
+    </div>
+
+    <footer class="post-footer">
+      <a href="/blog/">← All posts</a>
+      <span>Temulen Iveelt · 2026</span>
+    </footer>
+  </article>
+</BlogLayout>

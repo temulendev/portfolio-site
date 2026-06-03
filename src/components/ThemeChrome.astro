@@ -1,0 +1,22 @@
+---
+/* Dark-mode toggle + color theme picker (fixed top-right). */
+---
+
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+
+<div class="theme-picker">
+  <button class="theme-picker-toggle" id="themePickerToggle" aria-label="Color themes" aria-expanded="false" aria-controls="themePickerMenu" title="Color themes">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+  </button>
+  <div class="theme-picker-menu" id="themePickerMenu" role="menu" hidden>
+    <span class="theme-picker-label">THEMES</span>
+    <button class="theme-swatch" data-theme-color="rose" role="menuitemradio" aria-label="Rose theme"></button>
+    <button class="theme-swatch" data-theme-color="forest" role="menuitemradio" aria-label="Forest theme"></button>
+    <button class="theme-swatch" data-theme-color="ocean" role="menuitemradio" aria-label="Ocean theme"></button>
+    <button class="theme-swatch" data-theme-color="amber" role="menuitemradio" aria-label="Amber theme"></button>
+  </div>
+</div>
+
+<script src="/scripts/theme.js" is:inline></script>

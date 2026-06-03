@@ -1,0 +1,28 @@
+/* ===== SKILLS STRIP =====
+   "MY TECHNICAL STACK" heading + space-separated skill list under the main grid. */
+.skills-title {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 960px;
+  margin: 80px auto 20px;
+  padding: 0 32px;
+  transition: color 0.3s;
+}
+
+.skills-strip {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto 8px;
+  padding: 0 32px;
+  transition: color 0.3s;
+}
+

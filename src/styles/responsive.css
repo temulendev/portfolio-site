@@ -1,0 +1,115 @@
+/* ===== RESPONSIVE =====
+   ≤820px: single column, sidebar items reflow so profile sits above card. */
+
+    @media (max-width: 820px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin: 32px auto;
+        padding: 0 20px;
+        max-width: 480px;
+      }
+
+      /* display:contents lets sidebar children participate directly in the grid
+         so we can reorder them (profile first, player/now after the card). */
+      .sidebar {
+        display: contents;
+      }
+
+      .profile { order: -1; }
+      .card { order: 0; }
+      .y2k-player { order: 10; }
+      .now-card { order: 11; max-width: 360px; margin: 0 auto; width: 100%; }
+      .skills-title { padding: 0 20px; margin-top: 60px; }
+      .skills-strip { padding: 0 20px; }
+
+
+      .headshot-wrap {
+        width: 200px;
+        height: 200px;
+      }
+
+      .name { font-size: 24px; }
+      .card-body { padding: 24px 26px 55px; }
+      .section h2 { font-size: 23px; }
+      .y2k-player {
+        max-width: 360px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .theme-toggle {
+        top: 14px;
+        right: 14px;
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+      }
+
+      .theme-picker {
+        top: 50px;  /* 14 + 30 + 6 gap */
+        right: 14px;
+      }
+
+      .theme-picker-toggle {
+        width: 30px;
+        height: 30px;
+      }
+
+      .theme-picker-toggle span { width: 14px; }
+
+      .theme-picker-menu {
+        width: 38px;
+        top: 34px;
+      }
+
+      .theme-swatch { width: 24px; height: 24px; }
+    }
+
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      text-align: center;
+      padding: 32px 20px 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+    }
+
+    /* ≤480px: tighter padding, smaller headshot, resume row stacks vertically. */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 16px;
+        margin: 24px auto;
+      }
+      .skills-title { padding: 0 16px; }
+      .skills-strip { padding: 0 16px; }
+
+      .headshot-wrap {
+        width: 170px;
+        height: 170px;
+      }
+
+      .name { font-size: 22px; }
+      .card-body { padding: 20px 22px 50px; }
+      .section h2 { font-size: 21px; }
+      .flag-stripes { margin-bottom: 22px; }
+      .section { margin-bottom: 24px; }
+
+      .resume-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .resume-thumb { width: 110px; }
+
+      .project-item::before {
+        width: 35px;
+        margin-right: 10px;
+      }
+
+      .y2k-player { padding: 14px; }
+      .lcd-title { font-size: 14px; }
+    }
+

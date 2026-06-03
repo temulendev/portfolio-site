@@ -1,0 +1,56 @@
+/* ============================================================
+   Temulen Iveelt — portfolio landing page styles
+   Design tokens live on :root (light) and [data-theme="dark"].
+   ============================================================ */
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Light-mode design tokens (default). Every color used by the page
+   is declared here so the dark-mode block below only needs to override. */
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --card-bg: #f7f7f7;
+  --card-border: #d0d0d0;
+  --heading-color: #1a1a1a;
+  --dash-color: #bbb;
+  /* Player — light mode */
+  --player-bg: #e6e6e8;
+  --player-border: #c8c8cc;
+  --lcd-bg: #d8d8db;
+  --lcd-border: #bbbbbe;
+  --lcd-text: #1a1a1a;
+  --lcd-text-secondary: #444;
+  --lcd-text-muted: #777;
+  --player-btn-bg: #d5d5d8;
+  --player-btn-border: #b0b0b4;
+  --player-btn-color: #555;
+  --player-btn-hover: #cccccf;
+  --player-btn-active: #c0c0c3;
+  --waveform-color: #1a1a1a;
+  --waveform-idle: #aaa;
+  --progress-track-bg: #c0c0c3;
+  --progress-fill-color: #1a1a1a;
+  --player-label: #999;
+  --led-idle: #aaa;
+  --led-active: #1a1a1a;
+  --loop-bg: #d5d5d8;
+  --loop-border: #b0b0b4;
+  --loop-color: #888;
+  --loop-active: #1a1a1a;
+  --vent-color: #c8c8cc;
+  --scanline-color: rgba(0,0,0,0.04);
+
+  /* Accent tokens drive color-pops on player interactions + progress gradient + borders.
+     --accent is dark enough to read on white (≥4.5:1 contrast). --accent-alt is a lighter
+     complementary shade used only for gradient endpoints, never for text.
+     --goat-filter-theme shifts the goat image hue to match the chosen theme.
+     Defaults match "Amber" — the light-mode default. JS overrides to "Forest" in dark mode. */
+  --accent:            #a07030;
+  --accent-alt:        #d9bc6c;
+  --goat-filter-theme: hue-rotate(-10deg) saturate(1.2);
+}
+

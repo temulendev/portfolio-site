@@ -1,0 +1,93 @@
+/* ===== THEME COLOR PICKER =====
+   Hamburger button below the sun/moon toggle; clicking it reveals a narrow
+   vertical dropdown with 4 color-theme swatches. Active theme highlighted. */
+.theme-picker {
+  position: fixed;
+  top: 62px;          /* theme-toggle top(20) + size(34) + gap(8) */
+  right: 20px;
+  z-index: 100;
+}
+
+.theme-picker-toggle {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.theme-picker-toggle:hover {
+  border-color: var(--text-secondary);
+}
+
+.theme-picker-toggle span {
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  display: block;
+  transition: background 0.3s;
+}
+
+/* Dropdown extends slightly beyond the toggle width for breathing room. */
+.theme-picker-menu {
+  position: absolute;
+  top: 38px;
+  right: 0;
+  width: 40px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 8px 6px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.theme-picker-menu[hidden] {
+  display: none;
+}
+
+.theme-picker-label {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 9px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  transition: color 0.3s;
+}
+
+/* Each swatch is a small square filled with its theme's gradient preview. */
+.theme-swatch {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--card-border);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.2s, box-shadow 0.2s;
+}
+
+.theme-swatch:hover {
+  transform: scale(1.1);
+  border-color: var(--text-secondary);
+}
+
+/* Active theme gets a heavier border so you can see which one is applied. */
+.theme-swatch[data-active="true"] {
+  border-color: var(--heading-color);
+  box-shadow: 0 0 0 1px var(--heading-color);
+}
+
+.theme-swatch[data-theme-color="rose"]   { background: linear-gradient(135deg, #d9839f, #e8a27c); }
+.theme-swatch[data-theme-color="forest"] { background: linear-gradient(135deg, #7aa884, #adbd66); }
+.theme-swatch[data-theme-color="ocean"]  { background: linear-gradient(135deg, #6f8cc2, #a3c1dc); }
+.theme-swatch[data-theme-color="amber"]  { background: linear-gradient(135deg, #c89058, #d9bc6c); }
+

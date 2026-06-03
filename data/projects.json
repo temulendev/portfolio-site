@@ -1,0 +1,20 @@
+[
+  {
+    "name": "CribCub",
+    "url": "https://www.cribcub.com",
+    "desc": "Making dorming at college an easier experience for university administration, resident advisors, and students.",
+    "stack": null
+  },
+  {
+    "name": "LinkedIn Note Generator",
+    "url": "https://linkedin-connector-one.vercel.app/",
+    "desc": "Personalized connection notes from LinkedIn profiles",
+    "stack": "Next.js, Vercel, OpenAI API"
+  },
+  {
+    "name": "Banking App",
+    "url": "https://github.com/temulendev/console-banking-system",
+    "desc": "PIN verification, deposit/withdraw/view balance, interest calculation",
+    "stack": "Java, CLI"
+  }
+]

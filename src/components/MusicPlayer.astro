@@ -1,0 +1,89 @@
+---
+import tracks from '../../data/tracks.json';
+import playerConfig from '../../data/player.json';
+
+interface Track {
+  src: string;
+  title: string;
+  artist: string;
+  album: string;
+  date: string;
+}
+
+const defaultTrackIndex = playerConfig.defaultTrackIndex;
+const initial = (tracks as Track[])[defaultTrackIndex];
+const trackNum = String(defaultTrackIndex + 1).padStart(2, '0');
+const totalNum = String(tracks.length).padStart(2, '0');
+---
+
+<div class="y2k-player" id="player">
+  <div class="player-header" style="justify-content: space-between;">
+    <span class="player-label" style="letter-spacing: 1px; opacity: 1;">(my guitar covers)</span>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span class="player-label">DIGITAL AUDIO</span>
+      <span class="power-led" id="powerLed"></span>
+    </div>
+  </div>
+
+  <div class="lcd-screen">
+    <div class="lcd-content">
+      <div class="lcd-title" id="lcdTitle">{initial.title}</div>
+      <div class="lcd-artist" id="lcdArtist">{initial.artist}</div>
+      <div class="lcd-album" id="lcdAlbum" set:html={initial.album} />
+      <div class="lcd-date-row">
+        <span class="lcd-date" id="lcdDate">{initial.date}</span>
+        <span class="lcd-track-num" id="lcdTrackNum">{trackNum}/{totalNum}</span>
+      </div>
+      <div class="lcd-waveform" id="waveform"></div>
+      <div class="lcd-progress">
+        <span class="lcd-time" id="currentTime">0:00</span>
+        <div
+          class="progress-track"
+          id="progressTrack"
+          role="slider"
+          tabindex="0"
+          aria-label="Seek"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span class="lcd-time" id="totalTime">0:00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="transport">
+    <button class="transport-btn" id="playPauseBtn" title="Play / Pause" aria-label="Play or Pause">
+      <svg width="14" height="14" viewBox="0 0 14 14" id="playIcon">
+        <polygon points="3,1 3,13 12,7" fill="currentColor"></polygon>
+      </svg>
+      <svg width="14" height="14" viewBox="0 0 14 14" id="pauseIcon" style="display:none">
+        <rect x="2" y="1" width="3.5" height="12" fill="currentColor"></rect>
+        <rect x="8.5" y="1" width="3.5" height="12" fill="currentColor"></rect>
+      </svg>
+    </button>
+    <button class="transport-btn" id="skipBtn" title="Next track" aria-label="Next track">
+      <svg width="14" height="14" viewBox="0 0 14 14">
+        <polygon points="1,1 1,13 8,7" fill="currentColor"></polygon>
+        <rect x="9" y="1" width="3" height="12" fill="currentColor"></rect>
+      </svg>
+    </button>
+  </div>
+
+  <div class="player-footer">
+    <button class="loop-btn" id="loopBtn" aria-label="Toggle loop">
+      <span class="loop-led"></span>
+      LOOP
+    </button>
+    <div class="player-vents" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ tracks, defaultTrackIndex }}>
+  window.__TRACKS__ = tracks;
+  window.__DEFAULT_TRACK_INDEX__ = defaultTrackIndex;
+</script>

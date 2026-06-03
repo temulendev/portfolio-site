@@ -1,0 +1,54 @@
+---
+import ProjectsSection from './ProjectsSection.astro';
+---
+
+<section class="card">
+  <div class="card-body">
+    <div class="flag-stripes">
+      <img src="/usaflag.png" alt="US flag" class="flag-img" loading="lazy" />
+      <img src="/mongolianflag.png" alt="Mongolian flag" class="flag-img" loading="lazy" />
+      <div class="stripes" aria-hidden="true">
+        <div class="stripe--blue"></div>
+        <div class="stripe--yellow"></div>
+        <div class="stripe--red"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>What I'm Up To</h2>
+      <p>I am a rising sophomore in college trying to learn everything I can to make useful products. Right now, I'm working with two of my very smart friends on a site that turns college housing into a tight-knit digital community. We call it <a href="https://www.cribcub.com" target="_blank" rel="noopener">CribCub</a>. I can also be found playing a bunch of songs on my Fender and even posting recordings to Instagram. <a href="https://www.instagram.com/temuleniveelt" target="_blank" rel="noopener">@temuleniveelt</a> if you're curious!</p>
+    </div>
+
+    <ProjectsSection />
+
+    <div class="section">
+      <h2>Blog</h2>
+      <p>Notes on building CribCub, ventures, and findings worth sharing. <a href="/blog/">Read →</a></p>
+    </div>
+
+    <div class="section">
+      <h2>Resume</h2>
+      <div class="resume-row">
+        <a href="/Temulen_Resume.pdf" download>
+          <img src="/resumepreview.png" alt="Resume preview" class="resume-thumb" loading="lazy" />
+        </a>
+        <div class="resume-meta">
+          <span class="resume-status">Status: Up to date!</span>
+          <span class="resume-date">Last updated: May 2026</span>
+          <a href="/Temulen_Resume.pdf" download class="resume-download">Click to download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Contact</h2>
+      <div class="contact-list">
+        <a href="mailto:temulen.iveelt@gmail.com">temulen.iveelt@gmail.com</a>
+        <a href="https://www.linkedin.com/in/temulen-iveelt/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/temulendev" target="_blank" rel="noopener">GitHub (@temulendev)</a>
+      </div>
+    </div>
+  </div>
+
+  <img src="/goatYellow.png" alt="" class="goat" aria-hidden="true" loading="lazy" />
+</section>

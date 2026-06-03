@@ -1,127 +1,6 @@
-/* ============================================================
-   Temulen Iveelt — site script
-   Two IIFEs:
-     1) Main — theme toggle + color picker (always run); music player,
-               projects expand, stripes fade-in (landing-only, guarded
-               by the presence of the <audio id="audio"> element).
-     2) Goat — hover glow on the decorative goat image (self-guarded).
-   ============================================================ */
-
-
-/* ============================================================
-   1) MAIN IIFE
-   ============================================================ */
+/* Landing: music player, projects expand, stripes fade-in. */
 (function() {
   'use strict';
-
-  // ===== SHARED CHROME (runs on any page with these elements) =====
-
-  var themeToggle = document.getElementById('themeToggle');
-  var themePicker = document.querySelector('.theme-picker');
-  var themePickerToggle = document.getElementById('themePickerToggle');
-  var themePickerMenu = document.getElementById('themePickerMenu');
-  var themeSwatches = document.querySelectorAll('.theme-swatch');
-
-  // Returns the mode-appropriate default theme color — amber for light, forest for dark.
-  function getDefaultColor() {
-    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'forest' : 'amber';
-  }
-
-  // Apply a color theme to the page. When explicit=true the choice is saved to
-  // localStorage and persists across mode toggles. Auto-defaults are not saved
-  // so that mode switches can re-apply the correct default.
-  function applyThemeColor(color, explicit) {
-    if (color) {
-      document.documentElement.setAttribute('data-color', color);
-      if (explicit) localStorage.setItem('theme-color-explicit', color);
-    } else {
-      document.documentElement.removeAttribute('data-color');
-    }
-    for (var i = 0; i < themeSwatches.length; i++) {
-      var sw = themeSwatches[i];
-      sw.setAttribute('data-active', sw.dataset.themeColor === color ? 'true' : 'false');
-      sw.setAttribute('aria-checked', sw.dataset.themeColor === color ? 'true' : 'false');
-    }
-  }
-
-  // Restore saved light/dark theme on load.
-  var savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    if (themeToggle) themeToggle.innerHTML = '&#9788;';
-  }
-
-  // Apply explicit saved color (or fall back to the mode default).
-  applyThemeColor(localStorage.getItem('theme-color-explicit') || getDefaultColor());
-
-  // ---- Theme toggle wiring ----
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function() {
-      // Remove + reflow + re-add to restart the rotate animation every click.
-      themeToggle.classList.remove('spinning');
-      void themeToggle.offsetWidth;
-      themeToggle.classList.add('spinning');
-      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-        themeToggle.innerHTML = '&#9790;';
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        themeToggle.innerHTML = '&#9788;';
-      }
-      // If the visitor hasn't explicitly chosen a theme color, switch to the
-      // mode-appropriate default: amber in light, forest in dark.
-      if (!localStorage.getItem('theme-color-explicit')) {
-        applyThemeColor(getDefaultColor());
-      }
-      setTimeout(function() { themeToggle.classList.remove('spinning'); }, 400);
-    });
-  }
-
-  // ---- Theme color picker wiring ----
-  if (themePickerToggle && themePickerMenu) {
-    var setPickerOpen = function(open) {
-      if (open) {
-        themePickerMenu.removeAttribute('hidden');
-        themePickerToggle.setAttribute('aria-expanded', 'true');
-      } else {
-        themePickerMenu.setAttribute('hidden', '');
-        themePickerToggle.setAttribute('aria-expanded', 'false');
-      }
-    };
-
-    themePickerToggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      setPickerOpen(themePickerMenu.hasAttribute('hidden'));
-    });
-
-    for (var s = 0; s < themeSwatches.length; s++) {
-      themeSwatches[s].addEventListener('click', function() {
-        applyThemeColor(this.dataset.themeColor, true); // explicit = saves to localStorage
-      });
-    }
-
-    // Clicking anywhere outside the picker closes the menu.
-    document.addEventListener('click', function(e) {
-      if (!themePickerMenu.hasAttribute('hidden') && !themePicker.contains(e.target)) {
-        setPickerOpen(false);
-      }
-    });
-
-    // Escape key closes the menu (keyboard parity).
-    document.addEventListener('keydown', function(e) {
-      if (e.code === 'Escape' && !themePickerMenu.hasAttribute('hidden')) {
-        setPickerOpen(false);
-        themePickerToggle.focus();
-      }
-    });
-  }
-
-
-  // ===== LANDING-ONLY (everything below requires the audio player markup) =====
-
   var audio = document.getElementById('audio');
   if (!audio) return;
 
@@ -146,15 +25,8 @@
   var projectListWrap = document.getElementById('projectListWrap');
   var projectsHint = document.getElementById('projectsHint');
 
-  // ---- Track list ----
-  // Paths are relative to index.html (site root). `album` accepts HTML (used for the colored "Synchronicity" title).
-  var tracks = [
-    { src: 'angelIns.mp3', title: 'angel.mp3', artist: 'Temulen Iveelt', album: '', date: '12.31.2025' },
-    { src: 'everybreathyoutake.mp3', title: 'Every Breath You Take.mp3', artist: 'Temulen Iveelt', album: 'The Police — <span class="sync-blue">Synch</span><span class="sync-yellow">roni</span><span class="sync-red">city</span>', date: '07.30.2025' },
-    { src: 'killswitch.mp3', title: 'Killswitch Lullaby.mp3', artist: 'Temulen Iveelt', album: '', date: '06.02.2026' }
-  ];
-  var currentTrack = 2;
-
+  var tracks = window.__TRACKS__ || [];
+  var currentTrack = typeof window.__DEFAULT_TRACK_INDEX__ === 'number' ? window.__DEFAULT_TRACK_INDEX__ : 0;
   // Zero-pad a number to 2 digits ("1" → "01"). Used for the LCD track-number readout.
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
@@ -506,33 +378,4 @@
   });
 
 })();
-
-
-/* ============================================================
-   2) GOAT HOVER GLOW
-   The goat has pointer-events: none (so it doesn't block clicks),
-   which means :hover won't fire. Instead we hit-test mouse position
-   against its bounding rect and apply the glow via a CSS custom property.
-   Self-guarded: returns early on pages without a .goat.
-   ============================================================ */
-(function() {
-  'use strict';
-  var goat = document.querySelector('.goat');
-  if (!goat) return;
-  var hovered = false;
-  document.addEventListener('mousemove', function(e) {
-    var r = goat.getBoundingClientRect();
-    var over = e.clientX >= r.left && e.clientX <= r.right &&
-               e.clientY >= r.top  && e.clientY <= r.bottom;
-    if (over === hovered) return;
-    hovered = over;
-    if (over) {
-      goat.style.setProperty('--goat-glow',
-        'drop-shadow(0 0 16px rgba(255,255,255,0.4)) drop-shadow(0 0 6px rgba(255,255,255,0.2))');
-      goat.style.opacity = '0.3';
-    } else {
-      goat.style.setProperty('--goat-glow', 'drop-shadow(0 0 0 transparent)');
-      goat.style.opacity = '0.17';
-    }
-  });
 })();

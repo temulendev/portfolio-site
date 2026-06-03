@@ -1,6 +1,6 @@
 # Portfolio Site — Design Guide
 
-Minimal, personal landing page. HTML, CSS, and JS split across three files at the repo root.
+Minimal, personal landing page built with Astro. Visual design is unchanged from the original static site. Day-to-day content edits: see [EDITING.md](EDITING.md).
 
 ---
 
@@ -50,21 +50,20 @@ Toggle button (☾/☀) fixed top-right. Preference saved to `localStorage`. CSS
 
 ```
 portfoliosite/
-├── index.html          ← landing page markup
-├── styles.css          ← all styles (design tokens on :root + [data-theme="dark"])
-├── script.js           ← player, theme toggle, projects expand, stripes fade-in, goat glow
-├── headshot.webp       ← profile photo (circle-cropped in CSS)
-├── goatYellow.png      ← decorative goat in card
-├── resumepreview.png   ← resume thumbnail preview
-├── Temulen_Resume.pdf  ← downloadable resume
-├── angelIns.mp3        ← guitar cover track
-├── everybreathyoutake.mp3 ← guitar cover track
-├── usaflag.png, mongolianflag.png
-├── CNAME               ← custom domain config
-└── DESIGN.md           ← this file
+├── src/
+│   ├── pages/              ← routes (index, blog)
+│   ├── components/         ← MainCard, MusicPlayer, etc.
+│   ├── layouts/            ← BaseLayout, BlogLayout
+│   ├── styles/             ← CSS partials (concatenated on build)
+│   └── scripts/            ← theme, landing player, goat
+├── data/                   ← tracks, projects, now, blog-posts (JSON)
+├── public/                 ← static assets + built styles.css & scripts
+├── dist/                   ← output (gitignored; GitHub Pages deploys this)
+├── DESIGN.md               ← this file
+└── EDITING.md              ← how to change content and ship
 ```
 
-Only external dependency is Google Fonts (Cabin). No build step. Deployed via GitHub Pages on `main` — site serves at `/` (no redirect).
+External dependency: Google Fonts (DM Sans). Build: `npm run build`. Deployed via GitHub Actions to Pages from `dist/`.
 
 ---
 
@@ -86,7 +85,7 @@ Click-to-expand toggle with `(click)` / `(hide)` hint. Dash decorators are part 
 Preview thumbnail + "Status: Up to date!" + last updated date + download link. No red text.
 
 ### Blog
-"Coming soon..." placeholder.
+Index at `/blog/`; posts linked from `data/blog-posts.json`.
 
 ### Contact
 - temulen.iveelt@gmail.com
@@ -134,9 +133,10 @@ Simplified audio player inspired by late-1990s Sony hardware.
 ## Deploying
 
 ```bash
-git add index.html
+npm run build   # optional locally
+git add .
 git commit -m "describe change"
 git push
 ```
 
-GitHub Pages auto-deploys from `main` within ~60s.
+GitHub Actions builds and publishes `dist/` (see [EDITING.md](EDITING.md)).

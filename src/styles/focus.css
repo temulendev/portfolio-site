@@ -1,0 +1,14 @@
+/* ===== FOCUS STATES =====
+   Visible focus ring for keyboard users. Uses the heading color so it adapts to light/dark.
+   :focus-visible means mouse clicks won't show the ring, only keyboard focus does. */
+:focus-visible {
+  outline: 2px solid var(--heading-color);
+  outline-offset: 2px;
+}
+/* Progress track lives inside an overflow:hidden LCD — an outline would get clipped.
+   Use box-shadow instead so the ring can extend outside the track. */
+.progress-track:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--heading-color);
+}
+

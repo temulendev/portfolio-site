@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MainCard from '../components/MainCard.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<BaseLayout
+  title="Temulen Iveelt"
+  description="Temulen Iveelt — Computer Science & Business at Lehigh University. Co-Founder at CribCub."
+  canonical="https://temuleniveelt.com/"
+  includeLandingScripts={true}
+>
+  <script type="application/ld+json" slot="head" is:inline>
+    {"@context":"https://schema.org","@type":"Person","name":"Temulen Iveelt","url":"https://temuleniveelt.com/"}
+  </script>
+
+  <audio id="audio" src="/angelIns.mp3" preload="metadata"></audio>
+
+  <main class="container">
+    <MainCard />
+    <Sidebar />
+  </main>
+
+  <div class="skills-title">MY TECHNICAL STACK</div>
+  <div class="skills-strip">JAVA &nbsp;·&nbsp; HTML/CSS &nbsp;·&nbsp; LUA &nbsp;·&nbsp; FIGMA &nbsp;·&nbsp; ABLETON &nbsp;·&nbsp; GIT</div>
+
+  <footer class="site-footer">Website by Temulen Iveelt | 2026</footer>
+</BaseLayout>

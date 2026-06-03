@@ -1,0 +1,61 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import blogPosts from '../../../data/blog-posts.json';
+
+interface Post {
+  slug: string;
+  title: string;
+  date: string;
+  dek?: string;
+  status?: string;
+}
+
+const posts = ([...blogPosts] as Post[]).sort((a, b) =>
+  (b.date || '').localeCompare(a.date || '')
+);
+
+function shortDate(iso: string) {
+  return (iso || '').slice(0, 10);
+}
+---
+
+<BlogLayout
+  title="Blog — Temulen Iveelt"
+  description="Blog — Temulen Iveelt. Notes on building CribCub, startup ventures, and findings worth sharing."
+  canonical="https://temuleniveelt.com/blog/"
+  backHref="/"
+  backLabel="← Home"
+>
+  <header class="blog-header">
+    <h1>Blog</h1>
+    <p>Notes on building CribCub, ventures, and findings.</p>
+    <div class="blog-stripes" aria-hidden="true">
+      <div class="stripe--blue"></div>
+      <div class="stripe--yellow"></div>
+      <div class="stripe--red"></div>
+    </div>
+  </header>
+
+  <ul class="blog-list">
+    {posts.length === 0 ? (
+      <li style="color: var(--text-muted); padding: 24px 0;">No posts yet.</li>
+    ) : (
+      posts.map((post) => (
+        <li class="blog-list-item">
+          <div class="blog-list-meta">
+            <span class="blog-list-date">{shortDate(post.date)}</span>
+            {post.status && (
+              <span class="post-status" data-status={post.status}>
+                {post.status}
+              </span>
+            )}
+          </div>
+          <a class="blog-list-link" href={`/blog/posts/${post.slug}.html`}>
+            <h2 class="blog-list-title">{post.title}</h2>
+            {post.dek && <p class="blog-list-dek">{post.dek}</p>}
+          </a>
+        </li>
+      ))
+    )}
+  </ul>
+</BlogLayout>

@@ -1,0 +1,57 @@
+---
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+
+const title = 'Innovation Alley';
+const description =
+  "Pitching CribCub at Lehigh's Innovation Alley for the first time. Investors, former RAs, and the moment everything clicked.";
+const canonical = 'https://temuleniveelt.com/blog/posts/innovation-alley.html';
+---
+
+<BlogLayout
+  title={`${title} — Temulen Iveelt`}
+  description={description}
+  canonical={canonical}
+  ogType="article"
+>
+  <meta slot="head" name="post-title" content={title} />
+  <meta slot="head" name="post-date" content="2026-04-28T22:17" />
+  <meta slot="head" name="post-tag" content="cribcub" />
+  <meta slot="head" name="post-status" content="shipped" />
+  <meta slot="head" name="post-dek" content={description} />
+  <meta slot="head" property="article:published_time" content="2026-04-28T22:17" />
+
+  <article class="post-article">
+    <h1 class="post-title">{title}</h1>
+
+    <div class="post-meta">
+      <time datetime="2026-04-28T22:17">April 28, 2026 · 10:17 PM</time>
+      <span class="post-meta-sep">·</span>
+      <span class="post-status" data-status="shipped">shipped</span>
+      <span class="post-meta-sep">·</span>
+      <span class="post-tag">cribcub</span>
+    </div>
+
+    <div class="post-stripes" aria-hidden="true">
+      <div class="stripe--blue"></div>
+      <div class="stripe--yellow"></div>
+      <div class="stripe--red"></div>
+    </div>
+
+    <div class="post-content">
+      <p>Today was the first time I stood in front of strangers and asked them to take <a href="https://www.cribcub.com" target="_blank" rel="noopener">CribCub</a> seriously. I walked into Innovation Alley nervous. I left with more confidence than I came in with.</p>
+
+      <p>CribCub is the platform I'm building to fix the messy administrative side of college dorm life. Right now, RAs duct-tape their job together with group chats and spreadsheets. Residents have no idea what's happening on their floor unless they catch the right text at the right time. Nobody has built this for the actual workflow, so I'm building it along with my two co-founders.</p>
+
+      <p>The week before the exhibition was a sprint: dark mode redesign, fully functional dashboard tabs, a real DM inbox, a resident directory, a duty log, a maintenance form, and a full mobile pass.</p>
+
+      <p>The exhibition exceeded what I'd hoped for. I had a real conversation with the creator of MathWay, talked to actual investors, exchanged actual contact info. Hearing former RAs say <em>this is what I wished I had</em> was the moment everything clicked.</p>
+
+      <p>Sitting down at the end and listening to the presentations from my successful entrepreneurial peers at Lehigh made me inspired. Today showed me the success I see and admire from a distance is actually within arms reach.</p>
+    </div>
+
+    <footer class="post-footer">
+      <a href="/blog/">← All posts</a>
+      <span>Temulen Iveelt · 2026</span>
+    </footer>
+  </article>
+</BlogLayout>

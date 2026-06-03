@@ -1,0 +1,16 @@
+---
+import now from '../../data/now.json';
+---
+
+<div class="now-card">
+  <h2 class="now-heading">Now <span class="now-hint">(updated {now.updated})</span></h2>
+  <div class="now-grid">
+    {now.items.map((item) => (
+      <>
+        <span class="now-label">{item.label}</span>
+        <span class="now-sep">—</span>
+        <span>{item.value}</span>
+      </>
+    ))}
+  </div>
+</div>

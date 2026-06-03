@@ -1,0 +1,310 @@
+/* ===== LEFT CARD =====
+   Bordered container holding the flag/stripes header, bio, projects, resume, contact, goat.
+   Border blends 20% of the theme accent into the neutral card-border so it picks up
+   the active theme without ever reading as garish. */
+.card {
+  background: var(--card-bg);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--card-border));
+  overflow: hidden;
+  position: relative;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.card-body {
+  padding: 29px 33px 66px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Flag + Stripes row (top of card): US + Mongolian flags next to Mongolia's tricolor stripes. */
+.flag-stripes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 29px;
+  position: relative;
+  z-index: 1;
+}
+
+.flag-img {
+  height: 27px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* Stripes — blue(10px) / yellow(7px) / red(4px). Faded in on load via JS adding .visible. */
+.stripes {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.stripe--blue { height: 10px; background: #3558A0; transition: background 0.3s, opacity 0.6s ease; opacity: 0; }
+.stripe--yellow { height: 7px; background: #E8B832; transition: background 0.3s, opacity 0.6s ease 0.15s; opacity: 0; }
+.stripe--red { height: 4px; background: #C4342D; transition: background 0.3s, opacity 0.6s ease 0.3s; opacity: 0; }
+
+.stripe--blue.visible { opacity: 1; }
+.stripe--yellow.visible { opacity: 1; }
+.stripe--red.visible { opacity: 1; }
+
+[data-theme="dark"] .stripe--blue { background: #004d87; }
+[data-theme="dark"] .stripe--yellow { background: #ffd900; }
+[data-theme="dark"] .stripe--red { background: #ad0000; }
+
+/* Sections inside the card (What I'm Up To, Projects, Resume, Contact). */
+.section {
+  margin-bottom: 29px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.section h2 {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+.section p {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.section p a {
+  text-decoration: underline;
+  transition: color 0.15s;
+}
+
+.section p a:hover {
+  color: var(--accent);
+}
+
+.status-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.status-label {
+  font-weight: 700;
+  color: var(--text-primary);
+  display: inline-block;
+  width: 90px;
+}
+
+/* Projects toggle — real <button> nested inside <h2>.
+   Button defaults are stripped so it inherits the heading's font/color. */
+.projects-toggle {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 11px;
+  user-select: none;
+  transition: color 0.2s;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.projects-toggle:hover {
+  color: var(--accent);
+}
+
+.projects-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-style: italic;
+  transition: color 0.2s;
+}
+
+.projects-toggle:hover .projects-hint {
+  color: var(--text-secondary);
+}
+
+/* Project list expand — animated max-height/opacity, toggled by .open class from JS. */
+.project-list-wrap {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              margin 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 0;
+}
+
+.project-list-wrap.open {
+  max-height: 400px;
+  opacity: 1;
+  margin-top: 11px;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.project-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* The "—" dash decorator before each project — grows on hover. */
+.project-item::before {
+  content: '';
+  display: inline-block;
+  width: 48px;
+  height: 1.5px;
+  background: var(--dash-color);
+  margin-right: 15px;
+  flex-shrink: 0;
+  margin-top: 11px;
+  transition: background 0.2s, width 0.25s ease;
+}
+
+.project-item:hover::before {
+  background: var(--accent);
+  width: 64px;
+}
+
+.project-info {
+  min-width: 0;
+}
+
+.project-item a {
+  display: inline;
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: color 0.15s;
+}
+
+.project-item:hover a {
+  color: var(--accent);
+}
+
+.project-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.project-stack {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* Resume — thumbnail + status/date + download link. */
+.resume-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.resume-thumb {
+  width: 94px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--card-border));
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.3s;
+}
+
+.resume-thumb:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.resume-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 2px;
+}
+
+.resume-status {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.resume-date {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.resume-download {
+  font-size: 15px;
+  font-style: italic;
+  text-decoration: underline;
+  color: var(--text-secondary);
+  transition: color 0.15s;
+}
+
+.resume-download:hover {
+  color: var(--accent);
+}
+
+/* Contact links (email / LinkedIn / GitHub). */
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.contact-list a {
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s, transform 0.2s ease;
+  width: fit-content;
+  display: inline-block;
+}
+
+.contact-list a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  transform: translateX(4px);
+}
+
+/* Goat — decorative image absolutely positioned at the card's bottom-right.
+   --goat-glow is set from JS on hover for the drop-shadow effect.
+   --goat-filter-theme (from the active [data-color] rule) hue-rotates the yellow goat
+   to match the chosen color theme, transitioning smoothly when themes switch.
+   .zoomed is toggled when the Projects list is expanded. */
+.goat {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 75%;
+  height: auto;
+  opacity: 0.17;
+  pointer-events: none;
+  transform-origin: bottom right;
+  transform: scale(1);
+  --goat-glow: drop-shadow(0 0 0 transparent);
+  filter: var(--goat-filter-theme) var(--goat-glow);
+  transition: filter 0.5s ease, opacity 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.goat.zoomed {
+  transform: scale(1.12);
+}
+
+/* Dark mode: add sepia + brightness on top of the theme hue-rotation. */
+[data-theme="dark"] .goat {
+  filter: sepia(0.15) brightness(0.9) saturate(1.1) var(--goat-filter-theme) var(--goat-glow);
+}
+
