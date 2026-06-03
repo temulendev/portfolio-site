@@ -355,6 +355,23 @@ audio { display: none; }
   color: var(--accent);
 }
 
+.status-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.status-label {
+  font-weight: 700;
+  color: var(--text-primary);
+  display: inline-block;
+  width: 90px;
+}
+
 /* Projects toggle — real <button> nested inside <h2>.
    Button defaults are stripped so it inherits the heading's font/color. */
 .projects-toggle {
