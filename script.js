@@ -180,8 +180,8 @@
     }
   }
 
-  // Populate the track-number readout for track 0 before any user interaction.
-  lcdTrackNum.textContent = pad2(currentTrack + 1) + '/' + pad2(tracks.length);
+  // Load the default track into the player on page load (no autoplay).
+  loadTrack(currentTrack, false);
 
   // Advance to the next track, wrapping around. Used by the skip button and track-ended handler.
   function skipTrack() {
