@@ -2,7 +2,7 @@
    Two-column grid on desktop (card | sidebar), collapses to one column ≤820px. */
 .container {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: 55px;
   max-width: 960px;
   margin: 55px auto;

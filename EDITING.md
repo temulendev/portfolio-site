@@ -6,7 +6,7 @@ The site is built with [Astro](https://astro.build). Source lives under `src/`; 
 
 | What | File |
 |------|------|
-| Music tracks | [`data/tracks.json`](data/tracks.json) (optional `"video": "/file.mov"` per track) |
+| Music tracks | [`data/tracks.json`](data/tracks.json) (optional `"video": "/file.mp4"` per track) |
 | Default track on load | [`data/player.json`](data/player.json) (`defaultTrackIndex`, 0-based) |
 | Projects list | [`data/projects.json`](data/projects.json) |
 | Now card | [`data/now.json`](data/now.json) |

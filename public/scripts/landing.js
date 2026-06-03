@@ -28,6 +28,7 @@
   var tracks = window.__TRACKS__ || [];
   var currentTrack = typeof window.__DEFAULT_TRACK_INDEX__ === 'number' ? window.__DEFAULT_TRACK_INDEX__ : 0;
   var killswitchVideo = document.getElementById('killswitchVideo');
+  var lcdScreen = document.querySelector('.lcd-screen');
 
   function currentTrackHasVideo() {
     var t = tracks[currentTrack];
@@ -45,10 +46,10 @@
   function syncVideoPlayback() {
     if (!killswitchVideo) return;
     if (!currentTrackHasVideo() || audio.paused) {
-      killswitchVideo.classList.remove('is-active');
-      killswitchVideo.pause();
+      hideVideo();
       return;
     }
+    if (lcdScreen) lcdScreen.classList.add('lcd-screen--video');
     killswitchVideo.classList.add('is-active');
     syncVideoTime();
     var playPromise = killswitchVideo.play();
@@ -58,6 +59,7 @@
   }
 
   function hideVideo() {
+    if (lcdScreen) lcdScreen.classList.remove('lcd-screen--video');
     if (!killswitchVideo) return;
     killswitchVideo.classList.remove('is-active');
     killswitchVideo.pause();
