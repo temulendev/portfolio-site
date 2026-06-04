@@ -4,6 +4,9 @@
    project expand animation, and goat zoom. Stripes get forced to opacity:1
    so they remain visible even if the .visible class hasn't been added yet. */
 @media (prefers-reduced-motion: reduce) {
+  .ambient-bg__layer {
+    transition: none;
+  }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

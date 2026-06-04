@@ -252,7 +252,15 @@
     progressFill.style.width = (pct * 100) + '%';
     currentTimeEl.textContent = formatTime(audio.currentTime);
     progressTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
-    if (currentTrackHasVideo() && !audio.paused) syncVideoTime();
+    if (currentTrackHasVideo() && !audio.paused) {
+      if (audio.currentTime < prevAudioTime - 0.5) {
+        var target = audio.currentTime % (killswitchVideo.duration || audio.duration);
+        if (isFinite(target)) killswitchVideo.currentTime = target;
+      } else {
+        syncVideoTime();
+      }
+    }
+    prevAudioTime = audio.currentTime;
   });
 
   audio.addEventListener('loadedmetadata', function() {
@@ -263,6 +271,7 @@
   // Mouse/touch start on the track begins dragging; global move/up listeners
   // keep seeking working even when the pointer leaves the track.
   var isDragging = false;
+  var prevAudioTime = 0;
 
   // Shared seek helper — used by mouse/touch drag, bar clicks, and keyboard arrows.
   function seekToPct(pct) {

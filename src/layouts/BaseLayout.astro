@@ -48,14 +48,25 @@ const {
   <slot name="head" />
 </head>
 <body {...(bodyClass ? { class: bodyClass } : {})}>
-  <slot name="before-chrome" />
-  <ThemeChrome />
-  <slot />
-  {includeLandingScripts && (
-    <>
-      <script src="/scripts/landing.js" is:inline></script>
-      <script src="/scripts/goat.js" is:inline></script>
-    </>
-  )}
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-bg__layer ambient-bg__layer--forest"></div>
+    <div class="ambient-bg__layer ambient-bg__layer--rose"></div>
+    <div class="ambient-bg__layer ambient-bg__layer--ocean"></div>
+    <div class="ambient-bg__layer ambient-bg__layer--amber"></div>
+    <div class="ambient-bg__wash"></div>
+    <div class="ambient-bg__fade-top"></div>
+    <div class="ambient-bg__fade-bottom"></div>
+  </div>
+  <div class="site-shell">
+    <slot name="before-chrome" />
+    <ThemeChrome />
+    <slot />
+    {includeLandingScripts && (
+      <>
+        <script src="/scripts/landing.js" is:inline></script>
+        <script src="/scripts/goat.js" is:inline></script>
+      </>
+    )}
+  </div>
 </body>
 </html>

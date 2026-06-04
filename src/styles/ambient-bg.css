@@ -1,0 +1,140 @@
+/* ===== AMBIENT THEME BACKGROUNDS =====
+   Full-viewport photos sit behind all content; active layer follows data-color.
+   forest → mistyforest | rose → mars | ocean → cybercity | amber → goldenhour */
+
+:root {
+  --ambient-opacity: 0.14;
+  --ambient-vignette: 0.38;
+}
+
+[data-theme='dark'] {
+  --ambient-opacity: 0.2;
+  --ambient-vignette: 0.48;
+}
+
+[data-color='forest'] {
+  --ambient-opacity: 0.15;
+}
+[data-theme='dark'][data-color='forest'] {
+  --ambient-opacity: 0.22;
+}
+
+[data-color='rose'] {
+  --ambient-opacity: 0.18;
+  --ambient-vignette: 0.34;
+}
+[data-theme='dark'][data-color='rose'] {
+  --ambient-opacity: 0.27;
+  --ambient-vignette: 0.42;
+}
+
+[data-color='ocean'] {
+  --ambient-opacity: 0.13;
+}
+[data-theme='dark'][data-color='ocean'] {
+  --ambient-opacity: 0.19;
+}
+
+[data-color='amber'] {
+  --ambient-opacity: 0.14;
+}
+[data-theme='dark'][data-color='amber'] {
+  --ambient-opacity: 0.21;
+}
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-bg__layer {
+  position: absolute;
+  inset: -8%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 38%;
+  opacity: 0;
+  transition: opacity 0.75s ease;
+  filter: saturate(0.88) contrast(1.03);
+  will-change: opacity;
+}
+
+.ambient-bg__layer--forest {
+  background-image: url('/backgrounds/mistyforest.jpg');
+}
+
+.ambient-bg__layer--rose {
+  background-image: url('/backgrounds/mars.jpg');
+  filter: saturate(0.95) contrast(1.06) brightness(1.06);
+}
+
+.ambient-bg__layer--ocean {
+  background-image: url('/backgrounds/cybercity.jpg');
+}
+
+.ambient-bg__layer--amber {
+  background-image: url('/backgrounds/goldenhour.jpg');
+}
+
+[data-color='forest'] .ambient-bg__layer--forest,
+[data-color='rose'] .ambient-bg__layer--rose,
+[data-color='ocean'] .ambient-bg__layer--ocean,
+[data-color='amber'] .ambient-bg__layer--amber {
+  opacity: var(--ambient-opacity);
+}
+
+/* Before theme.js runs — match default swatches (amber light / forest dark) */
+html:not([data-color]) .ambient-bg__layer--amber {
+  opacity: var(--ambient-opacity);
+}
+
+html[data-theme='dark']:not([data-color]) .ambient-bg__layer--amber {
+  opacity: 0;
+}
+
+html[data-theme='dark']:not([data-color]) .ambient-bg__layer--forest {
+  opacity: var(--ambient-opacity);
+}
+
+/* Soft wash so photos read as texture, not wallpaper */
+.ambient-bg__wash {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg) calc(var(--ambient-vignette) * 100%), transparent);
+  z-index: 1;
+}
+
+/* Strong fade at top so chrome + header stay readable */
+.ambient-bg__fade-top {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 96%, transparent) 8%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 18%,
+    color-mix(in srgb, var(--bg) 42%, transparent) 32%,
+    transparent 52%
+  );
+}
+
+.ambient-bg__fade-bottom {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--bg) 88%, transparent) 0%,
+    transparent 22%
+  );
+}
+
+.site-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}

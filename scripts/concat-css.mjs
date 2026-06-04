@@ -6,6 +6,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const partials = [
   'reset.css',
   'themes.css',
+  'ambient-bg.css',
   'focus.css',
   'layout.css',
   'theme-toggle.css',
