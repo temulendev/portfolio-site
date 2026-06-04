@@ -11,9 +11,9 @@ Two-column CSS grid on desktop (`1.1fr 1fr`, max-width 960px, centered).
 | Column | Content |
 |---|---|
 | **Left — Card** | Bordered card with color stripes, What I'm Up To, Projects (expandable), Resume, goat decoration, Blog, Contact |
-| **Right — Sidebar** | Circular headshot, name + subtitle, Y2K music player |
+| **Right — Sidebar** | Circular headshot, skills carousel, Y2K music player, Now card |
 
-On mobile (≤820px): single column, sidebar stacks above the card. Player follows headshot/name.
+On mobile (≤820px): single column — profile + stack, main card, player + Now (DOM order; no `display: contents`).
 
 ---
 

@@ -18,13 +18,18 @@
 
 .now-grid {
   display: grid;
-  grid-template-columns: max-content max-content 1fr;
+  grid-template-columns: minmax(0, max-content) max-content minmax(0, 1fr);
   column-gap: 8px;
   row-gap: 4px;
   font-size: 15px;
   color: var(--text-secondary);
   line-height: 1.7;
   transition: color 0.3s;
+}
+
+.now-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .now-sep {

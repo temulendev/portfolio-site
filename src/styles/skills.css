@@ -1,5 +1,12 @@
 /* ===== SKILLS CAROUSEL =====
-   Lives in the sidebar (below Now card). Auto-scrolling tech logos. */
+   In sidebar lead (profile → stack). Auto-scrolling tech logos. */
+
+.skills-carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;
+}
 
 .skills-title {
   font-family: 'Courier New', 'Lucida Console', monospace;
@@ -14,12 +21,7 @@
   transition: color 0.3s;
 }
 
-.sidebar .skills-carousel {
-  width: 100%;
-  min-width: 0;
-}
-
-.sidebar .skills-carousel-viewport {
+.sidebar-lead .skills-carousel-viewport {
   max-width: 100%;
   padding: 4px 4px 8px;
 }
@@ -81,7 +83,7 @@
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   transition: color 0.3s;
 }
 

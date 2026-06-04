@@ -1,13 +1,4 @@
-/* ===== SIDEBAR =====
-   Right column: headshot, skills carousel, player, Now card. */
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(16px, 2vh, 22px);
-  min-width: 0;
-  max-width: 100%;
-}
-
+/* ===== PROFILE (sidebar lead) ===== */
 .profile {
   text-align: center;
 }

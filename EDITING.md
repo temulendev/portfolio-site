@@ -22,7 +22,7 @@ After changing JSON, run `npm run build` (or `npm run dev` for local preview).
 | Landing page structure | [`src/pages/index.astro`](src/pages/index.astro) |
 | Main card sections | [`src/components/MainCard.astro`](src/components/MainCard.astro) |
 | Music player markup | [`src/components/MusicPlayer.astro`](src/components/MusicPlayer.astro) |
-| Sidebar / profile | [`src/components/Sidebar.astro`](src/components/Sidebar.astro) |
+| Profile + sidebar layout | [`src/components/ProfileBlock.astro`](src/components/ProfileBlock.astro), [`src/pages/index.astro`](src/pages/index.astro) (`sidebar-lead` / `sidebar-tail`) |
 | Blog list | [`src/pages/blog/index.astro`](src/pages/blog/index.astro) |
 
 ## Styles

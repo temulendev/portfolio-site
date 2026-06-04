@@ -1,7 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import MainCard from '../components/MainCard.astro';
-import Sidebar from '../components/Sidebar.astro';
+import ProfileBlock from '../components/ProfileBlock.astro';
+import SkillsCarousel from '../components/SkillsCarousel.astro';
+import MusicPlayer from '../components/MusicPlayer.astro';
+import NowCard from '../components/NowCard.astro';
 ---
 
 <BaseLayout
@@ -17,8 +20,15 @@ import Sidebar from '../components/Sidebar.astro';
   <audio id="audio" src="/angelIns.mp3" preload="metadata"></audio>
 
   <main class="container">
+    <div class="sidebar-lead">
+      <ProfileBlock />
+      <SkillsCarousel />
+    </div>
     <MainCard />
-    <Sidebar />
+    <div class="sidebar-tail">
+      <MusicPlayer />
+      <NowCard />
+    </div>
   </main>
 
   <footer class="site-footer">Website by Temulen Iveelt | 2026</footer>
